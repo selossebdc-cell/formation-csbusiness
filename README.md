@@ -78,6 +78,21 @@ git push
 
 Les participants utilisent : **https://formation.csbusiness.fr**
 
+## Déjà fait dans ce workspace
+
+- Dépôt GitHub : **https://github.com/selossebdc-cell/formation-csbusiness**
+- Remote Git local (depuis la racine du repo `csbusiness-local`) : `formation` → ce dépôt
+- Pages activée depuis la branche **`main`** (racine)
+
+Pour publier une mise à jour **sans** quitter le mono-repo `csbusiness-local`, après commit sur `main` :
+
+```bash
+cd /chemin/vers/csbusiness-local
+git subtree push --prefix formation-csbusiness formation main
+```
+
+(La première fois peut prendre un peu plus de temps ; ensuite Git optimise.)
+
 ## Limite à connaître
 
 Un sous-domaine **`*.csbusiness.fr`** ne peut pointer vers **qu’un seul** dépôt GitHub Pages à la fois pour ce hostname. Si tu réutilises `formation.csbusiness.fr` pour une autre stack plus tard, il faudra changer soit le DNS soit le repo configuré dans GitHub.
