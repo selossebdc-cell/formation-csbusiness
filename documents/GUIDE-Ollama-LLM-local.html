@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide Ollama & LLM en local — CS Consulting Stratégique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #F3EADA; font-family: 'Playfair Display', Georgia, serif; color: #433F3C; padding: 32px 24px; line-height: 1.7; }
+h1 { font-size: 24px; font-weight: 600; margin-bottom: 6px; }
+.sub { font-size: 13px; color: #AE7558; font-style: italic; margin-bottom: 28px; }
+h2 { font-size: 18px; font-weight: 600; margin: 28px 0 14px; color: #433F3C; border-left: 4px solid #D17C61; padding-left: 12px; }
+h3 { font-size: 15px; font-weight: 600; margin: 18px 0 10px; color: #AE7558; }
+.card { background: #fff; border-radius: 16px; padding: 24px 28px; border: 1px solid #C19E8A; margin-bottom: 18px; }
+p { margin-bottom: 12px; font-size: 14px; }
+.intro { font-size: 15px; color: #433F3C; }
+
+/* Niveaux d'autonomie */
+.niveau { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; border-left: 5px solid; }
+.niveau-1 { border-color: #185FA5; }
+.niveau-2 { border-color: #AE7558; }
+.niveau-3 { border-color: #3B6D11; }
+.niveau .titre { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.niveau-1 .titre { color: #0C447C; }
+.niveau-2 .titre { color: #633806; }
+.niveau-3 .titre { color: #173404; }
+.niveau .pour { font-size: 12px; color: #888780; font-style: italic; margin-top: 6px; }
+
+/* Bloc code */
+.code { background: #2C2C2A; color: #F3EADA; padding: 14px 18px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 12px; margin: 10px 0; overflow-x: auto; line-height: 1.6; }
+.code .comment { color: #C19E8A; }
+.code .cmd { color: #FAC775; }
+
+/* Étapes numérotées */
+.etape { display: grid; grid-template-columns: 50px 1fr; gap: 14px; margin-bottom: 16px; align-items: start; }
+.etape-num { background: #D17C61; color: #fff; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; }
+.etape-content strong { display: block; font-size: 13px; color: #433F3C; margin-bottom: 4px; }
+.etape-content p { font-size: 12px; color: #5F5E5A; margin-bottom: 0; }
+
+/* Avantages */
+.avantages { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.avantage { background: #EAF3DE; border-radius: 8px; padding: 12px 14px; border-left: 3px solid #3B6D11; }
+.avantage strong { display: block; font-size: 12px; color: #173404; margin-bottom: 3px; }
+.avantage span { font-size: 11px; color: #27500A; }
+
+/* Modèles tableau */
+.modeles { width: 100%; border-collapse: collapse; margin: 10px 0; }
+.modeles th { background: #433F3C; color: #F3EADA; padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.modeles td { padding: 10px 12px; border-bottom: 1px solid #C19E8A; font-size: 12px; color: #433F3C; }
+.modeles tr:nth-child(odd) td { background: #F3EADA; }
+.modeles .meilleur { background: #EAF3DE; }
+.modeles .meilleur td { font-weight: 600; color: #173404; }
+
+/* Liens */
+.liens { background: #F3EADA; border-radius: 10px; padding: 16px 18px; }
+.liens a { display: block; padding: 8px 0; color: #D17C61; text-decoration: none; font-size: 13px; font-weight: 600; border-bottom: 1px solid #C19E8A; }
+.liens a:last-child { border: none; }
+.liens a:hover { color: #AE7558; }
+
+/* Note */
+.note { background: #FAEEDA; border-left: 4px solid #BA7517; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0; }
+.note strong { color: #633806; }
+.note p { font-size: 12px; color: #854F0B; margin: 0; }
+
+.footer { text-align: center; font-size: 11px; color: #C19E8A; letter-spacing: 1px; margin-top: 28px; }
+</style>
+</head>
+<body>
+
+<p style="margin:0 0 16px;font-size:13px;"><a href="../index.html" style="color:#D17C61;">← Ressources formation</a></p>
+
+<h1>Reprendre le contrôle de l'IA</h1>
+<p class="sub">Guide pratique — Mistral, Ollama et LLM en local · CS Consulting Stratégique · 2026</p>
+
+<div class="card">
+<p class="intro">L'IA souveraine n'est plus réservée aux grands groupes. En 2026, vous pouvez installer un assistant IA sur votre Mac en 15 minutes — sans qu'aucune de vos données ne quitte votre ordinateur. Ce guide vous montre comment.</p>
+</div>
+
+<!-- LES 3 NIVEAUX -->
+<h2>Les 3 niveaux d'autonomie IA</h2>
+<div class="card">
+<p>Choisissez votre niveau en fonction de vos données et de votre équipe. Vous pouvez aussi combiner : Mistral pour le quotidien, Ollama pour les données sensibles.</p>
+
+<div class="niveau niveau-1">
+  <div class="titre">Niveau 1 — Cloud souverain européen</div>
+  <p>Vous utilisez un service en ligne hébergé en Europe, soumis au RGPD européen. Pas d'installation, vous y accédez depuis n'importe quel navigateur.</p>
+  <div class="pour">Pour : démarrer en sécurité dès demain · Données internes non ultra-sensibles · Usage individuel ou petite équipe</div>
+</div>
+
+<div class="niveau niveau-2">
+  <div class="titre">Niveau 2 — LLM sur votre serveur (Ollama + VPS)</div>
+  <p>Vous louez un serveur dédié en France (15€/mois chez Scaleway ou OVH), vous y installez Ollama. Toute votre équipe accède à une interface privée type ChatGPT via navigateur.</p>
+  <div class="pour">Pour : une équipe de 2 à 20 personnes · Données clients identifiables · Économies vs abonnements multiples</div>
+</div>
+
+<div class="niveau niveau-3">
+  <div class="titre">Niveau 3 — LLM sur votre ordinateur (Ollama local)</div>
+  <p>Vous installez Ollama directement sur votre Mac ou PC. L'IA tourne sur votre machine. Aucune donnée ne sort. Fonctionne même hors-ligne. Gratuit.</p>
+  <div class="pour">Pour : souveraineté totale · Données ultra-sensibles (RH, santé, finances) · Travail individuel ou consultantes solo</div>
+</div>
+</div>
+
+<!-- MISTRAL -->
+<h2>Niveau 1 — Mistral Le Chat (le plus simple)</h2>
+<div class="card">
+<p>Mistral est l'équivalent français de ChatGPT — créé par une startup parisienne. Ses serveurs sont en Europe, sa politique RGPD est claire, et son modèle parle naturellement français.</p>
+
+<h3>En 3 étapes</h3>
+<div class="etape">
+  <div class="etape-num">1</div>
+  <div class="etape-content">
+    <strong>Allez sur chat.mistral.ai</strong>
+    <p>Créez un compte avec votre email professionnel. Compte gratuit pour usage personnel léger.</p>
+  </div>
+</div>
+<div class="etape">
+  <div class="etape-num">2</div>
+  <div class="etape-content">
+    <strong>Choisissez votre formule</strong>
+    <p>Gratuit pour découvrir. Pro à 20€/mois pour usage professionnel sans limite — équivalent ChatGPT Plus.</p>
+  </div>
+</div>
+<div class="etape">
+  <div class="etape-num">3</div>
+  <div class="etape-content">
+    <strong>Utilisez-le exactement comme ChatGPT</strong>
+    <p>Interface identique. Vous pouvez uploader des PDF, demander des analyses, rédiger des emails. Mais cette fois, vos données restent en Europe.</p>
+  </div>
+</div>
+
+<div class="note">
+  <strong>Le saviez-vous ?</strong>
+  <p>Le ministère des Armées français a signé un accord-cadre avec Mistral en janvier 2026 pour ses besoins IA. Quand l'État choisit Mistral pour ses données sensibles, c'est un bon signal pour votre TPE.</p>
+</div>
+</div>
+
+<!-- OLLAMA LOCAL -->
+<h2>Niveau 3 — Ollama sur votre Mac ou PC (le plus souverain)</h2>
+<div class="card">
+<p>Ollama est un outil gratuit qui télécharge des modèles d'IA (Mistral, Llama, Phi) et les fait tourner sur votre ordinateur. Aucune donnée ne sort. Vous pouvez même utiliser l'IA sans connexion internet.</p>
+
+<h3>Configuration minimale</h3>
+<ul style="list-style:none; padding-left:0;">
+  <li style="margin-bottom:6px; font-size:13px;">• <strong>Mac M1, M2, M3 ou M4</strong> avec 16 Go de RAM (idéal) — fonctionne aussi en 8 Go</li>
+  <li style="margin-bottom:6px; font-size:13px;">• <strong>PC Windows/Linux</strong> avec 16 Go de RAM</li>
+  <li style="margin-bottom:6px; font-size:13px;">• <strong>Espace disque :</strong> 4 à 8 Go pour le modèle (téléchargement unique)</li>
+</ul>
+
+<h3>Installation pas-à-pas</h3>
+<div class="etape">
+  <div class="etape-num">1</div>
+  <div class="etape-content">
+    <strong>Téléchargez Ollama</strong>
+    <p>Allez sur <strong>ollama.com</strong> et cliquez sur "Download". L'installation se fait comme n'importe quelle app. 2 minutes.</p>
+  </div>
+</div>
+
+<div class="etape">
+  <div class="etape-num">2</div>
+  <div class="etape-content">
+    <strong>Ouvrez le Terminal (Mac) ou PowerShell (Windows)</strong>
+    <p>Tapez la commande suivante pour télécharger Mistral 7B (le modèle français recommandé) :</p>
+  </div>
+</div>
+
+<div class="code">
+<span class="comment"># Cette commande télécharge Mistral et le lance — 4 Go à télécharger</span><br>
+<span class="cmd">ollama run mistral</span>
+</div>
+
+<div class="etape">
+  <div class="etape-num">3</div>
+  <div class="etape-content">
+    <strong>Patientez le téléchargement (5-10 minutes la première fois)</strong>
+    <p>Ensuite, vous pouvez poser vos questions directement dans le terminal. Tapez votre question, Mistral répond — sans qu'aucune donnée ne sorte.</p>
+  </div>
+</div>
+
+<div class="etape">
+  <div class="etape-num">4</div>
+  <div class="etape-content">
+    <strong>Pour une interface graphique type ChatGPT : Open WebUI</strong>
+    <p>Si vous voulez une vraie interface visuelle avec historique de conversations, installez Open WebUI. Plus simple : utilisez l'app <strong>Msty</strong> ou <strong>LM Studio</strong> (interface graphique prête à l'emploi).</p>
+  </div>
+</div>
+
+<div class="note">
+  <strong>Astuce</strong>
+  <p>Une fois installé, vous pouvez désactiver votre Wi-Fi et continuer à utiliser l'IA. Tout fonctionne en local. Vos données ne peuvent physiquement pas fuiter.</p>
+</div>
+
+<h3>Quel modèle choisir ?</h3>
+<table class="modeles">
+<tr><th>Modèle</th><th>Taille</th><th>RAM mini</th><th>Pour quoi</th></tr>
+<tr class="meilleur"><td>Mistral 7B</td><td>4 Go</td><td>8-16 Go</td><td>Référence française — qualité surprenante</td></tr>
+<tr><td>Llama 3.2 3B</td><td>2 Go</td><td>8 Go</td><td>Léger, rapide, pour tâches simples</td></tr>
+<tr><td>Phi-3 Mini</td><td>2,3 Go</td><td>8 Go</td><td>Microsoft, bon en raisonnement</td></tr>
+<tr><td>Llama 3.3 70B</td><td>40 Go</td><td>64 Go</td><td>Niveau GPT-4 — nécessite un Mac M3 Max ou un GPU dédié</td></tr>
+</table>
+</div>
+
+<!-- OLLAMA VPS -->
+<h2>Niveau 2 — Ollama sur un serveur dédié (équipe)</h2>
+<div class="card">
+<p>Pour une équipe de plusieurs personnes, l'idéal est d'héberger Ollama sur un VPS (Virtual Private Server) en France. Toute l'équipe accède à une interface privée via navigateur — sans installation individuelle.</p>
+
+<h3>Coût total</h3>
+<div class="avantages">
+  <div class="avantage"><strong>VPS Scaleway (FR)</strong><span>15€/mois — toute l'équipe accède au même serveur</span></div>
+  <div class="avantage"><strong>VPS OVH (FR)</strong><span>20€/mois — alternative française</span></div>
+  <div class="avantage"><strong>Ollama + Open WebUI</strong><span>0€ — gratuit et open source</span></div>
+  <div class="avantage"><strong>Comparaison ChatGPT Team</strong><span>25€/mois par utilisateur = 250€/mois pour 10 personnes</span></div>
+</div>
+
+<div class="note">
+<strong>ROI immédiat pour 10 collaborateurs</strong>
+<p>ChatGPT Team : 250€/mois soit 3 000€/an. Ollama + VPS : 15€/mois soit 180€/an. <strong>Économie : 2 820€/an</strong> — et vos données restent chez vous.</p>
+</div>
+
+<h3>Pour aller plus loin</h3>
+<p>L'installation Ollama + Open WebUI sur un VPS nécessite quelques compétences techniques. Si vous n'avez personne en interne, deux options :</p>
+<ul style="list-style:none; padding-left:0;">
+  <li style="margin-bottom:8px; font-size:13px;">• <strong>Demandez à votre prestataire informatique habituel</strong> — c'est une installation classique, 2 à 4 heures de travail.</li>
+  <li style="margin-bottom:8px; font-size:13px;">• <strong>Faites appel à un consultant IA souveraine</strong> — type accompagnement CS Consulting Stratégique.</li>
+</ul>
+</div>
+
+<!-- LES AVANTAGES -->
+<h2>Pourquoi passer au LLM local</h2>
+<div class="card">
+<div class="avantages">
+  <div class="avantage"><strong>Souveraineté totale</strong><span>Vos données ne quittent jamais votre infrastructure. Conformité RGPD par construction.</span></div>
+  <div class="avantage"><strong>Coût marginal nul</strong><span>Une fois installé, aucune facturation à l'usage. Vous l'utilisez autant que vous voulez.</span></div>
+  <div class="avantage"><strong>Fonctionne hors-ligne</strong><span>Avion, train, zone blanche, panne internet — votre IA fonctionne toujours.</span></div>
+  <div class="avantage"><strong>Pas de Cloud Act</strong><span>Les autorités américaines ne peuvent pas accéder à vos données.</span></div>
+  <div class="avantage"><strong>Pas d'entraînement sur vos données</strong><span>Votre IA n'utilise jamais ce que vous lui dites pour s'améliorer chez quelqu'un d'autre.</span></div>
+  <div class="avantage"><strong>Indépendance totale</strong><span>Aucune dépendance à un fournisseur dont la politique peut changer du jour au lendemain.</span></div>
+</div>
+</div>
+
+<!-- LIENS UTILES -->
+<h2>Ressources pour aller plus loin</h2>
+<div class="card">
+<div class="liens">
+  <a href="https://ollama.com" target="_blank">→ Site officiel Ollama — téléchargement et documentation</a>
+  <a href="https://chat.mistral.ai" target="_blank">→ Mistral Le Chat — équivalent ChatGPT français</a>
+  <a href="https://ollama.com/library" target="_blank">→ Bibliothèque Ollama — tous les modèles disponibles</a>
+  <a href="https://github.com/open-webui/open-webui" target="_blank">→ Open WebUI — interface ChatGPT-like pour Ollama</a>
+  <a href="https://msty.app" target="_blank">→ Msty — interface graphique simple pour Ollama (Mac/PC)</a>
+  <a href="https://www.scaleway.com" target="_blank">→ Scaleway — hébergement VPS français</a>
+</div>
+</div>
+
+<div class="footer">
+CS CONSULTING STRATÉGIQUE &nbsp;·&nbsp; Catherine Selosse &nbsp;·&nbsp; FCE Académie 2026<br>
+Vous accompagner pour reprendre le contrôle du digital dans votre entreprise.
+</div>
+
+</body>
+</html>

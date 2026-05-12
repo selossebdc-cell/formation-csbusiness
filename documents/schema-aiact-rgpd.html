@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Act & RGPD — Articulation — CS Consulting Stratégique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #F3EADA; font-family: 'Playfair Display', Georgia, serif; color: #433F3C; padding: 28px 24px; }
+h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.sub { font-size: 12px; color: #AE7558; font-style: italic; margin-bottom: 24px; }
+.card { background: #fff; border-radius: 16px; padding: 24px 28px; border: 1px solid #C19E8A; margin-bottom: 20px; }
+.section-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+
+/* COMPARATIF RGPD vs AI ACT */
+.compare-grid { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0; align-items: start; }
+.col-rgpd { background: #E6F1FB; border: 2px solid #185FA5; border-radius: 12px; padding: 18px; }
+.col-rgpd .col-titre { font-size: 13px; font-weight: 600; color: #0C447C; margin-bottom: 4px; }
+.col-rgpd .col-date { font-size: 10px; color: #378ADD; margin-bottom: 14px; font-style: italic; }
+.col-aiact { background: #EEEDFE; border: 2px solid #534AB7; border-radius: 12px; padding: 18px; }
+.col-aiact .col-titre { font-size: 13px; font-weight: 600; color: #3C3489; margin-bottom: 4px; }
+.col-aiact .col-date { font-size: 10px; color: #7F77DD; margin-bottom: 14px; font-style: italic; }
+.col-centre { display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 40px; gap: 8px; }
+.vs { font-size: 18px; font-weight: 600; color: #AE7558; }
+.plus { font-size: 22px; color: #3B6D11; font-weight: 600; }
+
+.ligne { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; font-size: 11px; line-height: 1.5; }
+.puce { width: 18px; min-width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; margin-top: 1px; }
+.puce-bleu { background: #B5D4F4; color: #042C53; }
+.puce-violet { background: #AFA9EC; color: #26215C; }
+
+/* ARTICULATION COMMUNE */
+.commun { background: #EAF3DE; border: 2px solid #3B6D11; border-radius: 12px; padding: 18px; margin-top: 16px; }
+.commun h3 { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #173404; margin-bottom: 12px; }
+.commun-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.commun-item { background: #C0DD97; border-radius: 8px; padding: 10px 12px; }
+.commun-item strong { display: block; font-size: 11px; color: #173404; margin-bottom: 3px; }
+.commun-item span { font-size: 10px; color: #27500A; line-height: 1.4; }
+
+/* CALENDRIER */
+.timeline { position: relative; padding-left: 0; }
+.tl-ligne { display: grid; grid-template-columns: 120px 20px 1fr; align-items: start; gap: 12px; margin-bottom: 16px; }
+.tl-date { font-size: 12px; font-weight: 600; text-align: right; padding-top: 2px; }
+.tl-dot-col { display: flex; flex-direction: column; align-items: center; }
+.tl-dot { width: 16px; height: 16px; border-radius: 50%; margin-bottom: 4px; flex-shrink: 0; }
+.tl-trait { width: 2px; flex: 1; min-height: 30px; }
+.tl-content { background: #F3EADA; border-radius: 8px; padding: 10px 14px; border-left: 3px solid; }
+.tl-content strong { display: block; font-size: 12px; margin-bottom: 4px; }
+.tl-content span { font-size: 10px; line-height: 1.5; }
+
+/* NIVEAUX DE RISQUE */
+.risques-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+.risque-card { border-radius: 10px; padding: 14px 12px; border-top: 5px solid; }
+.risque-interdit { background: #FCEBEB; border-color: #A32D2D; }
+.risque-interdit h4 { color: #791F1F; font-size: 12px; margin-bottom: 6px; }
+.risque-interdit p { font-size: 10px; color: #A32D2D; line-height: 1.5; }
+.risque-haut { background: #FAEEDA; border-color: #BA7517; }
+.risque-haut h4 { color: #633806; font-size: 12px; margin-bottom: 6px; }
+.risque-haut p { font-size: 10px; color: #854F0B; line-height: 1.5; }
+.risque-limite { background: #E6F1FB; border-color: #185FA5; }
+.risque-limite h4 { color: #0C447C; font-size: 12px; margin-bottom: 6px; }
+.risque-limite p { font-size: 10px; color: #185FA5; line-height: 1.5; }
+.risque-minimal { background: #EAF3DE; border-color: #3B6D11; }
+.risque-minimal h4 { color: #173404; font-size: 12px; margin-bottom: 6px; }
+.risque-minimal p { font-size: 10px; color: #27500A; line-height: 1.5; }
+
+/* SANCTIONS */
+.sanctions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sanction { border-radius: 10px; padding: 14px 16px; border-left: 4px solid; }
+.sanction-aiact { background: #FCEBEB; border-color: #A32D2D; }
+.sanction-aiact .montant { font-size: 22px; font-weight: 600; color: #791F1F; }
+.sanction-aiact .detail { font-size: 10px; color: #A32D2D; margin-top: 4px; line-height: 1.5; }
+.sanction-rgpd { background: #FAEEDA; border-color: #BA7517; }
+.sanction-rgpd .montant { font-size: 22px; font-weight: 600; color: #633806; }
+.sanction-rgpd .detail { font-size: 10px; color: #854F0B; margin-top: 4px; line-height: 1.5; }
+
+/* TPE FOCUS */
+.tpe-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.tpe-action { background: #EAF3DE; border-radius: 10px; padding: 14px 16px; border-left: 4px solid #3B6D11; }
+.tpe-action .num { font-size: 20px; font-weight: 600; color: #D17C61; margin-bottom: 6px; }
+.tpe-action strong { display: block; font-size: 12px; color: #173404; margin-bottom: 4px; }
+.tpe-action span { font-size: 10px; color: #27500A; line-height: 1.5; }
+
+/* LIENS */
+.liens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.lien { display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; background: #F3EADA; border-radius: 8px; border: 1px solid #C19E8A; text-decoration: none; }
+.lien:hover { border-color: #D17C61; }
+.lien-tag { font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #AE7558; }
+.lien-titre { font-size: 12px; font-weight: 600; color: #433F3C; }
+.lien-desc { font-size: 10px; color: #888780; font-style: italic; }
+
+.footer { text-align: center; font-size: 10px; color: #C19E8A; letter-spacing: 1px; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<p style="margin:0 0 16px;font-size:13px;"><a href="../index.html" style="color:#D17C61;">← Ressources formation</a></p>
+
+<h1>AI Act & RGPD — Comment ça s'articule ?</h1>
+<p class="sub">Formation FCE Académie · Catherine Selosse · CS Consulting Stratégique</p>
+
+<!-- 1. COMPARATIF RGPD vs AI ACT -->
+<div class="card">
+  <div class="section-label" style="color:#534AB7;">Les deux textes côte à côte</div>
+  <div class="compare-grid">
+    <div class="col-rgpd">
+      <div class="col-titre">RGPD</div>
+      <div class="col-date">En vigueur depuis mai 2018</div>
+      <div class="ligne"><span class="puce puce-bleu">→</span><span><strong>Objet :</strong> protège les données personnelles des individus</span></div>
+      <div class="ligne"><span class="puce puce-bleu">→</span><span><strong>Qui est concerné :</strong> toute organisation qui traite des données de personnes physiques dans l'UE</span></div>
+      <div class="ligne"><span class="puce puce-bleu">→</span><span><strong>Approche :</strong> uniforme — mêmes règles pour tous les traitements</span></div>
+      <div class="ligne"><span class="puce puce-bleu">→</span><span><strong>Obligations clés :</strong> base légale, consentement, droits des personnes, registre des traitements</span></div>
+      <div class="ligne"><span class="puce puce-bleu">→</span><span><strong>Autorité :</strong> CNIL en France</span></div>
+    </div>
+    <div class="col-centre">
+      <div class="plus">+</div>
+      <div style="font-size:10px; color:#888; text-align:center; font-style:italic;">complémentaires<br>pas concurrents</div>
+    </div>
+    <div class="col-aiact">
+      <div class="col-titre">AI Act</div>
+      <div class="col-date">Publié juillet 2024 — application progressive — Omnibus mai 2026 : haut risque repoussé à déc. 2027</div>
+      <div class="ligne"><span class="puce puce-violet">→</span><span><strong>Objet :</strong> encadre les systèmes d'IA selon leur niveau de risque</span></div>
+      <div class="ligne"><span class="puce puce-violet">→</span><span><strong>Qui est concerné :</strong> toute organisation qui développe, déploie ou utilise de l'IA dans l'UE</span></div>
+      <div class="ligne"><span class="puce puce-violet">→</span><span><strong>Approche :</strong> par niveaux de risque — obligations proportionnelles au danger</span></div>
+      <div class="ligne"><span class="puce puce-violet">→</span><span><strong>Obligations clés :</strong> classification, transparence, documentation, supervision humaine, formation équipes</span></div>
+      <div class="ligne"><span class="puce puce-violet">→</span><span><strong>Autorité :</strong> CNIL + ARCOM + ANSSI selon les secteurs</span></div>
+    </div>
+  </div>
+
+  <div class="commun">
+    <h3>Ce qu'ils ont en commun — vos obligations croisées</h3>
+    <div class="commun-grid">
+      <div class="commun-item">
+        <strong>Analyse d'impact (AIPD)</strong>
+        <span>Le RGPD l'exige pour les traitements à risque. L'AI Act l'élargit aux droits fondamentaux. Une seule analyse peut couvrir les deux.</span>
+      </div>
+      <div class="commun-item">
+        <strong>Registre des usages</strong>
+        <span>RGPD : registre des traitements de données. AI Act : cartographie des outils IA utilisés. Fusionnez-les en un seul document.</span>
+      </div>
+      <div class="commun-item">
+        <strong>Transparence obligatoire</strong>
+        <span>Vos clients et collaborateurs doivent savoir quand l'IA est utilisée sur leurs données. Les deux textes l'exigent.</span>
+      </div>
+      <div class="commun-item">
+        <strong>Formation des équipes</strong>
+        <span>L'AI Act impose l'AI Literacy depuis février 2025. Le RGPD exigeait déjà la sensibilisation aux données. Même action, double conformité.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. CALENDRIER -->
+<div class="card">
+  <div class="section-label" style="color:#D17C61;">Calendrier — Ce qui est déjà en vigueur</div>
+  <div class="timeline">
+    <div class="tl-ligne">
+      <div class="tl-date" style="color:#185FA5;">Mai 2018</div>
+      <div class="tl-dot-col"><div class="tl-dot" style="background:#185FA5;"></div><div class="tl-trait" style="background:#C19E8A;"></div></div>
+      <div class="tl-content" style="border-color:#185FA5;"><strong style="color:#0C447C;">RGPD en vigueur</strong><span>Toutes les obligations RGPD s'appliquent. Vos contrats clients, vos données RH, vos formulaires en ligne — tout est concerné.</span></div>
+    </div>
+    <div class="tl-ligne">
+      <div class="tl-date" style="color:#534AB7;">Août 2024</div>
+      <div class="tl-dot-col"><div class="tl-dot" style="background:#534AB7;"></div><div class="tl-trait" style="background:#C19E8A;"></div></div>
+      <div class="tl-content" style="border-color:#534AB7;"><strong style="color:#3C3489;">AI Act publié au Journal officiel UE</strong><span>Le texte entre en vigueur. L'application est progressive mais le cadre existe. Vous êtes concernée.</span></div>
+    </div>
+    <div class="tl-ligne">
+      <div class="tl-date" style="color:#E24B4A;">Fév. 2025 ✓</div>
+      <div class="tl-dot-col"><div class="tl-dot" style="background:#E24B4A;"></div><div class="tl-trait" style="background:#C19E8A;"></div></div>
+      <div class="tl-content" style="border-color:#E24B4A;"><strong style="color:#791F1F;">Interdictions en vigueur — MAINTENANT</strong><span>IA à risque inacceptable interdites. Obligation d'AI Literacy pour vos équipes déjà applicable. <strong>Vous devez former vos collaborateurs aux usages responsables de l'IA.</strong></span></div>
+    </div>
+    <div class="tl-ligne">
+      <div class="tl-date" style="color:#BA7517;">Août 2025</div>
+      <div class="tl-dot-col"><div class="tl-dot" style="background:#BA7517;"></div><div class="tl-trait" style="background:#C19E8A;"></div></div>
+      <div class="tl-content" style="border-color:#BA7517;"><strong style="color:#633806;">Modèles IA générale (GPAI)</strong><span>Claude, ChatGPT, Gemini sont des GPAI. Les fournisseurs ont des obligations de transparence et documentation. Vous devez savoir quels modèles vous utilisez et à quelles fins.</span></div>
+    </div>
+    <div class="tl-ligne">
+      <div class="tl-date" style="color:#534AB7;">7 mai 2026 ✓</div>
+      <div class="tl-dot-col"><div class="tl-dot" style="background:#534AB7;"></div><div class="tl-trait" style="background:#C19E8A;"></div></div>
+      <div class="tl-content" style="border-color:#534AB7;"><strong style="color:#3C3489;">Digital Omnibus — accord provisoire</strong><span>Report des obligations haut risque du 2 août 2026 au 2 décembre 2027. Les interdictions (fév. 2025) et l'AI Literacy restent en vigueur. <strong>La fenêtre est ouverte — utilisez-la maintenant.</strong></span></div>
+    </div>
+    <div class="tl-ligne">
+      <div class="tl-date" style="color:#3B6D11;">Déc. 2027</div>
+      <div class="tl-dot-col"><div class="tl-dot" style="background:#3B6D11;"></div></div>
+      <div class="tl-content" style="border-color:#3B6D11;"><strong style="color:#173404;">Haut risque — application repoussée</strong><span>Accord Omnibus du 7 mai 2026 : les obligations haut risque (Annexe III) sont reportées au 2 décembre 2027. Ce n'est pas une raison de reporter — c'est une fenêtre d'avance à saisir maintenant.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. NIVEAUX DE RISQUE -->
+<div class="card">
+  <div class="section-label" style="color:#534AB7;">Les 4 niveaux de risque AI Act — Où se situent vos outils ?</div>
+  <div class="risques-grid">
+    <div class="risque-card risque-interdit">
+      <h4>🚫 Risque inacceptable</h4>
+      <p><strong>Interdit depuis fév. 2025</strong><br><br>Notation sociale des individus, manipulation psychologique, surveillance biométrique de masse, reconnaissance faciale temps réel dans les espaces publics.</p>
+      <p style="margin-top:8px; font-style:italic;">→ Vous ne les utilisez probablement pas. Mais vérifiez vos outils RH.</p>
+    </div>
+    <div class="risque-card risque-haut">
+      <h4>⚠ Risque élevé</h4>
+      <p><strong>Obligations strictes dès déc. 2027 (Omnibus)</strong><br><br>IA de recrutement (tri de CV automatisé), scoring de crédit, outils d'évaluation scolaire, IA dans la santé.</p>
+      <p style="margin-top:8px; font-style:italic;">→ Si vous utilisez un outil de recrutement avec IA : documentation et supervision humaine obligatoires.</p>
+    </div>
+    <div class="risque-card risque-limite">
+      <h4>ℹ Risque limité</h4>
+      <p><strong>Transparence obligatoire</strong><br><br>Chatbots, assistants IA, outils qui génèrent du contenu. Vos interlocuteurs doivent savoir qu'ils parlent à une IA.</p>
+      <p style="margin-top:8px; font-style:italic;">→ Si vous utilisez Claude pour répondre à des clients : mentionnez-le dans vos CGV.</p>
+    </div>
+    <div class="risque-card risque-minimal">
+      <h4>✓ Risque minimal</h4>
+      <p><strong>Pas d'obligation spécifique</strong><br><br>IA de traduction, filtres antispam, suggestions de contenu, outils de productivité classiques.</p>
+      <p style="margin-top:8px; font-style:italic;">→ Claude pour rédiger un mail ou faire une veille = risque minimal. Mais le RGPD s'applique toujours si données perso.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 4. SANCTIONS -->
+<div class="card">
+  <div class="section-label" style="color:#E24B4A;">Ce que vous risquez si vous ne faites rien</div>
+  <div class="sanctions-grid">
+    <div class="sanction sanction-aiact">
+      <div class="montant">35 M€ ou 7% CA</div>
+      <div class="detail"><strong>AI Act — IA à risque inacceptable</strong><br>15 M€ ou 3% CA pour les systèmes haut risque non conformes.<br>7,5 M€ ou 1% CA pour les manquements de transparence.<br><br>Note : pour une TPE, c'est le pourcentage qui s'applique — pas le montant fixe.</div>
+    </div>
+    <div class="sanction sanction-rgpd">
+      <div class="montant">20 M€ ou 4% CA</div>
+      <div class="detail"><strong>RGPD — violations graves</strong><br>10 M€ ou 2% CA pour les violations secondaires.<br>+ Mise en demeure, suspension d'activité, obligation de notification aux personnes concernées.<br><br>67% des cyberattaques touchent des TPE/PME (ANSSI 2024).</div>
+    </div>
+  </div>
+  <div style="margin-top:14px; padding:12px 16px; background:#F3EADA; border-radius:8px; font-size:11px; color:#433F3C; border-left:4px solid #D17C61;">
+    <strong>La réalité pour une TPE :</strong> Vous ne serez pas la première cible des régulateurs. Mais un incident client, une fuite de données, un concurrent qui vous dénonce — et la CNIL peut être saisie. La conformité protège aussi votre réputation.
+  </div>
+</div>
+
+<!-- 5. VOS 5 ACTIONS CONCRÈTES -->
+<div class="card">
+  <div class="section-label" style="color:#3B6D11;">Ce que vous faites concrètement — les 5 actions TPE</div>
+  <div class="tpe-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+    <div class="tpe-action">
+      <div class="num">01</div>
+      <strong>Cartographiez vos outils IA</strong>
+      <span>Listez tous les outils IA utilisés dans votre structure (y compris par vos collaborateurs). C'est votre registre AI Act + RGPD en un seul document.</span>
+    </div>
+    <div class="tpe-action">
+      <div class="num">02</div>
+      <strong>Classez par niveau de risque</strong>
+      <span>Pour chaque outil : vert (minimal), orange (limité), rouge (élevé). Vérifiez si vos outils RH entrent dans la catégorie haut risque.</span>
+    </div>
+    <div class="tpe-action">
+      <div class="num">03</div>
+      <strong>Rédigez 3 règles d'usage</strong>
+      <span>Quelles données ne sortent jamais. Quels outils sont autorisés. Comment informer vos clients quand l'IA est utilisée.</span>
+    </div>
+  </div>
+  <div class="tpe-grid" style="grid-template-columns: 1fr 1fr; margin-top:12px;">
+    <div class="tpe-action">
+      <div class="num">04</div>
+      <strong>Formez vos équipes (AI Literacy)</strong>
+      <span>Obligatoire depuis février 2025. Une session d'1h sur les bons usages et les risques suffit pour une TPE. C'est ce qu'on fait ce soir.</span>
+    </div>
+    <div class="tpe-action">
+      <div class="num">05</div>
+      <strong>Mettez à jour vos CGV / mentions légales</strong>
+      <span>Indiquez si vous utilisez l'IA dans vos processus clients. Une phrase suffit. C'est la transparence que la loi exige.</span>
+    </div>
+  </div>
+</div>
+
+<!-- 6. LIENS OFFICIELS -->
+<div class="card">
+  <div class="section-label" style="color:#AE7558;">Sources officielles</div>
+  <div class="liens-grid">
+    <a class="lien" href="https://artificialintelligenceact.eu/fr/" target="_blank">
+      <span class="lien-tag">Texte officiel</span>
+      <span class="lien-titre">AI Act — Règlement UE 2024/1689</span>
+      <span class="lien-desc">Le texte complet, résumés et outils de conformité pour PME.</span>
+    </a>
+    <a class="lien" href="https://www.cnil.fr/fr/entree-en-vigueur-du-reglement-europeen-sur-lia-les-premieres-questions-reponses-de-la-cnil" target="_blank">
+      <span class="lien-tag">CNIL</span>
+      <span class="lien-titre">CNIL — Questions-réponses AI Act</span>
+      <span class="lien-desc">Articulation RGPD / AI Act expliquée par l'autorité française.</span>
+    </a>
+    <a class="lien" href="https://cyber.gouv.fr/publications/recommandations-de-securite-pour-un-systeme-dia-generative" target="_blank">
+      <span class="lien-tag">Sécurité</span>
+      <span class="lien-titre">ANSSI — Recommandations IA générative</span>
+      <span class="lien-desc">Guide sécurité officiel pour l'usage d'IA générative en entreprise.</span>
+    </a>
+    <a class="lien" href="https://www.leto.legal/guides/ai-act-conformite" target="_blank">
+      <span class="lien-tag">Guide pratique</span>
+      <span class="lien-titre">Leto Legal — Guide AI Act PME</span>
+      <span class="lien-desc">Obligations, calendrier, sanctions — version accessible pour non-juristes.</span>
+    </a>
+  </div>
+</div>
+
+<div class="footer">CS CONSULTING STRATÉGIQUE &nbsp;·&nbsp; Catherine Selosse &nbsp;·&nbsp; FCE Académie 2026</div>
+</body>
+</html>

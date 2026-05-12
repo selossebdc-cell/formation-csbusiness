@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude & RGPD 2026 — Guide pratique · CS Consulting Stratégique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #F3EADA; font-family: 'Playfair Display', Georgia, serif; color: #433F3C; padding: 0; }
+a { color: #D17C61; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* HERO */
+.hero { background: #433F3C; padding: 48px 32px 40px; }
+.hero-inner { max-width: 860px; margin: 0 auto; }
+.hero-tag { display: inline-block; background: #D17C61; color: #fff; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px; }
+.hero h1 { font-size: 32px; font-weight: 600; color: #F3EADA; line-height: 1.3; margin-bottom: 12px; }
+.hero .intro { font-size: 14px; color: #C19E8A; line-height: 1.75; max-width: 680px; }
+.hero-meta { margin-top: 20px; font-size: 12px; color: #888780; }
+
+/* LAYOUT */
+.container { max-width: 860px; margin: 0 auto; padding: 36px 24px; }
+
+/* SOMMAIRE */
+.sommaire { background: #fff; border-radius: 14px; border: 1px solid #C19E8A; padding: 20px 24px; margin-bottom: 32px; }
+.sommaire h3 { font-size: 13px; font-weight: 600; color: #AE7558; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+.sommaire ol { padding-left: 18px; }
+.sommaire li { margin-bottom: 7px; font-size: 13px; }
+.sommaire a { color: #433F3C; }
+.sommaire a:hover { color: #D17C61; }
+
+/* SECTIONS */
+.section { margin-bottom: 36px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.section-num { background: #D17C61; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; flex-shrink: 0; }
+.section h2 { font-size: 20px; font-weight: 600; color: #433F3C; }
+.section-intro { font-size: 13px; color: #5F5E5A; line-height: 1.75; margin-bottom: 18px; padding-left: 44px; }
+
+/* CARDS */
+.card { background: #fff; border-radius: 14px; border: 1px solid #C19E8A; padding: 20px 24px; margin-bottom: 14px; }
+.card h3 { font-size: 15px; font-weight: 600; color: #433F3C; margin-bottom: 10px; }
+p { font-size: 13px; line-height: 1.75; margin-bottom: 10px; }
+p:last-child { margin-bottom: 0; }
+
+/* COMPARATIF VERSIONS */
+.versions-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.version-card { border-radius: 12px; padding: 16px; border: 1px solid; }
+.v-gratuit { background: #FAEEDA; border-color: #FAC775; }
+.v-gratuit .v-titre { color: #633806; }
+.v-work { background: #EAF3DE; border-color: #9FE1CB; }
+.v-work .v-titre { color: #173404; }
+.v-enterprise { background: #E6F1FB; border-color: #B5D4F4; }
+.v-enterprise .v-titre { color: #042C53; }
+.v-badge { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.v-badge-orange { color: #CC5500; }
+.v-badge-vert { color: #1A7A1A; }
+.v-badge-bleu { color: #185FA5; }
+.v-titre { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.v-liste { list-style: none; padding: 0; }
+.v-liste li { font-size: 12px; padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.06); line-height: 1.5; }
+.v-liste li:last-child { border: none; }
+.v-prix { font-size: 13px; font-weight: 600; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.1); }
+
+/* LIGNES COMPARAISON */
+.compare-row { display: grid; grid-template-columns: 200px 1fr 1fr 1fr; gap: 0; }
+.compare-row .cr-label { font-size: 12px; font-weight: 600; color: #433F3C; padding: 10px 12px; background: #F3EADA; border-bottom: 1px solid #C19E8A; }
+.compare-row .cr-cell { font-size: 12px; padding: 10px 12px; border-bottom: 1px solid #C19E8A; border-left: 1px solid #C19E8A; text-align: center; background: #fff; }
+.compare-row:first-child .cr-label, .compare-row:first-child .cr-cell { background: #433F3C; color: #F3EADA; font-weight: 600; border-bottom: 2px solid #D17C61; }
+.ico-ok { color: #1A7A1A; font-size: 16px; }
+.ico-warn { color: #CC5500; font-size: 16px; }
+.ico-no { color: #CC1111; font-size: 16px; }
+
+/* ÉTAPES */
+.etapes { display: flex; flex-direction: column; gap: 12px; }
+.etape { display: grid; grid-template-columns: 44px 1fr; gap: 14px; background: #fff; border-radius: 12px; padding: 16px; border: 1px solid #C19E8A; }
+.etape-num { background: #D17C61; color: #fff; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; flex-shrink: 0; }
+.etape h4 { font-size: 14px; font-weight: 600; color: #433F3C; margin-bottom: 5px; }
+.etape p { font-size: 12px; color: #5F5E5A; margin: 0; }
+.etape .tag-obligatoire { display: inline-block; background: #FCEBEB; color: #791F1F; border: 1px solid #F09595; padding: 2px 10px; border-radius: 10px; font-size: 10px; font-weight: 600; margin-left: 8px; vertical-align: middle; }
+.etape .tag-optionnel { display: inline-block; background: #EAF3DE; color: #173404; border: 1px solid #9FE1CB; padding: 2px 10px; border-radius: 10px; font-size: 10px; font-weight: 600; margin-left: 8px; vertical-align: middle; }
+
+/* ALERTES */
+.alerte-rouge { background: #FCEBEB; border-left: 4px solid #CC1111; padding: 14px 16px; border-radius: 0 10px 10px 0; margin: 14px 0; }
+.alerte-rouge strong { display: block; color: #791F1F; font-size: 13px; margin-bottom: 4px; }
+.alerte-rouge p { font-size: 12px; color: #A32D2D; margin: 0; }
+.alerte-verte { background: #EAF3DE; border-left: 4px solid #1A7A1A; padding: 14px 16px; border-radius: 0 10px 10px 0; margin: 14px 0; }
+.alerte-verte strong { display: block; color: #173404; font-size: 13px; margin-bottom: 4px; }
+.alerte-verte p { font-size: 12px; color: #27500A; margin: 0; }
+.alerte-orange { background: #FAEEDA; border-left: 4px solid #CC5500; padding: 14px 16px; border-radius: 0 10px 10px 0; margin: 14px 0; }
+.alerte-orange strong { display: block; color: #633806; font-size: 13px; margin-bottom: 4px; }
+.alerte-orange p { font-size: 12px; color: #854F0B; margin: 0; }
+
+/* TABLEAU USAGE */
+.usage-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+.usage-table th { background: #433F3C; color: #F3EADA; padding: 10px 14px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+.usage-table td { padding: 10px 14px; border: 1px solid #C19E8A; font-size: 12px; vertical-align: middle; }
+.usage-table tr:nth-child(odd) td { background: #FAF6EE; }
+.usage-table tr:nth-child(even) td { background: #fff; }
+
+/* DÉFINITIONS */
+.def-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.def-item { background: #FAF6EE; border-radius: 10px; padding: 14px 16px; border: 1px solid #C19E8A; }
+.def-item dt { font-size: 13px; font-weight: 600; color: #D17C61; margin-bottom: 4px; }
+.def-item dd { font-size: 12px; color: #433F3C; line-height: 1.6; }
+
+/* SANCTIONS */
+.sanctions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.sanction { border-radius: 10px; padding: 14px; text-align: center; border: 1px solid; }
+.s1 { background: #FCEBEB; border-color: #F09595; }
+.s1 .s-montant { color: #CC1111; }
+.s2 { background: #FAEEDA; border-color: #FAC775; }
+.s2 .s-montant { color: #CC5500; }
+.s3 { background: #FFF8E6; border-color: #FAC775; }
+.s3 .s-montant { color: #854F0B; }
+.s-montant { font-size: 18px; font-weight: 600; display: block; margin-bottom: 6px; }
+.s-label { font-size: 11px; color: #433F3C; line-height: 1.5; }
+
+/* FOOTER */
+.footer { background: #433F3C; padding: 28px 32px; text-align: center; }
+.footer p { font-size: 12px; color: #888780; line-height: 1.7; }
+.footer strong { color: #C19E8A; }
+
+.print-btn { position: fixed; top: 20px; right: 20px; background: #D17C61; color: #fff; padding: 9px 16px; border-radius: 8px; cursor: pointer; font-family: inherit; border: none; font-size: 12px; font-weight: 600; z-index: 100; }
+@media print { .print-btn { display: none; } }
+@media (max-width: 640px) {
+  .versions-grid, .sanctions, .def-grid { grid-template-columns: 1fr; }
+  .compare-row { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<p style="max-width:860px;margin:16px auto 0;padding:0 32px;font-size:13px;"><a href="../index.html" style="color:#D17C61;">← Ressources formation</a></p>
+
+<button class="print-btn" onclick="window.print()">🖨 Imprimer</button>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">Guide pratique 2026</span>
+    <h1>Claude & RGPD :<br>Ce que vous devez savoir en tant que dirigeante</h1>
+    <p class="intro">Claude est-il conforme au RGPD ? Quelle version utiliser avec des données sensibles ? Comment signer un DPA ? Ce guide répond à toutes les questions pratiques — sans jargon.</p>
+    <div class="hero-meta">CS Consulting Stratégique · Catherine Selosse · Mai 2026</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- SOMMAIRE -->
+<div class="sommaire">
+  <h3>Sommaire</h3>
+  <ol>
+    <li><a href="#versions">Les 3 versions de Claude — laquelle utiliser ?</a></li>
+    <li><a href="#comparatif">Comparatif RGPD : Claude vs ChatGPT</a></li>
+    <li><a href="#dpa">Le DPA — ce contrat obligatoire que personne ne signe</a></li>
+    <li><a href="#usage">Quelles données peut-on envoyer à Claude ?</a></li>
+    <li><a href="#aiact">AI Act 2026 — ce qui change pour vous</a></li>
+    <li><a href="#etapes">Les 5 étapes pour utiliser Claude en conformité</a></li>
+    <li><a href="#sanctions">Les sanctions si vous ne faites rien</a></li>
+    <li><a href="#definitions">Lexique — les termes à connaître</a></li>
+  </ol>
+</div>
+
+<!-- SECTION 1 — VERSIONS -->
+<div class="section" id="versions">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>Les 3 versions de Claude — laquelle utiliser ?</h2>
+  </div>
+  <p class="section-intro">La conformité RGPD de Claude dépend entièrement de la version que vous utilisez. La version gratuite est insuffisante pour un usage professionnel avec données clients.</p>
+
+  <div class="versions-grid">
+    <div class="version-card v-gratuit">
+      <div class="v-badge v-badge-orange">⚠ Usage personnel</div>
+      <div class="v-titre">Claude Gratuit</div>
+      <ul class="v-liste">
+        <li>🚫 Pas de DPA possible</li>
+        <li>🚫 Serveurs US (Virginia)</li>
+        <li>✅ Pas d'entraînement (depuis août 2024)</li>
+        <li>✅ Conservation 90 jours</li>
+        <li>✅ Mode "Temporary chat"</li>
+      </ul>
+      <div class="v-prix">0 € — Pour tester uniquement</div>
+    </div>
+    <div class="version-card v-work">
+      <div class="v-badge v-badge-vert">✅ Recommandé TPE/PME</div>
+      <div class="v-titre">Claude Pro / for Work</div>
+      <ul class="v-liste">
+        <li>✅ DPA disponible en 48h</li>
+        <li>✅ Data residency Europe (Frankfurt / Paris)</li>
+        <li>✅ Zéro entraînement garanti contractuellement</li>
+        <li>✅ Conservation paramétrable (7 à 365 jours)</li>
+        <li>✅ Support conformité dédié</li>
+      </ul>
+      <div class="v-prix">20 € / utilisateur / mois</div>
+    </div>
+    <div class="version-card v-enterprise">
+      <div class="v-badge v-badge-bleu">✅ Grandes structures</div>
+      <div class="v-titre">Claude Enterprise</div>
+      <ul class="v-liste">
+        <li>✅ DPA sur mesure</li>
+        <li>✅ Déploiement 100% EU possible</li>
+        <li>✅ Zéro entraînement + audit Ernst & Young</li>
+        <li>✅ Conservation de 1 jour à 5 ans</li>
+        <li>✅ Customer Success Manager dédié</li>
+      </ul>
+      <div class="v-prix">Sur devis — ETI / Grands comptes</div>
+    </div>
+  </div>
+
+  <div class="alerte-verte">
+    <strong>Bonne nouvelle pour les TPE</strong>
+    <p>Claude for Work à 20€/mois offre le meilleur rapport conformité/prix du marché. C'est moins cher que ChatGPT Business (25€/mois) et plus conforme RGPD natif.</p>
+  </div>
+</div>
+
+<!-- SECTION 2 — COMPARATIF -->
+<div class="section" id="comparatif">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>Comparatif RGPD : Claude vs ChatGPT</h2>
+  </div>
+  <p class="section-intro">Claude a été conçu avec la conformité RGPD en tête dès le départ. Voici les différences clés avec ChatGPT.</p>
+
+  <div class="card" style="padding:0; overflow:hidden;">
+    <div class="compare-row">
+      <div class="cr-label">Critère</div>
+      <div class="cr-cell">Claude Gratuit</div>
+      <div class="cr-cell">Claude for Work</div>
+      <div class="cr-cell">ChatGPT Plus</div>
+    </div>
+    <div class="compare-row">
+      <div class="cr-label">DPA disponible</div>
+      <div class="cr-cell"><span class="ico-no">❌</span></div>
+      <div class="cr-cell"><span class="ico-ok">✅</span> En 48h</div>
+      <div class="cr-cell"><span class="ico-warn">⚠️</span> 5-10 jours</div>
+    </div>
+    <div class="compare-row">
+      <div class="cr-label">Serveurs Europe</div>
+      <div class="cr-cell"><span class="ico-no">❌</span> US seulement</div>
+      <div class="cr-cell"><span class="ico-ok">✅</span> Frankfurt / Paris</div>
+      <div class="cr-cell"><span class="ico-warn">⚠️</span> Option payante</div>
+    </div>
+    <div class="compare-row">
+      <div class="cr-label">Pas d'entraînement</div>
+      <div class="cr-cell"><span class="ico-ok">✅</span> Depuis août 2024</div>
+      <div class="cr-cell"><span class="ico-ok">✅</span> Garanti contrat</div>
+      <div class="cr-cell"><span class="ico-warn">⚠️</span> À désactiver</div>
+    </div>
+    <div class="compare-row">
+      <div class="cr-label">Conservation données</div>
+      <div class="cr-cell">90 jours</div>
+      <div class="cr-cell">Paramétrable</div>
+      <div class="cr-cell">Illimitée (gratuit)</div>
+    </div>
+    <div class="compare-row">
+      <div class="cr-label">Certification ISO 27701</div>
+      <div class="cr-cell"><span class="ico-ok">✅</span> Jan. 2026</div>
+      <div class="cr-cell"><span class="ico-ok">✅</span> Jan. 2026</div>
+      <div class="cr-cell"><span class="ico-ok">✅</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="cr-label">Satisfaction RGPD</div>
+      <div class="cr-cell">—</div>
+      <div class="cr-cell" style="color:#1A7A1A; font-weight:600;">92%</div>
+      <div class="cr-cell" style="color:#CC5500; font-weight:600;">67%</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3 — DPA -->
+<div class="section" id="dpa">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>Le DPA — ce contrat obligatoire que personne ne signe</h2>
+  </div>
+  <p class="section-intro">Le DPA (Data Processing Addendum) est le contrat qui fait de Claude votre sous-traitant au sens du RGPD. Sans lui, vous n'avez aucune base légale pour traiter des données clients avec Claude.</p>
+
+  <div class="alerte-rouge">
+    <strong>Obligatoire dès lors que vous traitez des données personnelles avec Claude</strong>
+    <p>Article 28 du RGPD : tout traitement de données personnelles par un sous-traitant doit faire l'objet d'un contrat. Sans DPA, vous êtes en infraction — même si vous utilisez Claude for Work.</p>
+  </div>
+
+  <div class="card">
+    <h3>Ce que le DPA garantit concrètement</h3>
+    <ul style="padding-left:16px; margin-top:8px;">
+      <li style="margin-bottom:8px; font-size:13px;"><strong>Zéro entraînement sur vos données</strong> — garanti contractuellement et audité par Ernst & Young (septembre 2025)</li>
+      <li style="margin-bottom:8px; font-size:13px;"><strong>Localisation des données</strong> — vos données restent dans la région EU que vous avez choisie</li>
+      <li style="margin-bottom:8px; font-size:13px;"><strong>Suppression garantie</strong> — à l'expiration, données supprimées définitivement, irrécupérables même par Anthropic</li>
+      <li style="margin-bottom:8px; font-size:13px;"><strong>Droit d'audit</strong> — vous pouvez demander une vérification de conformité</li>
+      <li style="font-size:13px;"><strong>Clauses contractuelles types UE</strong> — pour tout transfert résiduel vers les États-Unis</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Comment obtenir le DPA en 2026 (5 minutes)</h3>
+    <div class="etapes" style="margin-top:10px;">
+      <div class="etape">
+        <div class="etape-num">1</div>
+        <div>
+          <h4>Connectez-vous à votre dashboard Claude for Work</h4>
+          <p>claude.ai → Settings → Legal & Compliance</p>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape-num">2</div>
+        <div>
+          <h4>Téléchargez le DPA pré-signé (PDF)</h4>
+          <p>Depuis janvier 2026, Anthropic propose un DPA en self-service. Plus besoin d'attendre 48h.</p>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape-num">3</div>
+        <div>
+          <h4>Contresignez électroniquement</h4>
+          <p>Via la plateforme Anthropic ou par email à support@anthropic.com (objet : "DPA Request - [Nom entreprise]")</p>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape-num">4</div>
+        <div>
+          <h4>Conservez une copie dans votre registre RGPD</h4>
+          <p>Le DPA est votre preuve de conformité en cas de contrôle CNIL.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4 — USAGE -->
+<div class="section" id="usage">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2>Quelles données peut-on envoyer à Claude ?</h2>
+  </div>
+  <p class="section-intro">La réponse dépend de votre version et de la nature des données. Voici la grille de décision claire.</p>
+
+  <table class="usage-table">
+    <tr>
+      <th>Type de données</th>
+      <th>Claude Gratuit</th>
+      <th>Claude for Work (EU)</th>
+    </tr>
+    <tr>
+      <td>Données publiques, marketing, brainstorming</td>
+      <td><span class="ico-ok">✅</span> Autorisé</td>
+      <td><span class="ico-ok">✅</span> Autorisé</td>
+    </tr>
+    <tr>
+      <td>Données internes non nominatives (procédures, budgets)</td>
+      <td><span class="ico-warn">⚠️</span> Avec prudence</td>
+      <td><span class="ico-ok">✅</span> Autorisé</td>
+    </tr>
+    <tr>
+      <td>Données clients identifiables (noms, emails, contrats)</td>
+      <td><span class="ico-no">❌</span> Interdit</td>
+      <td><span class="ico-ok">✅</span> Avec DPA signé</td>
+    </tr>
+    <tr>
+      <td>Données RH (salaires, évaluations, dossiers)</td>
+      <td><span class="ico-no">❌</span> Interdit</td>
+      <td><span class="ico-warn">⚠️</span> AIPD obligatoire</td>
+    </tr>
+    <tr>
+      <td>Données de santé / données sensibles art. 9 RGPD</td>
+      <td><span class="ico-no">❌</span> Interdit</td>
+      <td><span class="ico-no">❌</span> LLM local uniquement</td>
+    </tr>
+    <tr>
+      <td>Données financières (IBAN, RIB, numéros de carte)</td>
+      <td><span class="ico-no">❌</span> Interdit</td>
+      <td><span class="ico-no">❌</span> LLM local uniquement</td>
+    </tr>
+  </table>
+
+  <div class="alerte-orange">
+    <strong>La règle d'or — Le réflexe DDO</strong>
+    <p>Avant chaque envoi à Claude : Département (qui utilise ?) + Donnée (quelle nature ?) + Outil (où ça part ?). Si Donnée = sensible ET Outil = cloud public → STOP. Solution isolée obligatoire.</p>
+  </div>
+</div>
+
+<!-- SECTION 5 — AI ACT -->
+<div class="section" id="aiact">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>AI Act 2026 — ce qui change pour vous</h2>
+  </div>
+  <p class="section-intro">Claude est un modèle d'IA à usage général (GPAI). L'AI Act s'applique donc à Anthropic — et à vous en tant qu'utilisatrice.</p>
+
+  <div class="card">
+    <h3>Ce qu'Anthropic doit faire (ce n'est pas votre problème)</h3>
+    <p>Documentation technique exhaustive, politique droits d'auteur, résumé des données d'entraînement, watermarking des contenus générés. Anthropic s'y conforme. Vous n'avez rien à faire sur ce point.</p>
+  </div>
+
+  <div class="card">
+    <h3>Ce que vous devez faire en tant que "déployeur"</h3>
+    <div class="etapes" style="margin-top:10px;">
+      <div class="etape">
+        <div class="etape-num">1</div>
+        <div>
+          <h4>Former vos équipes <span class="tag-obligatoire">OBLIGATOIRE depuis fév. 2025</span></h4>
+          <p>L'AI Literacy est en vigueur. Une session d'1h sur les bons usages et les risques suffit pour une TPE. C'est ce qu'on fait ce soir.</p>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape-num">2</div>
+        <div>
+          <h4>Cartographier vos outils IA <span class="tag-obligatoire">OBLIGATOIRE</span></h4>
+          <p>Listez tous les outils IA utilisés dans votre structure. C'est votre registre AI Act + RGPD en un seul document.</p>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape-num">3</div>
+        <div>
+          <h4>AIPD si usage à haut risque <span class="tag-obligatoire">OBLIGATOIRE si concerné</span></h4>
+          <p>Usage haut risque : recrutement automatisé, scoring clients, évaluation salariés. Si Claude aide à prendre une décision impactant des droits → AIPD obligatoire.</p>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape-num">4</div>
+        <div>
+          <h4>Supervision humaine systématique <span class="tag-obligatoire">OBLIGATOIRE</span></h4>
+          <p>Aucun contenu produit par Claude (email, document, contrat) ne peut être envoyé ou signé sans relecture humaine. Human in the loop = obligation légale.</p>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape-num">5</div>
+        <div>
+          <h4>Transparence clients <span class="tag-obligatoire">OBLIGATOIRE</span></h4>
+          <p>Mentionner dans vos CGV si vous utilisez l'IA dans vos prestations. Une phrase suffit.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alerte-verte">
+    <strong>Digital Omnibus — accord du 7 mai 2026</strong>
+    <p>Les obligations pour les systèmes à haut risque ont été repoussées du 2 août 2026 au 2 décembre 2027. Ce n'est pas une raison de reporter — c'est une fenêtre d'avance à saisir maintenant.</p>
+  </div>
+</div>
+
+<!-- SECTION 6 — ÉTAPES -->
+<div class="section" id="etapes">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2>Les 5 étapes pour utiliser Claude en conformité</h2>
+  </div>
+  <p class="section-intro">Ce que vous faites cette semaine pour être conforme. Dans l'ordre.</p>
+
+  <div class="etapes">
+    <div class="etape">
+      <div class="etape-num">1</div>
+      <div>
+        <h4>Passez à Claude for Work <span class="tag-obligatoire">Aujourd'hui</span></h4>
+        <p>claude.ai → Upgrade → Claude for Work (20€/mois). Activez Data Residency Europe (Frankfurt ou Paris) dans Settings → Data Residency.</p>
+      </div>
+    </div>
+    <div class="etape">
+      <div class="etape-num">2</div>
+      <div>
+        <h4>Signez le DPA <span class="tag-obligatoire">Cette semaine</span></h4>
+        <p>Dashboard → Settings → Legal & Compliance → Télécharger et signer. Conservez-le avec votre registre RGPD.</p>
+      </div>
+    </div>
+    <div class="etape">
+      <div class="etape-num">3</div>
+      <div>
+        <h4>Activez votre prompt Secure Guard <span class="tag-obligatoire">Immédiat</span></h4>
+        <p>Collez le prompt Secure Guard au début de chaque nouvelle conversation. Votre pare-feu est actif. Il bloque les injections et alerte sur les données sensibles.</p>
+      </div>
+    </div>
+    <div class="etape">
+      <div class="etape-num">4</div>
+      <div>
+        <h4>Complétez le template de gouvernance <span class="tag-obligatoire">Ce mois-ci</span></h4>
+        <p>Cartographiez vos outils, rédigez vos 3 règles d'or, formez votre équipe en 1h. Document dans votre pack ce soir.</p>
+      </div>
+    </div>
+    <div class="etape">
+      <div class="etape-num">5</div>
+      <div>
+        <h4>Mettez à jour vos CGV <span class="tag-optionnel">Ce trimestre</span></h4>
+        <p>Ajoutez une clause IA dans vos contrats clients. Une phrase : "Dans le cadre de nos prestations, nous utilisons des outils d'IA conformes au RGPD avec données hébergées en Europe."</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 7 — SANCTIONS -->
+<div class="section" id="sanctions">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>Les sanctions si vous ne faites rien</h2>
+  </div>
+  <p class="section-intro">Les amendes s'appliquent en pourcentage du chiffre d'affaires pour les TPE/PME — pas en montant fixe. C'est ce qui vous concerne.</p>
+
+  <div class="sanctions">
+    <div class="sanction s1">
+      <span class="s-montant">35 M€ ou 7%</span>
+      <span class="s-label">AI Act — Pratiques interdites (notation sociale, surveillance biométrique masse)</span>
+    </div>
+    <div class="sanction s2">
+      <span class="s-montant">15 M€ ou 3%</span>
+      <span class="s-label">AI Act — Systèmes haut risque non conformes (RH, scoring, santé)</span>
+    </div>
+    <div class="sanction s3">
+      <span class="s-montant">20 M€ ou 4%</span>
+      <span class="s-label">RGPD — Violations graves (pas de DPA, transfert hors UE non encadré)</span>
+    </div>
+  </div>
+
+  <div class="alerte-orange" style="margin-top:16px;">
+    <strong>La réalité pour une TPE</strong>
+    <p>Vous ne serez pas la première cible des régulateurs. Mais un incident client, une plainte, une fuite de données — et la CNIL peut être saisie. La conformité protège aussi votre réputation et votre relation client.</p>
+  </div>
+</div>
+
+<!-- SECTION 8 — LEXIQUE -->
+<div class="section" id="definitions">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <h2>Lexique — les termes à connaître</h2>
+  </div>
+  <p class="section-intro">Les définitions que vous entendrez et que vous devez pouvoir expliquer à vos clients.</p>
+
+  <div class="def-grid">
+    <dl class="def-item">
+      <dt>AIPD</dt>
+      <dd>Analyse d'Impact sur la Protection des Données. Document obligatoire avant de déployer une IA traitant des données sensibles. Prouve que vous avez évalué les risques.</dd>
+    </dl>
+    <dl class="def-item">
+      <dt>DPA</dt>
+      <dd>Data Processing Addendum. Contrat entre vous (responsable de traitement) et Claude/Anthropic (sous-traitant). Obligatoire dès que vous traitez des données personnelles.</dd>
+    </dl>
+    <dl class="def-item">
+      <dt>GPAI</dt>
+      <dd>General Purpose AI — IA à usage général. Claude, ChatGPT, Gemini sont des GPAI. Les fournisseurs ont des obligations spécifiques AI Act depuis août 2025.</dd>
+    </dl>
+    <dl class="def-item">
+      <dt>Data residency</dt>
+      <dd>Localisation géographique du stockage de vos données. Avec Claude for Work, vous pouvez forcer l'hébergement en Europe (Frankfurt ou Paris).</dd>
+    </dl>
+    <dl class="def-item">
+      <dt>Training vs Inférence</dt>
+      <dd>Training = l'IA apprend avec vos données (risque). Inférence = l'IA traite votre requête et oublie (sûr). Les offres Pro et Enterprise = inférence uniquement.</dd>
+    </dl>
+    <dl class="def-item">
+      <dt>Shadow AI</dt>
+      <dd>Utilisation d'outils IA par vos collaborateurs sans cadre défini par la direction. C'est un risque RGPD — et votre argument commercial pour proposer un cadre.</dd>
+    </dl>
+    <dl class="def-item">
+      <dt>Prompt injection</dt>
+      <dd>Instructions cachées dans un document envoyé à une IA pour la manipuler à l'insu de l'utilisateur. Le prompt Secure Guard vous protège de ce type d'attaque.</dd>
+    </dl>
+    <dl class="def-item">
+      <dt>Human in the loop</dt>
+      <dd>Principe AI Act : un humain doit rester en mesure de contrôler et valider les décisions ou contenus produits par une IA. Obligation légale pour les usages à impact.</dd>
+    </dl>
+    <dl class="def-item">
+      <dt>LLM local (Ollama)</dt>
+      <dd>Modèle de langage installé directement sur votre ordinateur. Aucune donnée ne sort. Gratuit, fonctionne hors-ligne. Idéal pour données ultra-sensibles.</dd>
+    </dl>
+    <dl class="def-item">
+      <dt>Watermarking</dt>
+      <dd>Obligation AI Act : tout contenu généré par IA doit pouvoir être identifié comme tel (tatouage numérique). S'applique aux textes, images, vidéos générés.</dd>
+    </dl>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <p><strong>CS Consulting Stratégique</strong> · Catherine Selosse</p>
+  <p>Vous accompagner pour reprendre le contrôle du digital dans votre entreprise.</p>
+  <p style="margin-top:10px; font-size:11px;">Sources : Anthropic Privacy Policy 2026 · CNIL · AI Act Regulation UE 2024/1689 · Leto.legal</p>
+</div>
+
+</body>
+</html>
