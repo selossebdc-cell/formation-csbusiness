@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ma Politique IA — CS Consulting Stratégique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --terracotta: #D17C61;
+  --terre: #433F3C;
+  --cuivre: #AE7558;
+  --sable: #C19E8A;
+  --lin: #F3EADA;
+  --blanc: #ffffff;
+  --vert: #3B6D11;
+  --rouge: #CC1111;
+  --orange: #CC5500;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--lin); font-family: 'Crimson Pro', Georgia, serif; color: var(--terre); min-height: 100vh; }
+
+/* HEADER */
+.header { background: var(--terre); padding: 36px 40px 28px; position: relative; overflow: hidden; }
+.header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--terracotta); }
+.header-inner { max-width: 820px; margin: 0 auto; }
+.header-tag { display: inline-block; background: var(--terracotta); color: var(--blanc); padding: 4px 14px; border-radius: 20px; font-size: 11px; font-family: 'Playfair Display', serif; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+.header h1 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; color: var(--lin); line-height: 1.2; margin-bottom: 10px; }
+.header p { font-size: 15px; color: var(--sable); line-height: 1.6; }
+.header-meta { margin-top: 16px; font-size: 12px; color: #888780; }
+
+/* PROGRESS */
+.progress-bar { background: #2C2C2A; height: 3px; }
+.progress-fill { height: 3px; background: var(--terracotta); transition: width 0.4s ease; width: 0%; }
+
+/* CONTAINER */
+.container { max-width: 820px; margin: 0 auto; padding: 36px 24px 80px; }
+
+/* SECTIONS */
+.section { background: var(--blanc); border-radius: 16px; border: 1px solid var(--sable); padding: 28px 32px; margin-bottom: 20px; transition: border-color 0.2s; }
+.section:focus-within { border-color: var(--terracotta); }
+.section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+.section-num { background: var(--terracotta); color: var(--blanc); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 600; flex-shrink: 0; }
+.section h2 { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: var(--terre); }
+.section-desc { font-size: 13px; color: #888780; font-style: italic; margin-bottom: 22px; padding-left: 44px; line-height: 1.6; }
+
+/* CHAMPS */
+.champ { margin-bottom: 18px; }
+.champ:last-child { margin-bottom: 0; }
+.champ label { display: block; font-family: 'Playfair Display', serif; font-size: 12px; font-weight: 600; color: var(--terre); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+.champ .hint { font-size: 11px; color: #888780; font-style: italic; margin-bottom: 7px; font-family: 'Crimson Pro', serif; }
+.champ input, .champ textarea, .champ select {
+  width: 100%; padding: 10px 14px; border: 1.5px solid #E0D8CC; border-radius: 8px;
+  font-family: 'Crimson Pro', Georgia, serif; font-size: 14px; color: var(--terre);
+  background: var(--lin); transition: border-color 0.2s, background 0.2s; resize: vertical;
+}
+.champ input:focus, .champ textarea:focus, .champ select:focus { outline: none; border-color: var(--terracotta); background: var(--blanc); }
+.champ textarea { min-height: 80px; }
+.champ-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* RÈGLES */
+.regle-container { margin-bottom: 18px; }
+.regle { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+.regle-num { background: var(--terracotta); color: var(--blanc); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; font-family: 'Playfair Display', serif; flex-shrink: 0; margin-top: 2px; }
+.regle textarea { flex: 1; min-height: 64px; }
+
+/* FEU TRICOLORE */
+.feu-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 8px; }
+.feu-item { border-radius: 10px; padding: 14px; border: 2px solid; }
+.feu-vert { background: #D6F5D6; border-color: #5CBF5C; }
+.feu-orange { background: #FFE5CC; border-color: #FF8C00; }
+.feu-rouge { background: #FFD6D6; border-color: #FF3333; }
+.feu-label { font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.feu-vert .feu-label { color: #1A7A1A; }
+.feu-orange .feu-label { color: #CC5500; }
+.feu-rouge .feu-label { color: #CC1111; }
+.feu-item textarea { background: rgba(255,255,255,0.7); min-height: 70px; border-color: rgba(0,0,0,0.1); }
+
+/* OUTILS TABLE */
+.outils-table-container { overflow-x: auto; margin-bottom: 12px; }
+.outils-table { width: 100%; border-collapse: collapse; }
+.outils-table th { background: var(--terre); color: var(--lin); padding: 10px 12px; text-align: left; font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+.outils-table td { padding: 8px; border: 1px solid #E0D8CC; }
+.outils-table tr:nth-child(even) td { background: var(--lin); }
+.outils-table input, .outils-table select { width: 100%; padding: 6px 10px; border: 1px solid #E0D8CC; border-radius: 6px; font-family: 'Crimson Pro', serif; font-size: 13px; background: var(--blanc); color: var(--terre); }
+.outils-table input:focus, .outils-table select:focus { outline: none; border-color: var(--terracotta); }
+.add-row-btn { background: none; border: 1.5px dashed var(--sable); color: var(--cuivre); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: 'Crimson Pro', serif; font-size: 13px; margin-top: 8px; width: 100%; transition: all 0.2s; }
+.add-row-btn:hover { border-color: var(--terracotta); color: var(--terracotta); background: #FFF5F0; }
+
+/* DDO VISUEL */
+.ddo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.ddo-item { border-radius: 10px; padding: 16px; border: 2px solid; text-align: center; }
+.ddo-d1 { background: #FAECE7; border-color: var(--terracotta); }
+.ddo-d2 { background: #F3EADA; border-color: var(--cuivre); }
+.ddo-o { background: #EAF3DE; border-color: var(--vert); }
+.ddo-lettre { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 600; margin-bottom: 4px; }
+.ddo-d1 .ddo-lettre { color: var(--terracotta); }
+.ddo-d2 .ddo-lettre { color: var(--cuivre); }
+.ddo-o .ddo-lettre { color: var(--vert); }
+.ddo-mot { font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; color: var(--terre); }
+.ddo-item textarea { background: rgba(255,255,255,0.6); min-height: 60px; font-size: 12px; border-color: rgba(0,0,0,0.1); }
+
+/* CHECKLIST */
+.check-list { display: flex; flex-direction: column; gap: 10px; }
+.check-item { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; padding: 12px 14px; background: var(--lin); border-radius: 10px; border: 1px solid #E0D8CC; }
+.check-box-visual { width: 26px; height: 26px; border: 2px solid var(--terracotta); border-radius: 6px; background: var(--blanc); flex-shrink: 0; margin-top: 2px; }
+.check-content strong { display: block; font-family: 'Playfair Display', serif; font-size: 13px; color: var(--terre); margin-bottom: 3px; }
+.check-content span { font-size: 12px; color: #888780; font-style: italic; line-height: 1.5; }
+
+/* SIGNATURE */
+.signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.signature-zone { border: 1.5px dashed var(--sable); border-radius: 12px; padding: 18px; min-height: 120px; }
+.signature-zone label { display: block; font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--cuivre); margin-bottom: 10px; }
+.signature-zone input { border: none; border-bottom: 1.5px solid #E0D8CC; border-radius: 0; background: transparent; padding: 6px 0; font-size: 16px; font-style: italic; margin-bottom: 8px; }
+.signature-zone input:focus { border-bottom-color: var(--terracotta); background: transparent; }
+.signature-hint { font-size: 11px; color: #888780; font-style: italic; }
+
+/* BOUTON GENERATE PDF */
+.cta-zone { position: fixed; bottom: 0; left: 0; right: 0; background: var(--blanc); border-top: 2px solid var(--terracotta); padding: 16px 24px; display: flex; align-items: center; justify-content: center; gap: 16px; z-index: 100; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); }
+.progress-text { font-size: 13px; color: var(--cuivre); font-style: italic; }
+.btn-generate { background: var(--terracotta); color: var(--blanc); border: none; padding: 14px 32px; border-radius: 10px; font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; gap: 8px; }
+.btn-generate:hover { background: #B5644A; }
+.btn-generate:disabled { background: var(--sable); cursor: not-allowed; }
+.btn-save { background: none; border: 2px solid var(--sable); color: var(--cuivre); padding: 12px 20px; border-radius: 10px; font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-save:hover { border-color: var(--terracotta); color: var(--terracotta); }
+
+/* ENGAGEMENT */
+.engagement { background: var(--terracotta); border-radius: 16px; padding: 28px 32px; margin-bottom: 100px; }
+.engagement h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--blanc); margin-bottom: 10px; }
+.engagement p { font-size: 14px; color: var(--lin); line-height: 1.7; }
+.engagement .signature-phrase { font-size: 16px; font-weight: 600; color: var(--blanc); margin-top: 14px; font-style: italic; }
+
+@media (max-width: 640px) {
+  .champ-grid, .feu-grid, .ddo-grid, .signature-grid { grid-template-columns: 1fr; }
+  .section { padding: 20px; }
+  .header { padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<p style="text-align:center;margin:0;padding:12px 16px 0;font-size:13px;"><a href="../index.html" style="color:#D17C61;">← Ressources formation</a></p>
+
+<div class="header">
+  <div class="header-inner">
+    <span class="header-tag">Template interactif 2026</span>
+    <h1>Ma politique IA</h1>
+    <p>Remplissez ce document en ligne — il génère automatiquement votre PDF de gouvernance.</p>
+    <div class="header-meta">CS Consulting Stratégique · Catherine Selosse · formation.csbusiness.fr</div>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="container">
+
+  <!-- 1. IDENTITÉ -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">1</div><h2>Votre entreprise</h2></div>
+    <p class="section-desc">Les informations qui définissent le périmètre de cette politique.</p>
+    <div class="champ-grid">
+      <div class="champ">
+        <label>Nom de l'entreprise</label>
+        <input type="text" id="entreprise" placeholder="ex : CS Consulting Stratégique" oninput="updateProgress()">
+      </div>
+      <div class="champ">
+        <label>Nom de la dirigeante</label>
+        <input type="text" id="dirigeante" placeholder="ex : Catherine Selosse" oninput="updateProgress()">
+      </div>
+      <div class="champ">
+        <label>Nombre de collaborateurs</label>
+        <input type="text" id="collaborateurs" placeholder="ex : 5 (incluez vous-même si solo)" oninput="updateProgress()">
+      </div>
+      <div class="champ">
+        <label>Date d'entrée en vigueur</label>
+        <input type="date" id="date_vigueur" oninput="updateProgress()">
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CARTOGRAPHIE OUTILS -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">2</div><h2>Cartographie de vos outils IA</h2></div>
+    <p class="section-desc">Listez tous les outils IA utilisés dans votre structure et classez-les par niveau de risque.</p>
+
+    <div class="champ">
+      <label>Outils autorisés</label>
+      <div class="outils-table-container">
+        <table class="outils-table" id="outils-table">
+          <tr>
+            <th>Outil</th>
+            <th>Utilisé pour</th>
+            <th>Qui l'utilise</th>
+            <th>Niveau</th>
+          </tr>
+          <tr>
+            <td><input type="text" placeholder="ex : Claude Pro"></td>
+            <td><input type="text" placeholder="ex : rédaction, analyse"></td>
+            <td><input type="text" placeholder="ex : direction"></td>
+            <td>
+              <select>
+                <option value="vert">🟢 Vert</option>
+                <option value="orange">🟠 Orange</option>
+                <option value="rouge">🔴 Rouge</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="text" placeholder="ex : Mistral Le Chat"></td>
+            <td><input type="text" placeholder=""></td>
+            <td><input type="text" placeholder=""></td>
+            <td><select><option value="vert">🟢 Vert</option><option value="orange">🟠 Orange</option><option value="rouge">🔴 Rouge</option></select></td>
+          </tr>
+          <tr>
+            <td><input type="text" placeholder=""></td>
+            <td><input type="text" placeholder=""></td>
+            <td><input type="text" placeholder=""></td>
+            <td><select><option value="vert">🟢 Vert</option><option value="orange">🟠 Orange</option><option value="rouge">🔴 Rouge</option></select></td>
+          </tr>
+        </table>
+      </div>
+      <button class="add-row-btn" onclick="addRow()">+ Ajouter un outil</button>
+    </div>
+
+    <div class="champ">
+      <label>Outils interdits dans ma structure</label>
+      <div class="hint">Ex : DeepSeek (serveurs Chine), outils sans politique RGPD</div>
+      <textarea id="outils_interdits" placeholder="Listez les outils que vos collaborateurs ne doivent jamais utiliser dans un contexte professionnel..." oninput="updateProgress()"></textarea>
+    </div>
+  </div>
+
+  <!-- 3. RÈGLES D'OR -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">3</div><h2>Mes 3 règles d'or</h2></div>
+    <p class="section-desc">Les règles que vos équipes doivent mémoriser — courtes, non négociables.</p>
+
+    <div class="regle-container">
+      <div class="regle">
+        <div class="regle-num">1</div>
+        <textarea id="regle1" placeholder="ex : Aucune donnée client identifiable, salaire, dossier RH ou donnée bancaire ne doit être envoyée dans un outil IA grand public." oninput="updateProgress()"></textarea>
+      </div>
+      <div class="regle">
+        <div class="regle-num">2</div>
+        <textarea id="regle2" placeholder="ex : Seuls les outils listés dans la cartographie ci-dessus peuvent être utilisés. Toute nouvelle utilisation doit être validée par la dirigeante." oninput="updateProgress()"></textarea>
+      </div>
+      <div class="regle">
+        <div class="regle-num">3</div>
+        <textarea id="regle3" placeholder="ex : Aucun contenu produit par l'IA (email, document, contrat) n'est envoyé ou signé sans avoir été relu et validé par un humain." oninput="updateProgress()"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. RÉFLEXE DDO -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">4</div><h2>Le réflexe DDO</h2></div>
+    <p class="section-desc">Complétez les exemples concrets pour votre secteur d'activité.</p>
+    <div class="ddo-grid">
+      <div class="ddo-item ddo-d1">
+        <div class="ddo-lettre">D</div>
+        <div class="ddo-mot">Département</div>
+        <textarea id="ddo_dept" placeholder="Vos départements sensibles..." oninput="updateProgress()"></textarea>
+      </div>
+      <div class="ddo-item ddo-d2">
+        <div class="ddo-lettre">D</div>
+        <div class="ddo-mot">Donnée</div>
+        <textarea id="ddo_data" placeholder="Vos types de données sensibles..." oninput="updateProgress()"></textarea>
+      </div>
+      <div class="ddo-item ddo-o">
+        <div class="ddo-lettre">O</div>
+        <div class="ddo-mot">Outil</div>
+        <textarea id="ddo_outil" placeholder="Vos outils autorisés par niveau..." oninput="updateProgress()"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. CHECKLIST GO/NO-GO -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">5</div><h2>Checklist Go / No-Go</h2></div>
+    <p class="section-desc">Les 5 questions à se poser avant chaque usage IA important.</p>
+    <div class="check-list">
+      <div class="check-item"><div class="check-box-visual"></div><div class="check-content"><strong>01 — Je sais quelle donnée j'envoie</strong><span>Verte, orange ou rouge ? Si rouge → outil public interdit.</span></div></div>
+      <div class="check-item"><div class="check-box-visual"></div><div class="check-content"><strong>02 — J'ai retiré ce qui identifie</strong><span>Noms, salaires, coordonnées remplacés par des codes génériques.</span></div></div>
+      <div class="check-item"><div class="check-box-visual"></div><div class="check-content"><strong>03 — Mon outil ne s'entraîne pas sur mes données</strong><span>Option désactivée dans les paramètres. Claude Pro = par défaut.</span></div></div>
+      <div class="check-item"><div class="check-box-visual"></div><div class="check-content"><strong>04 — Un humain relit et valide</strong><span>Aucun contenu IA envoyé ou signé sans relecture humaine.</span></div></div>
+      <div class="check-item"><div class="check-box-visual"></div><div class="check-content"><strong>05 — Mes collaborateurs connaissent les règles</strong><span>Les règles sont écrites, partagées, documentées.</span></div></div>
+    </div>
+  </div>
+
+  <!-- 6. FORMATION ÉQUIPE -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">6</div><h2>Comment j'embarque mon équipe</h2></div>
+    <p class="section-desc">Pas de réunion supplémentaire — l'IA s'intègre dans ce qui existe déjà.</p>
+    <div class="champ-grid">
+      <div class="champ">
+        <label>Date du briefing initial (1h)</label>
+        <div class="hint">À organiser dans les 30 jours</div>
+        <input type="date" id="date_briefing" oninput="updateProgress()">
+      </div>
+      <div class="champ">
+        <label>Personne référente IA</label>
+        <div class="hint">Vous-même si solo, ou un collaborateur désigné</div>
+        <input type="text" id="referent" placeholder="Nom du référent IA" oninput="updateProgress()">
+      </div>
+    </div>
+    <div class="champ">
+      <label>Intégration dans les réunions d'équipe</label>
+      <div class="hint">5 minutes par semaine : un usage, un risque, une question</div>
+      <textarea id="reunions" placeholder="ex : 5 min tous les lundis en réunion équipe — partage d'un cas IA de la semaine" oninput="updateProgress()"></textarea>
+    </div>
+  </div>
+
+  <!-- 7. AGENT DE VEILLE -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">7</div><h2>Mon agent de veille mensuelle</h2></div>
+    <p class="section-desc">L'agent Claude qui surveille les nouveautés IA pour vous chaque mois.</p>
+    <div class="champ-grid">
+      <div class="champ">
+        <label>Date d'activation</label>
+        <input type="date" id="date_agent" oninput="updateProgress()">
+      </div>
+      <div class="champ">
+        <label>À qui je transfère le rapport</label>
+        <input type="text" id="destinataire_rapport" placeholder="ex : équipe, comptable, pour réunion mensuelle" oninput="updateProgress()">
+      </div>
+    </div>
+    <div class="champ">
+      <label>Thématiques à surveiller</label>
+      <textarea id="thematiques" placeholder="ex : évolutions réglementaires AI Act/RGPD, nouveaux outils IA pour mon secteur, risques et incidents du mois" oninput="updateProgress()"></textarea>
+    </div>
+  </div>
+
+  <!-- 8. DOCUMENTS JURIDIQUES -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">8</div><h2>Mes documents juridiques</h2></div>
+    <p class="section-desc">Les 3 documents à mettre à jour pour être en conformité AI Act + RGPD.</p>
+    <div class="champ">
+      <label>État des documents</label>
+      <div class="check-list">
+        <div class="check-item">
+          <div class="check-box-visual"></div>
+          <div class="check-content">
+            <strong>Mes CGV mentionnent l'usage de l'IA</strong>
+            <span>Une clause expliquant si et comment vous utilisez l'IA dans vos prestations.</span>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box-visual"></div>
+          <div class="check-content">
+            <strong>Mon registre RGPD inclut les traitements IA</strong>
+            <span>Outils IA et données qu'ils traitent ajoutés au registre existant.</span>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box-visual"></div>
+          <div class="check-content">
+            <strong>DPA signé avec mes outils IA Pro</strong>
+            <span>Data Processing Agreement avec Claude / Mistral selon les outils utilisés.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="champ" style="margin-top:16px;">
+      <label>Notes et échéances juridiques</label>
+      <textarea id="notes_juridiques" placeholder="ex : mise à jour CGV avant le 1er juillet, DPA Claude à signer..." oninput="updateProgress()"></textarea>
+    </div>
+  </div>
+
+  <!-- 9. RÉVISION -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">9</div><h2>Révision de cette politique</h2></div>
+    <p class="section-desc">L'IA évolue tous les 3 mois. Planifiez les révisions maintenant — dans votre agenda.</p>
+    <div class="champ-grid">
+      <div class="champ">
+        <label>Première révision (6 mois)</label>
+        <input type="date" id="revision1" oninput="updateProgress()">
+      </div>
+      <div class="champ">
+        <label>Seconde révision (12 mois)</label>
+        <input type="date" id="revision2" oninput="updateProgress()">
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGNATURE -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">✍</div><h2>Signature</h2></div>
+    <p class="section-desc">Votre engagement — et preuve de conformité en cas de contrôle CNIL.</p>
+    <div class="signature-grid">
+      <div class="signature-zone">
+        <label>La dirigeante</label>
+        <input type="text" id="sign_nom" placeholder="Votre nom" oninput="updateProgress()">
+        <input type="date" id="sign_date" oninput="updateProgress()">
+        <p class="signature-hint">Signature manuscrite sur le PDF imprimé</p>
+      </div>
+      <div class="signature-zone">
+        <label>Référent IA (si différent)</label>
+        <input type="text" id="sign_referent" placeholder="Nom du référent" oninput="updateProgress()">
+        <input type="date" id="sign_referent_date" oninput="updateProgress()">
+        <p class="signature-hint">Signature manuscrite sur le PDF imprimé</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENGAGEMENT FINAL -->
+  <div class="engagement">
+    <h3>Mon engagement de dirigeante</h3>
+    <p>Je m'engage à respecter et à faire respecter cette politique IA dans mon entreprise. Je comprends que la conformité AI Act et RGPD est ma responsabilité en tant que dirigeante.</p>
+    <p class="signature-phrase">"L'IA ne me subit pas. Je la maîtrise."</p>
+  </div>
+
+</div>
+
+<!-- CTA FIXE EN BAS -->
+<div class="cta-zone">
+  <span class="progress-text" id="progressText">Remplissez le formulaire pour générer votre PDF</span>
+  <button class="btn-save" onclick="saveProgress()">💾 Sauvegarder</button>
+  <button class="btn-generate" onclick="generatePDF()">
+    📄 Générer mon PDF
+  </button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// ─── PROGRESS ───────────────────────────────────────────────────────────────
+const requiredFields = ['entreprise','dirigeante','date_vigueur','regle1','regle2','regle3','sign_nom','sign_date'];
+
+function updateProgress() {
+  const filled = requiredFields.filter(id => {
+    const el = document.getElementById(id);
+    return el && el.value.trim() !== '';
+  }).length;
+  const pct = Math.round((filled / requiredFields.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct < 100
+    ? `${pct}% complété — encore ${requiredFields.length - filled} champ${requiredFields.length - filled > 1 ? 's' : ''} obligatoire${requiredFields.length - filled > 1 ? 's' : ''}`
+    : '✅ Formulaire complet — prêt à générer le PDF';
+}
+
+// ─── SAVE ────────────────────────────────────────────────────────────────────
+function saveProgress() {
+  const data = {};
+  document.querySelectorAll('input, textarea, select').forEach(el => {
+    if (el.id) data[el.id] = el.value;
+  });
+  // Also save table
+  const rows = [];
+  document.querySelectorAll('#outils-table tr:not(:first-child)').forEach(row => {
+    const cells = row.querySelectorAll('input, select');
+    if (cells[0] && cells[0].value) {
+      rows.push([cells[0].value, cells[1]?.value||'', cells[2]?.value||'', cells[3]?.value||'vert']);
+    }
+  });
+  data['_outils_rows'] = JSON.stringify(rows);
+  localStorage.setItem('gouvernance_ia_data', JSON.stringify(data));
+  const btn = event.currentTarget;
+  const orig = btn.textContent;
+  btn.textContent = '✓ Sauvegardé !';
+  setTimeout(() => btn.textContent = orig, 2000);
+}
+
+// ─── LOAD ────────────────────────────────────────────────────────────────────
+function loadProgress() {
+  try {
+    const data = JSON.parse(localStorage.getItem('gouvernance_ia_data') || '{}');
+    Object.entries(data).forEach(([id, val]) => {
+      if (id === '_outils_rows') return;
+      const el = document.getElementById(id);
+      if (el) el.value = val;
+    });
+    updateProgress();
+  } catch(e) {}
+}
+
+// ─── ADD ROW ─────────────────────────────────────────────────────────────────
+function addRow() {
+  const table = document.getElementById('outils-table');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" placeholder=""></td>
+    <td><input type="text" placeholder=""></td>
+    <td><input type="text" placeholder=""></td>
+    <td><select><option value="vert">🟢 Vert</option><option value="orange">🟠 Orange</option><option value="rouge">🔴 Rouge</option></select></td>`;
+  table.appendChild(tr);
+}
+
+// ─── GENERATE PDF ────────────────────────────────────────────────────────────
+function v(id) {
+  const el = document.getElementById(id);
+  return el ? (el.value || '').trim() : '';
+}
+
+function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  const W = 210, M = 18, CW = W - M * 2;
+  let y = 0;
+
+  const C = {
+    terracotta: [209, 124, 97],
+    terre: [67, 63, 60],
+    cuivre: [174, 117, 88],
+    sable: [193, 158, 138],
+    lin: [243, 234, 218],
+    blanc: [255, 255, 255],
+    vert: [59, 109, 17],
+    rouge: [204, 17, 17],
+  };
+
+  function addPage() {
+    doc.addPage();
+    y = 20;
+    // Footer
+    doc.setFillColor(...C.terracotta);
+    doc.rect(0, 285, 210, 12, 'F');
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(7);
+    doc.setTextColor(243,234,218);
+    doc.text('CS CONSULTING STRATÉGIQUE  ·  Catherine Selosse  ·  formation.csbusiness.fr', M, 291);
+    doc.text(`${doc.internal.getNumberOfPages()}`, W - M, 291, { align: 'right' });
+  }
+
+  function checkY(needed) {
+    if (y + needed > 272) addPage();
+  }
+
+  function sectionTitle(num, title) {
+    checkY(20);
+    // Pastille
+    doc.setFillColor(...C.terracotta);
+    doc.circle(M + 4, y + 3, 4, 'F');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(10);
+    doc.setTextColor(...C.blanc);
+    doc.text(String(num), M + 4, y + 4.5, { align: 'center' });
+    // Titre
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(14);
+    doc.setTextColor(...C.terre);
+    doc.text(title, M + 12, y + 5);
+    y += 14;
+    // Filet
+    doc.setDrawColor(...C.sable);
+    doc.setLineWidth(0.4);
+    doc.line(M, y, W - M, y);
+    y += 8;
+  }
+
+  function field(label, value, multiline) {
+    checkY(multiline ? 24 : 16);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(8);
+    doc.setTextColor(...C.cuivre);
+    doc.text(label.toUpperCase(), M, y);
+    y += 5;
+    if (value) {
+      const lines = doc.splitTextToSize(value || '—', CW);
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(11);
+      doc.setTextColor(...C.terre);
+      lines.forEach(line => {
+        checkY(6);
+        doc.text(line, M, y);
+        y += 5.5;
+      });
+    } else {
+      doc.setFont('helvetica','italic');
+      doc.setFontSize(10);
+      doc.setTextColor(...C.sable);
+      doc.text('Non renseigné', M, y);
+      y += 5.5;
+    }
+    y += 4;
+  }
+
+  function regle(num, value) {
+    checkY(18);
+    doc.setFillColor(...C.terracotta);
+    doc.roundedRect(M, y, 7, 7, 1, 1, 'F');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...C.blanc);
+    doc.text(String(num), M + 3.5, y + 5, { align: 'center' });
+    const lines = doc.splitTextToSize(value || '—', CW - 12);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(11);
+    doc.setTextColor(...C.terre);
+    lines.forEach((line, i) => {
+      checkY(6);
+      doc.text(line, M + 11, y + (i === 0 ? 5 : 0));
+      if (i > 0) y += 5.5;
+    });
+    y += 11;
+  }
+
+  // ── COVER ──
+  doc.setFillColor(...C.terre);
+  doc.rect(0, 0, 210, 80, 'F');
+  doc.setFillColor(...C.terracotta);
+  doc.rect(0, 76, 210, 4, 'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(9);
+  doc.setTextColor(...C.sable);
+  doc.setCharSpace(2);
+  doc.text('CS CONSULTING STRATÉGIQUE  ·  FCE ACADÉMIE 2026', M, 22);
+  doc.setCharSpace(0);
+  doc.setFontSize(30);
+  doc.setTextColor(243, 234, 218);
+  doc.text('Ma politique IA', M, 44);
+  doc.setFont('helvetica','italic');
+  doc.setFontSize(15);
+  doc.setTextColor(...C.sable);
+  doc.text('Gouvernance & conformité RGPD / AI Act', M, 56);
+  const nom = v('entreprise') || 'Mon entreprise';
+  const date = v('date_vigueur') ? new Date(v('date_vigueur')).toLocaleDateString('fr-FR') : new Date().toLocaleDateString('fr-FR');
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(11);
+  doc.setTextColor(...C.blanc);
+  doc.text(`${nom}  ·  En vigueur depuis le ${date}`, M, 68);
+  // Footer cover
+  doc.setFillColor(...C.terracotta);
+  doc.rect(0, 285, 210, 12, 'F');
+  doc.setFontSize(7);
+  doc.setTextColor(243,234,218);
+  doc.text('CS CONSULTING STRATÉGIQUE  ·  Catherine Selosse  ·  formation.csbusiness.fr', M, 291);
+
+  y = 100;
+
+  // ── SECTION 1 ──
+  sectionTitle(1, 'Votre entreprise');
+  field('Nom de l\'entreprise', v('entreprise'));
+  field('Dirigeante', v('dirigeante'));
+  field('Collaborateurs concernés', v('collaborateurs'));
+  field('Date d\'entrée en vigueur', v('date_vigueur') ? new Date(v('date_vigueur')).toLocaleDateString('fr-FR') : '');
+
+  // ── SECTION 2 ──
+  sectionTitle(2, 'Cartographie des outils IA');
+  // Table
+  const rows = [];
+  document.querySelectorAll('#outils-table tr:not(:first-child)').forEach(row => {
+    const inputs = row.querySelectorAll('input');
+    const sel = row.querySelector('select');
+    if (inputs[0] && inputs[0].value) {
+      rows.push({ outil: inputs[0].value, usage: inputs[1]?.value||'', qui: inputs[2]?.value||'', niveau: sel?.value||'vert' });
+    }
+  });
+  if (rows.length) {
+    const cols = [52, 62, 50, 26];
+    const headers = ['Outil', 'Utilisé pour', 'Qui l\'utilise', 'Niveau'];
+    checkY(12 + rows.length * 8);
+    doc.setFillColor(...C.terre);
+    doc.rect(M, y, CW, 8, 'F');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(8);
+    doc.setTextColor(243,234,218);
+    let cx = M + 2;
+    cols.forEach((w, i) => { doc.text(headers[i], cx, y + 5.5); cx += w; });
+    y += 8;
+    rows.forEach((r, ri) => {
+      checkY(9);
+      doc.setFillColor(ri % 2 === 0 ? 243 : 255, ri % 2 === 0 ? 234 : 255, ri % 2 === 0 ? 218 : 255);
+      doc.rect(M, y, CW, 8, 'F');
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(9);
+      doc.setTextColor(...C.terre);
+      cx = M + 2;
+      const niv = r.niveau === 'vert' ? '🟢 Vert' : r.niveau === 'orange' ? '🟠 Orange' : '🔴 Rouge';
+      [r.outil, r.usage, r.qui, niv].forEach((val, i) => { doc.text(val.substring(0,25), cx, y + 5.5); cx += cols[i]; });
+      y += 8;
+    });
+    y += 8;
+  }
+  field('Outils interdits', v('outils_interdits'), true);
+
+  // ── SECTION 3 ──
+  sectionTitle(3, 'Mes 3 règles d\'or');
+  regle(1, v('regle1'));
+  regle(2, v('regle2'));
+  regle(3, v('regle3'));
+
+  // ── SECTION 4 ──
+  sectionTitle(4, 'Le réflexe DDO');
+  const ddoW = (CW - 8) / 3;
+  checkY(50);
+  const ddoItems = [
+    { label: 'DÉPARTEMENT', val: v('ddo_dept'), color: C.terracotta },
+    { label: 'DONNÉE', val: v('ddo_data'), color: C.cuivre },
+    { label: 'OUTIL', val: v('ddo_outil'), color: C.vert },
+  ];
+  ddoItems.forEach((d, i) => {
+    const x = M + i * (ddoW + 4);
+    doc.setFillColor(...d.color);
+    doc.roundedRect(x, y, ddoW, 12, 2, 2, 'F');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(16);
+    doc.setTextColor(...C.blanc);
+    doc.text(d.label[0], x + ddoW / 2, y + 8.5, { align: 'center' });
+    doc.setFontSize(7);
+    doc.setCharSpace(1);
+    doc.text(d.label, x + ddoW / 2, y + 12, { align: 'center' });
+    doc.setCharSpace(0);
+    // Contenu
+    const lines = doc.splitTextToSize(d.val || '—', ddoW - 4);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...C.terre);
+    lines.slice(0, 4).forEach((l, li) => { doc.text(l, x + 2, y + 18 + li * 5); });
+  });
+  y += 50;
+
+  // ── SECTION 5 ──
+  sectionTitle(5, 'Checklist Go / No-Go');
+  const checks = [
+    'Je sais quelle donnée j\'envoie — verte, orange ou rouge ?',
+    'J\'ai retiré ce qui identifie les personnes',
+    'Mon outil ne s\'entraîne pas sur mes données',
+    'Un humain relit et valide avant envoi/signature',
+    'Mes collaborateurs connaissent les règles',
+  ];
+  checks.forEach((c, i) => {
+    checkY(9);
+    doc.setFillColor(i % 2 === 0 ? 243 : 255, i % 2 === 0 ? 234 : 255, i % 2 === 0 ? 218 : 255);
+    doc.roundedRect(M, y, CW, 8, 1, 1, 'F');
+    doc.setDrawColor(...C.terracotta);
+    doc.setLineWidth(0.8);
+    doc.roundedRect(M + 2, y + 1.5, 5, 5, 0.5, 0.5, 'S');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(8);
+    doc.setTextColor(...C.terre);
+    doc.text(`0${i+1}`, M + 3, y + 5, { align: 'center' });
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10);
+    doc.text(c, M + 10, y + 5.5);
+    y += 9;
+  });
+  y += 6;
+
+  // ── SECTION 6 ──
+  sectionTitle(6, 'Embarquement de l\'équipe');
+  field('Date du briefing initial', v('date_briefing') ? new Date(v('date_briefing')).toLocaleDateString('fr-FR') : '');
+  field('Référent IA', v('referent'));
+  field('Intégration réunions', v('reunions'), true);
+
+  // ── SECTION 7 ──
+  sectionTitle(7, 'Agent de veille mensuelle');
+  field('Date d\'activation', v('date_agent') ? new Date(v('date_agent')).toLocaleDateString('fr-FR') : '');
+  field('Destinataire du rapport mensuel', v('destinataire_rapport'));
+  field('Thématiques surveillées', v('thematiques'), true);
+
+  // ── SECTION 8 ──
+  sectionTitle(8, 'Documents juridiques & révision');
+  field('Notes juridiques', v('notes_juridiques'), true);
+  field('Première révision (6 mois)', v('revision1') ? new Date(v('revision1')).toLocaleDateString('fr-FR') : '');
+  field('Seconde révision (12 mois)', v('revision2') ? new Date(v('revision2')).toLocaleDateString('fr-FR') : '');
+
+  // ── SIGNATURE ──
+  checkY(50);
+  sectionTitle('✍', 'Signature & engagement');
+  doc.setFont('helvetica','italic');
+  doc.setFontSize(11);
+  doc.setTextColor(...C.terre);
+  doc.text('"L\'IA ne me subit pas. Je la maîtrise."', M, y);
+  y += 12;
+  // Deux zones
+  [['Dirigeante', v('sign_nom'), v('sign_date')], ['Référent IA', v('sign_referent'), v('sign_referent_date')]].forEach((sig, i) => {
+    const sx = M + i * (CW / 2 + 4);
+    const sw = CW / 2 - 4;
+    checkY(36);
+    doc.setDrawColor(...C.sable);
+    doc.setLineWidth(0.5);
+    doc.setLineDash([2,2]);
+    doc.roundedRect(sx, y, sw, 32, 2, 2, 'S');
+    doc.setLineDash([]);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(8);
+    doc.setTextColor(...C.cuivre);
+    doc.text(sig[0].toUpperCase(), sx + 4, y + 7);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10);
+    doc.setTextColor(...C.terre);
+    if (sig[1]) doc.text(sig[1], sx + 4, y + 16);
+    if (sig[2]) doc.text(new Date(sig[2]).toLocaleDateString('fr-FR'), sx + 4, y + 23);
+    doc.setDrawColor(...C.sable);
+    doc.line(sx + 4, y + 28, sx + sw - 4, y + 28);
+    doc.setFont('helvetica','italic');
+    doc.setFontSize(8);
+    doc.setTextColor(...C.sable);
+    doc.text('Signature manuscrite', sx + 4, y + 31);
+  });
+
+  const filename = `Politique-IA-${(v('entreprise') || 'mon-entreprise').replace(/\s+/g,'-')}-${new Date().getFullYear()}.pdf`;
+  doc.save(filename);
+}
+
+// Init
+window.onload = loadProgress;
+</script>
+
+</body>
+</html>
