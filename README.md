@@ -8,9 +8,21 @@ Mini-site **GitHub Pages** pour partager des HTML (formations, supports interact
 |-------------------|------|
 | `CNAME` | Indique à GitHub Pages le domaine custom **`formation.csbusiness.fr`** |
 | `.nojekyll` | Désactive Jekyll (évite les surprises sur fichiers qui commencent par `_`) |
-| `index.html` | Page d’accueil : liste les liens vers tes documents |
-| `documents/` | Dépose ici tes fichiers `.html` (et assets associés si besoin) |
-| `assets/` | Logo et futures images communes |
+| `index.html` | Page d’accueil (grilles Outils / Méthodes / Guides) |
+| `documents/` | Fichiers `.html` des ressources (voir inventaire ci-dessous) |
+| `assets/` | Logo et images communes |
+
+### Inventaire `documents/` (2026-05)
+
+- `SECURE-GUARD-3-outils.html`
+- `SECURE-GUARD-installation-pas-a-pas.html`
+- `TEMPLATE-Gouvernance-IA-interactif.html` *(seul template gouvernance — pas de version statique)*
+- `schema-flux-donnees-v2.html`
+- `schema-aiact-rgpd.html`
+- `GUIDE-Claude-RGPD-conformite.html`
+- `GUIDE-Ollama-LLM-local.html`
+
+Mémoire entreprise : `business/01-entreprise/memory/reference_formation-csbusiness-fr.md`
 
 ## Mise en ligne (une fois)
 
