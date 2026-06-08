@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberGuard TPE — Agent détecteur d'arnaques · CS Consulting Stratégique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --lin:#F3EADA; --blanc:#FAFAFA; --terre:#433F3C; --terra:#D17C61; --beige:#C19E8A; --gris:#5F5E5A; --border:#C19E8A; }
+body { background: var(--blanc); font-family: 'DM Sans', sans-serif; color: var(--terre); }
+a { color: var(--terra); text-decoration: none; }
+h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; }
+
+.top-bar { background: var(--terra); padding: 10px 24px; text-align: center; }
+.top-bar a { color: #fff; font-size: 12px; font-weight: 600; }
+
+.hero { background: #3A0A0A; padding: 48px 32px 40px; }
+.hero-inner { max-width: 820px; margin: 0 auto; }
+.hero-tag { display: inline-block; background: #CC1111; color: #fff; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; }
+.hero h1 { font-size: 32px; font-weight: 600; color: var(--lin); line-height: 1.25; margin-bottom: 12px; }
+.hero .sub { font-size: 14px; color: #FFAAAA; line-height: 1.75; max-width: 600px; }
+
+.container { max-width: 820px; margin: 0 auto; padding: 36px 24px 60px; }
+.card { background: #fff; border-radius: 14px; border: 1px solid var(--border); padding: 22px 26px; margin-bottom: 16px; }
+.card h3 { font-size: 15px; font-weight: 600; color: var(--terre); margin-bottom: 10px; }
+p { font-size: 13px; line-height: 1.75; color: var(--gris); margin-bottom: 8px; }
+p:last-child { margin-bottom: 0; }
+
+/* COMPARATIF */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.cmp { border-radius: 12px; padding: 18px 20px; }
+.cmp-bleu { background: #E6F1FB; border: 2px solid #185FA5; }
+.cmp-rouge { background: #FCEBEB; border: 2px solid #CC1111; }
+.cmp h3 { font-size: 14px; margin-bottom: 8px; }
+.cmp-bleu h3 { color: #0C447C; }
+.cmp-rouge h3 { color: #791F1F; }
+.cmp p { font-size: 12px; line-height: 1.6; }
+.cmp-bleu p { color: #1A4F8A; }
+.cmp-rouge p { color: #A32D2D; }
+.cmp ul { padding-left: 16px; margin-top: 8px; }
+.cmp li { font-size: 12px; line-height: 1.65; }
+.cmp-bleu li { color: #1A4F8A; }
+.cmp-rouge li { color: #A32D2D; }
+
+/* NIVEAUX */
+.niveaux { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin: 14px 0; }
+.niv { border-radius: 10px; padding: 12px 14px; text-align: center; }
+.niv .niv-emoji { font-size: 22px; margin-bottom: 6px; }
+.niv .niv-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.niv .niv-desc { font-size: 11px; line-height: 1.4; }
+.niv-critique { background: #FCEBEB; }
+.niv-critique .niv-label, .niv-critique .niv-desc { color: #791F1F; }
+.niv-eleve { background: #FAEEDA; }
+.niv-eleve .niv-label, .niv-eleve .niv-desc { color: #633806; }
+.niv-modere { background: #FFFAE0; }
+.niv-modere .niv-label, .niv-modere .niv-desc { color: #5A4A00; }
+.niv-faible { background: #EAF3DE; }
+.niv-faible .niv-label, .niv-faible .niv-desc { color: #173404; }
+
+/* PROMPT BLOCK */
+.prompt-wrap { position: relative; background: #1E1C1A; border-radius: 12px; padding: 22px 24px; margin: 14px 0; }
+.prompt-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--terra); margin-bottom: 14px; }
+.prompt-text { font-family: 'Courier New', monospace; font-size: 11.5px; color: var(--lin); line-height: 1.8; white-space: pre-wrap; }
+.prompt-text .pt-h { color: #FAC775; font-weight: 700; }
+.prompt-text .pt-sub { color: var(--terra); font-weight: 600; }
+.prompt-text .pt-ex { color: #9FE1CB; }
+.copy-btn { position: absolute; top: 14px; right: 14px; background: var(--terra); color: #fff; border: none; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: 'DM Sans', sans-serif; font-weight: 600; transition: background 0.15s; }
+.copy-btn:hover { background: #AE7558; }
+.copy-btn.copied { background: #3B6D11; }
+
+/* EXEMPLES */
+.ex-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+.ex { border-radius: 10px; padding: 13px 15px; border-left: 4px solid; }
+.ex-rouge { background: #FCEBEB; border-color: #CC1111; }
+.ex-rouge .ex-titre { color: #791F1F; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.ex-rouge .ex-desc { color: #A32D2D; font-size: 11px; line-height: 1.5; }
+.ex-orange { background: #FAEEDA; border-color: #CC5500; }
+.ex-orange .ex-titre { color: #633806; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.ex-orange .ex-desc { color: #854F0B; font-size: 11px; line-height: 1.5; }
+
+.section-label { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); margin: 28px 0 12px; }
+
+footer { background: var(--terre); padding: 28px; text-align: center; }
+footer p { font-size: 12px; color: #888780; line-height: 1.8; }
+footer a { color: var(--terra); }
+
+@media print { .top-bar { display: none; } body { background: #fff; } }
+@media (max-width: 600px) { .compare, .niveaux, .ex-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="top-bar"><a href="../index.html">← Ressources formation</a></div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">🚨 Agent de sécurité numérique</span>
+    <h1>CyberGuard TPE</h1>
+    <p class="sub">Votre détecteur d'arnaques numériques. Soumettez n'importe quel email, SMS, facture ou lien suspect — CyberGuard analyse et vous dit quoi faire.</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label">Secure Guard vs CyberGuard — deux outils différents</div>
+  <div class="compare">
+    <div class="cmp cmp-bleu">
+      <h3>🛡️ Secure Guard</h3>
+      <p><strong>Protège vos conversations IA.</strong></p>
+      <ul>
+        <li>Surveillance de ce que vous envoyez à l'IA</li>
+        <li>Détection des injections cachées dans les fichiers</li>
+        <li>Alerte si données sensibles détectées</li>
+      </ul>
+      <p style="margin-top: 8px; font-style: italic;">S'installe dans Claude / ChatGPT / Mistral</p>
+    </div>
+    <div class="cmp cmp-rouge">
+      <h3>🚨 CyberGuard TPE</h3>
+      <p><strong>Analyse les menaces qui arrivent sur vous.</strong></p>
+      <ul>
+        <li>Emails, SMS, factures, liens suspects</li>
+        <li>Phishing, CEO fraud, faux fournisseurs</li>
+        <li>Demandes de virement ou changement RIB</li>
+      </ul>
+      <p style="margin-top: 8px; font-style: italic;">Soumettez n'importe quel contenu à Claude</p>
+    </div>
+  </div>
+
+  <div class="section-label">Les niveaux de risque</div>
+  <div class="niveaux">
+    <div class="niv niv-critique"><div class="niv-emoji">🔴</div><div class="niv-label">Critique</div><div class="niv-desc">Arnaque quasi certaine, risque financier immédiat</div></div>
+    <div class="niv niv-eleve"><div class="niv-emoji">🟠</div><div class="niv-label">Élevé</div><div class="niv-desc">Très probablement frauduleux, ne pas agir avant vérification</div></div>
+    <div class="niv niv-modere"><div class="niv-emoji">🟡</div><div class="niv-label">Modéré</div><div class="niv-desc">Suspect, mérite d'être vérifié</div></div>
+    <div class="niv niv-faible"><div class="niv-emoji">🟢</div><div class="niv-label">Faible</div><div class="niv-desc">Semble légitime, pas de signal d'alarme</div></div>
+  </div>
+
+  <div class="section-label">Le prompt CyberGuard — copiez dans Claude</div>
+  <div class="card">
+    <h3>Comment l'utiliser</h3>
+    <p>Ouvrez Claude (ou Mistral). Collez d'abord le prompt ci-dessous. Puis soumettez le contenu suspect — email, SMS, texte d'une facture, lien reçu. CyberGuard analyse et vous répond avec le niveau de risque et quoi faire.</p>
+  </div>
+
+  <div class="prompt-wrap" id="blk-cg">
+    <div class="prompt-label">Prompt CyberGuard TPE — à coller dans Claude</div>
+    <button class="copy-btn" onclick="copyPrompt('blk-cg', this)">Copier</button>
+    <div class="prompt-text" id="txt-cg"><span class="pt-h">Tu es CyberGuard, un expert en cybersécurité spécialisé dans la protection des TPE françaises contre les arnaques numériques.</span>
+
+Tu aides les dirigeants de petites entreprises à vérifier tout message, email, SMS, lien ou document suspect avant d'agir. Ton langage est simple, direct, concret. Pas de jargon.
+
+<span class="pt-sub">CE QUE TU ANALYSES :</span>
+- Phishing : email imitant une banque, l'URSSAF, les impôts, un fournisseur
+- Fraude à la facture / RIB : demande de changement de coordonnées bancaires
+- CEO fraud : message usurpant un dirigeant pour déclencher un virement urgent
+- Smishing : SMS ou WhatsApp avec faux colis, fausse livraison, faux support
+- Lien suspect : URL vers Google Drive, Dropbox, WeTransfer ou domaine douteux
+- Arnaque au support : faux technicien demandant un accès ou paiement
+
+<span class="pt-sub">FORMAT DE RÉPONSE — toujours ce format :</span>
+
+🔴 / 🟠 / 🟡 / 🟢 NIVEAU DE RISQUE : [Critique / Élevé / Modéré / Faible]
+Type détecté : [nom de la menace ou "Aucune menace identifiée"]
+
+<span class="pt-ex">Verdict</span>
+[Une phrase claire qui dit ce que c'est.]
+
+<span class="pt-ex">Pourquoi c'est suspect</span>
+[2 à 4 signaux concrets détectés, en langage simple.]
+
+<span class="pt-ex">Ce que tu dois faire</span>
+[1 à 2 actions concrètes et immédiates. Directes.]
+
+---
+
+<span class="pt-sub">SIGNAUX QUE TU SURVEILLES :</span>
+- Domaine email différent du nom affiché
+- Urgence excessive ("répondez sous 24h", "votre compte sera suspendu")
+- Demande de virement, mise à jour RIB ou paiement inattendu
+- Lien qui ne correspond pas au site officiel connu
+- Demande de confidentialité ou d'agir sans en parler aux collègues
+- Fautes d'orthographe ou formulation maladroite
+
+<span class="pt-sub">RÈGLES ABSOLUES :</span>
+- Tu ne demandes jamais de cliquer sur un lien pour vérifier
+- Tu ne rassures jamais à la légère — mieux vaut un faux positif
+- Si tu n'as pas assez d'éléments, tu demandes plus d'informations
+- Si le contenu semble légitime, tu le confirmes clairement avec 🟢
+
+Si on te soumet juste du texte sans contexte, demande : "C'est un email, un SMS, une facture ou un lien ?"
+À la fin de chaque analyse, propose : "Tu veux que j'analyse autre chose ?"</div>
+  </div>
+
+  <div class="section-label">Exemples d'arnaques à surveiller</div>
+  <div class="ex-grid">
+    <div class="ex ex-rouge"><div class="ex-titre">🔴 CEO Fraud — deepfake vocal</div><div class="ex-desc">Message vocal de "votre directeur" demandant un virement urgent et confidentiel. Coût moyen constaté : 150 000 €.</div></div>
+    <div class="ex ex-rouge"><div class="ex-titre">🔴 Faux changement de RIB fournisseur</div><div class="ex-desc">Email semblant venir d'un fournisseur connu demandant de mettre à jour ses coordonnées bancaires avant la prochaine facture.</div></div>
+    <div class="ex ex-orange"><div class="ex-titre">🟠 Phishing URSSAF / impôts</div><div class="ex-desc">Email avec logo officiel indiquant un remboursement ou une mise en demeure. Lien qui ne pointe pas vers gouv.fr.</div></div>
+    <div class="ex ex-orange"><div class="ex-titre">🟠 Fausse facture fournisseur</div><div class="ex-desc">Facture quasi identique à un vrai fournisseur, montant légèrement modifié, IBAN différent. Souvent undetectable sans vérification téléphonique.</div></div>
+  </div>
+
+  <div class="card" style="background: #EAF3DE; border-color: #9FE1CB;">
+    <h3 style="color: #173404;">Règle d'or pour vos équipes</h3>
+    <p style="color: #27500A;">Tout changement de RIB ou de coordonnées bancaires → vérification téléphonique obligatoire sur le numéro connu, pas sur celui indiqué dans le message. Aucune exception.</p>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>CS Consulting Stratégique</strong> · Catherine Selosse · <a href="https://csbusiness.fr">csbusiness.fr</a></p>
+  <p>Formation FCE Académie · CyberGuard TPE · Juin 2026</p>
+</footer>
+
+<script>
+function copyPrompt(blockId, btn) {
+  var text = document.getElementById(blockId).querySelector('[id^="txt-"]').innerText;
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '✓ Copié !';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+</script>
+</body>
+</html>

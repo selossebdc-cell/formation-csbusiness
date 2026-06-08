@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Drive & OneDrive — RGPD & AI Act · CS Consulting Stratégique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --lin:#F3EADA; --blanc:#FAFAFA; --terre:#433F3C; --terra:#D17C61; --beige:#C19E8A; --gris:#5F5E5A; --border:#C19E8A; }
+body { background: var(--blanc); font-family: 'DM Sans', sans-serif; color: var(--terre); }
+a { color: var(--terra); text-decoration: none; }
+h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
+.top-bar { background: var(--terra); padding: 10px 24px; text-align: center; }
+.top-bar a { color: #fff; font-size: 12px; font-weight: 600; }
+.hero { background: var(--terre); padding: 48px 32px 40px; }
+.hero-inner { max-width: 820px; margin: 0 auto; }
+.hero-tag { display: inline-block; background: var(--terra); color: #fff; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; }
+.hero h1 { font-size: 30px; font-weight: 600; color: var(--lin); line-height: 1.3; margin-bottom: 10px; }
+.hero .sub { font-size: 14px; color: var(--beige); line-height: 1.75; max-width: 620px; }
+.container { max-width: 820px; margin: 0 auto; padding: 36px 24px 60px; }
+.section-label { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); margin: 28px 0 12px; }
+.card { background: #fff; border-radius: 14px; border: 1px solid var(--border); padding: 20px 24px; margin-bottom: 14px; }
+.card h3 { font-size: 15px; font-weight: 600; color: var(--terre); margin-bottom: 10px; }
+p { font-size: 13px; line-height: 1.75; color: var(--gris); margin-bottom: 8px; }
+p:last-child { margin-bottom: 0; }
+ul { padding-left: 18px; margin-bottom: 8px; }
+li { font-size: 13px; line-height: 1.7; color: var(--gris); margin-bottom: 4px; }
+
+/* DOUBLE RISQUE */
+.double-risque { display: grid; grid-template-columns: 1fr 20px 1fr; gap: 0; align-items: center; margin: 14px 0; }
+.dr-box { border-radius: 12px; padding: 18px 20px; }
+.dr-stockage { background: #E6F1FB; border: 2px solid #185FA5; }
+.dr-stockage h4 { color: #0C447C; font-size: 13px; margin-bottom: 8px; }
+.dr-stockage p, .dr-stockage li { color: #1A4F8A; font-size: 12px; }
+.dr-ia { background: #FCEBEB; border: 2px solid #CC1111; }
+.dr-ia h4 { color: #791F1F; font-size: 13px; margin-bottom: 8px; }
+.dr-ia p, .dr-ia li { color: #A32D2D; font-size: 12px; }
+.dr-plus { text-align: center; font-size: 24px; font-weight: 600; color: var(--terra); }
+
+/* TABLEAU VERDICT */
+.verdict-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 12px; }
+.verdict-table th { background: var(--terre); color: var(--lin); padding: 9px 12px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+.verdict-table td { padding: 10px 12px; border: 1px solid var(--border); vertical-align: top; line-height: 1.55; }
+.verdict-table tr:nth-child(odd) td { background: #FAF6EE; }
+.verdict-table tr:nth-child(even) td { background: #fff; }
+.v-ok { color: #1A7A1A; font-weight: 600; }
+.v-warn { color: #CC5500; font-weight: 600; }
+.v-ko { color: #CC1111; font-weight: 600; }
+
+/* ÉTAPES */
+.etapes { display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
+.etape { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.etape-n { background: var(--terra); color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; font-family: 'Playfair Display', serif; flex-shrink: 0; }
+.etape h4 { font-size: 13px; font-weight: 600; color: var(--terre); margin-bottom: 4px; font-family: 'DM Sans', sans-serif; }
+.etape p { font-size: 12px; color: var(--gris); margin: 0; }
+.tag-urgent { display: inline-block; background: #FCEBEB; color: #791F1F; border: 1px solid #F09595; padding: 2px 8px; border-radius: 8px; font-size: 10px; font-weight: 600; margin-left: 6px; }
+
+/* ALERTES */
+.alerte { border-radius: 0 10px 10px 0; padding: 13px 16px; margin: 12px 0; border-left: 4px solid; }
+.alerte strong { display: block; font-size: 13px; margin-bottom: 4px; }
+.alerte p { margin: 0; font-size: 12px; }
+.al-rouge { background: #FCEBEB; border-color: #CC1111; }
+.al-rouge strong { color: #791F1F; }
+.al-rouge p { color: #A32D2D; }
+.al-orange { background: #FAEEDA; border-color: #CC5500; }
+.al-orange strong { color: #633806; }
+.al-orange p { color: #854F0B; }
+.al-verte { background: #EAF3DE; border-color: #3B6D11; }
+.al-verte strong { color: #173404; }
+.al-verte p { color: #27500A; }
+
+footer { background: var(--terre); padding: 28px; text-align: center; }
+footer p { font-size: 12px; color: #888780; line-height: 1.8; }
+footer a { color: var(--terra); }
+@media (max-width: 600px) { .double-risque { grid-template-columns: 1fr; } .dr-plus { display: none; } }
+@media print { .top-bar { display: none; } }
+</style>
+</head>
+<body>
+<div class="top-bar"><a href="../index.html">← Ressources formation</a></div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">Stockage cloud · RGPD · AI Act</span>
+    <h1>Google Drive &amp; OneDrive —<br>Ce que vous devez vraiment savoir</h1>
+    <p class="sub">Le stockage cloud et l'IA intégrée dans votre stockage ne sont pas le même problème. Ce guide démêle les deux.</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label">Le double risque que personne ne vous explique</div>
+  <div class="double-risque">
+    <div class="dr-box dr-stockage">
+      <h4>Risque 1 — Le stockage lui-même</h4>
+      <p>Vos fichiers sont sur des serveurs d'entreprises américaines (Google, Microsoft). La loi américaine CLOUD Act peut contraindre ces entreprises à livrer vos données à des autorités US — même si elles sont stockées en Europe.</p>
+      <ul style="margin-top: 8px;">
+        <li>Clients européens concernés par le RGPD</li>
+        <li>Données RH, financières, stratégiques</li>
+        <li>Données de santé (réglementation spécifique)</li>
+      </ul>
+    </div>
+    <div class="dr-plus">+</div>
+    <div class="dr-box dr-ia">
+      <h4>Risque 2 — L'IA intégrée dans votre stockage</h4>
+      <p>Quand Gemini analyse vos Docs Google ou que Copilot lit vos fichiers Word — vos données sont traitées par une IA. C'est un niveau de risque supplémentaire distinct du stockage seul.</p>
+      <ul style="margin-top: 8px;">
+        <li>Gemini dans Google Workspace</li>
+        <li>Copilot dans Microsoft 365</li>
+        <li>Suggestions IA automatiques dans vos documents</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Verdict par solution — ce qui est autorisé</div>
+  <table class="verdict-table">
+    <tr>
+      <th>Solution</th>
+      <th>Données publiques</th>
+      <th>Données clients</th>
+      <th>RH / Finance / Brevets</th>
+    </tr>
+    <tr>
+      <td><strong>Google Drive personnel</strong></td>
+      <td class="v-warn">⚠ Acceptable</td>
+      <td class="v-ko">❌ Interdit</td>
+      <td class="v-ko">❌ Interdit</td>
+    </tr>
+    <tr>
+      <td><strong>Google Workspace Business</strong><br><small>avec DPA signé + EU data region</small></td>
+      <td class="v-ok">✅ OK</td>
+      <td class="v-warn">⚠ Sous conditions</td>
+      <td class="v-ko">❌ Très risqué</td>
+    </tr>
+    <tr>
+      <td><strong>OneDrive personnel</strong></td>
+      <td class="v-warn">⚠ Acceptable</td>
+      <td class="v-ko">❌ Interdit</td>
+      <td class="v-ko">❌ Interdit</td>
+    </tr>
+    <tr>
+      <td><strong>Microsoft 365 Business</strong><br><small>avec DPA + EU Data Boundary</small></td>
+      <td class="v-ok">✅ OK</td>
+      <td class="v-warn">⚠ Sous conditions</td>
+      <td class="v-ko">❌ Très risqué</td>
+    </tr>
+    <tr>
+      <td><strong>Gemini dans Google Docs</strong></td>
+      <td class="v-warn">⚠ Acceptable</td>
+      <td class="v-ko">❌ Interdit sans audit</td>
+      <td class="v-ko">❌ Interdit</td>
+    </tr>
+    <tr>
+      <td><strong>Copilot dans Word/Excel</strong></td>
+      <td class="v-warn">⚠ Acceptable</td>
+      <td class="v-ko">❌ Interdit sans audit</td>
+      <td class="v-ko">❌ Interdit</td>
+    </tr>
+  </table>
+
+  <div class="alerte al-orange">
+    <strong>Pourquoi "sous conditions" ne veut pas dire "OK"</strong>
+    <p>Pour Google Workspace ou Microsoft 365 avec des données clients : il faut (1) un DPA signé, (2) l'hébergement EU activé, (3) Gemini/Copilot désactivé sur les fichiers concernés, (4) une mention dans votre politique RGPD. Sans ces 4 éléments, vous n'êtes pas en conformité même avec un abonnement payant.</p>
+  </div>
+
+  <div class="section-label">Ce que vous faites concrètement — Google Workspace</div>
+  <div class="etapes">
+    <div class="etape">
+      <div class="etape-n">1</div>
+      <div><h4>Vérifiez votre abonnement <span class="tag-urgent">Obligatoire</span></h4>
+      <p>Seules les versions Business Starter, Business Standard ou Business Plus permettent de signer un DPA et d'activer l'hébergement EU. Google Drive "gratuit" ou compte perso → données clients interdites.</p></div>
+    </div>
+    <div class="etape">
+      <div class="etape-n">2</div>
+      <div><h4>Signez le DPA Google</h4>
+      <p>admin.google.com → Compte → Légal → Data Processing Agreement. À télécharger, signer, et archiver dans votre registre RGPD.</p></div>
+    </div>
+    <div class="etape">
+      <div class="etape-n">3</div>
+      <div><h4>Activez l'hébergement EU</h4>
+      <p>admin.google.com → Compte → Paramètres → Région de données → Sélectionner "Europe". Attention : le changement prend jusqu'à 6 semaines pour les données existantes.</p></div>
+    </div>
+    <div class="etape">
+      <div class="etape-n">4</div>
+      <div><h4>Désactivez Gemini sur les fichiers sensibles <span class="tag-urgent">Ce soir</span></h4>
+      <p>admin.google.com → Applications → Google Workspace → Gemini → Désactiver pour les unités organisationnelles qui traitent des données clients. Sinon, Gemini peut lire et analyser ces fichiers automatiquement.</p></div>
+    </div>
+  </div>
+
+  <div class="section-label">Ce que vous faites concrètement — Microsoft 365</div>
+  <div class="etapes">
+    <div class="etape">
+      <div class="etape-n">1</div>
+      <div><h4>Vérifiez votre abonnement</h4>
+      <p>Microsoft 365 Business Basic, Standard ou Premium permettent le DPA et l'EU Data Boundary. OneDrive personnel → données clients interdites.</p></div>
+    </div>
+    <div class="etape">
+      <div class="etape-n">2</div>
+      <div><h4>Signez le DPA Microsoft (MPA)</h4>
+      <p>Microsoft appelle ça le "Microsoft Products and Services Data Protection Addendum". Disponible dans le centre d'administration Microsoft 365 → Facturation → Contrats.</p></div>
+    </div>
+    <div class="etape">
+      <div class="etape-n">3</div>
+      <div><h4>Activez EU Data Boundary</h4>
+      <p>Depuis 2023, Microsoft propose l'EU Data Boundary pour traiter et stocker vos données en Europe. Admin center → Paramètres → Sécurité et confidentialité → Résidence des données.</p></div>
+    </div>
+    <div class="etape">
+      <div class="etape-n">4</div>
+      <div><h4>Désactivez Copilot pour les fichiers sensibles <span class="tag-urgent">Ce soir</span></h4>
+      <p>Admin center → Applications intégrées → Microsoft 365 Copilot → Gestion des licences → Retirez l'accès Copilot aux utilisateurs qui traitent des données RH, financières ou clients sensibles.</p></div>
+    </div>
+  </div>
+
+  <div class="section-label">La règle simple à retenir</div>
+  <div class="card" style="background: var(--lin);">
+    <h3>Stockage ≠ traitement IA</h3>
+    <p>Stocker un fichier client sur Google Drive avec un abonnement Business + DPA + EU Region = acceptable (avec conditions). Mais si Gemini ou Copilot <em>ouvre et analyse</em> ce fichier — c'est un traitement IA supplémentaire qui nécessite une évaluation séparée.</p>
+    <p style="margin-top: 10px; font-weight: 600; color: var(--terre);">Règle pratique : désactivez Gemini et Copilot sur tous les dossiers contenant des données clients, RH ou financières. Utilisez ces IA uniquement sur des contenus publics ou internes non nominatifs.</p>
+  </div>
+
+  <div class="alerte al-verte">
+    <strong>Bonne nouvelle pour les utilisateurs Microsoft 365 Business</strong>
+    <p>Si vous avez déjà un abonnement Microsoft 365 Business actif, le DPA est probablement déjà signé (Microsoft le signe automatiquement depuis 2022 pour les abonnements Business). Vérifiez dans Admin Center → Légal. Et activez l'EU Data Boundary si ce n'est pas fait.</p>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>CS Consulting Stratégique</strong> · Catherine Selosse · <a href="https://csbusiness.fr">csbusiness.fr</a></p>
+  <p>Formation FCE Académie · Guide Google Drive &amp; OneDrive · Juin 2026</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obligation AI Literacy — Ce que vous devez faire avant le 3 août 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --lin: #F3EADA;
+  --blanc: #FAFAFA;
+  --terre: #433F3C;
+  --terra: #D17C61;
+  --beige: #C19E8A;
+  --gris: #5F5E5A;
+  --border: #C19E8A;
+}
+body { background: #fff; font-family: 'DM Sans', sans-serif; color: var(--terre); max-width: 800px; margin: 0 auto; padding: 40px 48px; }
+
+/* HEADER */
+.doc-header { border-bottom: 3px solid var(--terra); padding-bottom: 20px; margin-bottom: 28px; }
+.doc-label { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); margin-bottom: 10px; }
+h1 { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--terre); line-height: 1.3; margin-bottom: 8px; }
+.doc-meta { font-size: 12px; color: var(--gris); }
+.urgence-badge { display: inline-block; background: #CC1111; color: #fff; padding: 6px 16px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-top: 12px; }
+
+/* TYPOGRAPHY */
+h2 { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--terre); margin: 28px 0 10px; border-left: 4px solid var(--terra); padding-left: 12px; }
+h3 { font-size: 13px; font-weight: 600; color: var(--terre); margin: 16px 0 6px; }
+p { font-size: 13px; line-height: 1.8; color: var(--gris); margin-bottom: 8px; }
+p:last-child { margin-bottom: 0; }
+ul { padding-left: 20px; margin: 8px 0; }
+li { font-size: 13px; line-height: 1.75; color: var(--gris); margin-bottom: 4px; }
+strong { color: var(--terre); }
+
+/* ENCADRÉS */
+.encadre { border-radius: 6px; padding: 14px 18px; margin: 14px 0; border-left: 5px solid; }
+.enc-rouge { background: #FCEBEB; border-color: #CC1111; }
+.enc-rouge p, .enc-rouge li { color: #791F1F; }
+.enc-rouge strong { color: #501313; }
+.enc-vert { background: #EAF3DE; border-color: #3B6D11; }
+.enc-vert p, .enc-vert li { color: #27500A; }
+.enc-vert strong { color: #173404; }
+.enc-orange { background: #FAEEDA; border-color: #CC5500; }
+.enc-orange p, .enc-orange li { color: #854F0B; }
+.enc-orange strong { color: #633806; }
+.enc-bleu { background: #E6F1FB; border-color: #185FA5; }
+.enc-bleu p, .enc-bleu li { color: #1A4F8A; }
+.enc-bleu strong { color: #0C447C; }
+
+/* DÉFINITION */
+.definition-box { background: var(--lin); border: 2px solid var(--beige); border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+.definition-box .def-label { font-size: 9px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); margin-bottom: 8px; }
+.definition-box p { font-size: 14px; color: var(--terre); font-style: italic; line-height: 1.65; }
+.definition-box cite { display: block; font-size: 11px; color: var(--gris); margin-top: 8px; font-style: normal; }
+
+/* TABLEAU SANCTIONS */
+.tableau { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 12px; }
+.tableau th { background: var(--terre); color: var(--lin); padding: 8px 12px; text-align: left; font-weight: 600; }
+.tableau td { padding: 8px 12px; border: 1px solid var(--border); vertical-align: top; line-height: 1.55; }
+.tableau tr:nth-child(odd) td { background: #FAF6EE; }
+.tableau tr:nth-child(even) td { background: #fff; }
+.rouge-td { color: #CC1111; font-weight: 600; }
+
+/* CHECKLIST PRINTABLE */
+.checklist-section { margin-top: 24px; }
+.chk-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+.chk-table tr { border-bottom: 1px solid #E8DDD0; }
+.chk-table td { padding: 9px 8px; font-size: 12px; vertical-align: middle; }
+.chk-box-print { width: 20px; height: 20px; border: 1.5px solid #C19E8A; border-radius: 3px; display: inline-block; }
+.chk-num { width: 30px; font-weight: 600; color: var(--terra); font-size: 13px; }
+.chk-action { color: var(--terre); line-height: 1.5; }
+.chk-action span { display: block; font-size: 11px; color: var(--gris); }
+
+/* PLAN SESSION */
+.session-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; }
+.session-table th { background: #433F3C; color: var(--lin); padding: 7px 10px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+.session-table td { padding: 8px 10px; border: 1px solid var(--border); vertical-align: top; }
+.session-table tr:nth-child(odd) td { background: #FAF6EE; }
+.session-table tr:nth-child(even) td { background: #fff; }
+.session-table td:first-child { font-weight: 600; color: var(--terra); width: 70px; }
+
+/* ATTESTATION */
+.attestation { border: 2px dashed var(--beige); border-radius: 8px; padding: 20px 24px; margin-top: 28px; }
+.attestation h2 { border: none; padding: 0; margin-top: 0; margin-bottom: 14px; font-size: 15px; }
+.att-ligne { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; font-size: 12px; }
+.att-ligne .att-label { min-width: 120px; color: var(--gris); font-weight: 600; }
+.att-blank { flex: 1; border-bottom: 1px solid var(--terre); }
+.att-sign { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+.att-sign-col { font-size: 11px; color: var(--gris); }
+.att-sign-col strong { display: block; margin-bottom: 40px; }
+.att-sign-col .sign-zone { border-top: 1px solid var(--terre); padding-top: 4px; font-style: italic; }
+
+/* FOOTER DOC */
+.doc-footer { margin-top: 32px; padding-top: 14px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.doc-footer p { font-size: 10px; color: var(--beige); margin: 0; }
+
+/* PRINT */
+@media print {
+  body { padding: 20px 32px; max-width: 100%; }
+  .no-print { display: none !important; }
+  h2 { page-break-after: avoid; }
+  .attestation { page-break-before: always; }
+}
+</style>
+</head>
+<body>
+
+<p class="no-print" style="font-size:12px; margin-bottom:20px;"><a href="../index.html" style="color: #D17C61;">← Ressources formation</a></p>
+
+<div class="doc-header">
+  <div class="doc-label">AI Act · Article 4 · Obligation légale</div>
+  <h1>L'obligation AI Literacy —<br>Ce que vous devez faire avant le 3 août 2026</h1>
+  <p class="doc-meta">CS Consulting Stratégique · Catherine Selosse · Mise à jour juin 2026</p>
+  <div class="urgence-badge">⏰ Sanctions possibles dès le 3 août 2026 — J&nbsp;-&nbsp;56</div>
+</div>
+
+
+<h2>Ce qu'est l'AI Literacy</h2>
+
+<div class="definition-box">
+  <div class="def-label">Définition légale — Article 4, AI Act</div>
+  <p>« Les fournisseurs et les déployeurs de systèmes d'IA prennent des mesures pour s'assurer, dans la mesure du possible, d'un niveau suffisant de maîtrise de l'IA parmi leur personnel et toute autre personne traitant ou utilisant des systèmes d'IA en leur nom. »</p>
+  <cite>— Règlement UE 2024/1689, Article 4 · En vigueur depuis le 2 février 2025</cite>
+</div>
+
+<p>En clair : <strong>si votre entreprise utilise un outil IA — pour rédiger, analyser, traduire, générer du contenu — vous devez vous assurer que vos collaborateurs savent l'utiliser de façon responsable.</strong></p>
+
+<div class="encadre enc-orange">
+  <p><strong>Qui est concerné ?</strong> Toute entreprise qui utilise un outil IA, sans aucun seuil de taille. Une TPE de 2 personnes qui utilise ChatGPT pour rédiger ses devis est concernée au même titre qu'un groupe de 5 000 salariés. Aucune exemption pour les micro-entreprises.</p>
+</div>
+
+
+<h2>Le calendrier exact</h2>
+
+<table class="tableau">
+  <tr>
+    <th>Date</th>
+    <th>Ce qui s'est passé</th>
+    <th>Votre situation</th>
+  </tr>
+  <tr>
+    <td><strong>2 fév. 2025</strong></td>
+    <td>Article 4 entre en vigueur. L'obligation de former vos équipes est effective.</td>
+    <td>Vous êtes <em>déjà</em> concernée depuis 16 mois. Si vous n'avez pas encore formé, vous avez un retard de conformité.</td>
+  </tr>
+  <tr>
+    <td><strong>7 mai 2026</strong></td>
+    <td>Accord Omnibus : les obligations systèmes haut risque sont repoussées à déc. 2027. <strong>L'AI Literacy reste au 3 août 2026.</strong></td>
+    <td>Le report ne concerne pas l'article 4. La date de sanction reste inchangée.</td>
+  </tr>
+  <tr>
+    <td><strong class="rouge-td">3 août 2026</strong></td>
+    <td>Les autorités nationales (CNIL + ARCOM) peuvent engager des contrôles et prononcer des sanctions.</td>
+    <td><strong>Votre deadline pour avoir une trace de formation.</strong></td>
+  </tr>
+</table>
+
+
+<h2>Ce que vous risquez si vous ne faites rien</h2>
+
+<table class="tableau">
+  <tr>
+    <th>Type de manquement</th>
+    <th>Sanction maximale</th>
+    <th>Pour une TPE à 500 k€ de CA</th>
+  </tr>
+  <tr>
+    <td>Non-conformité article 4 (AI Literacy)</td>
+    <td>7,5 M€ <strong>ou</strong> 1,5% du CA mondial</td>
+    <td class="rouge-td">7 500 €</td>
+  </tr>
+  <tr>
+    <td>Manquement transparence (chatbot non signalé)</td>
+    <td>7,5 M€ <strong>ou</strong> 1,5% du CA mondial</td>
+    <td class="rouge-td">7 500 €</td>
+  </tr>
+  <tr>
+    <td>Système haut risque non conforme</td>
+    <td>15 M€ <strong>ou</strong> 3% du CA mondial</td>
+    <td class="rouge-td">15 000 €</td>
+  </tr>
+</table>
+
+<div class="encadre enc-bleu">
+  <p><strong>La règle "plus petit montant" protège les TPE.</strong> Pour les PME et les startups, le règlement prévoit explicitement que c'est le montant le plus bas entre le plafond absolu et le pourcentage du CA qui s'applique. Mais 7 500 € d'amende pour une TPE reste un risque réel — sans compter le coût de réputation.</p>
+</div>
+
+
+<h2>Ce que "former ses équipes" veut dire concrètement</h2>
+
+<p>La loi ne demande <strong>pas</strong> :</p>
+<ul>
+  <li>Une certification ou un diplôme</li>
+  <li>Des semaines de formation</li>
+  <li>Un budget important</li>
+</ul>
+
+<p style="margin-top: 10px;">La loi demande <strong>un "niveau suffisant de maîtrise adapté au rôle" de chaque personne</strong>. Pour une TPE qui utilise Claude ou ChatGPT pour rédiger des emails et faire de la veille, une session d'1h avec une trace écrite suffit.</p>
+
+<div class="encadre enc-vert">
+  <p><strong>La règle simple :</strong> chaque collaborateur qui utilise un outil IA doit comprendre (1) ce que fait l'outil, (2) quelles données ne doivent pas y entrer, (3) pourquoi un humain doit toujours relire le résultat. C'est tout.</p>
+</div>
+
+
+<h2>Plan de session — 1h pour une TPE</h2>
+
+<table class="session-table">
+  <tr>
+    <th>Durée</th>
+    <th>Contenu</th>
+    <th>À retenir</th>
+  </tr>
+  <tr>
+    <td>15 min</td>
+    <td><strong>Ce qui sort de votre entreprise</strong><br>Montrez le schéma des flux de données. Quels outils vous utilisez, où vont les données. Les 4 points de fuite.</td>
+    <td>Chaque donnée collée dans un outil IA quitte potentiellement l'Europe.</td>
+  </tr>
+  <tr>
+    <td>20 min</td>
+    <td><strong>Ce qu'on ne met jamais dans une IA</strong><br>Liste concrète : noms clients, IBAN, RH, contrats, stratégie. Exemples réels.</td>
+    <td>Apprendre le réflexe DDO (Département → Donnée → Outil).</td>
+  </tr>
+  <tr>
+    <td>15 min</td>
+    <td><strong>Les outils autorisés dans notre structure</strong><br>Montrez quels outils sont validés et pourquoi. Règles d'or de votre entreprise.</td>
+    <td>Savoir où aller et qui demander en cas de doute.</td>
+  </tr>
+  <tr>
+    <td>10 min</td>
+    <td><strong>La règle du dernier regard humain</strong><br>Aucun document client ou officiel ne part sans relecture. L'IA aide — elle ne décide pas.</td>
+    <td>Le "dernier regard" est toujours humain, toujours.</td>
+  </tr>
+</table>
+
+
+<h2>Ce que vous devez garder comme preuve</h2>
+
+<p>En cas de contrôle, vous devrez montrer que vous avez pris des mesures. Conservez :</p>
+<ul>
+  <li>La date et le contenu de la session (ordre du jour ou support utilisé)</li>
+  <li>La liste des participants et leurs signatures — l'attestation ci-dessous</li>
+  <li>Vos 3 règles d'usage IA (document écrit, même une page)</li>
+  <li>La liste des outils IA utilisés dans votre structure (registre simplifié)</li>
+</ul>
+
+<div class="encadre enc-vert">
+  <p><strong>Ce guide + l'attestation signée ci-dessous = votre preuve de conformité AI Literacy.</strong> Conservez-les dans votre registre RGPD ou dans votre GED, avec la date de la session.</p>
+</div>
+
+
+<div class="checklist-section">
+  <h2>Checklist — Ce que vous avez fait</h2>
+  <table class="chk-table">
+    <tr><td class="chk-num">1</td><td><span class="chk-box-print"></span></td><td class="chk-action">Cartographie des outils IA utilisés dans la structure<span>Liste des outils + qui les utilise + type de données traitées</span></td></tr>
+    <tr><td class="chk-num">2</td><td><span class="chk-box-print"></span></td><td class="chk-action">Session de sensibilisation AI Literacy organisée<span>Date : ____________  Durée : ____________  Animatrice : ____________</span></td></tr>
+    <tr><td class="chk-num">3</td><td><span class="chk-box-print"></span></td><td class="chk-action">3 règles d'usage IA rédigées et communiquées à l'équipe<span>Document écrit, signé, conservé dans le registre</span></td></tr>
+    <tr><td class="chk-num">4</td><td><span class="chk-box-print"></span></td><td class="chk-action">Mention IA ajoutée dans le règlement intérieur ou la charte informatique<span>Une phrase suffit : "L'usage d'outils IA est soumis aux règles définies dans la politique IA de l'entreprise."</span></td></tr>
+    <tr><td class="chk-num">5</td><td><span class="chk-box-print"></span></td><td class="chk-action">Attestation de participation signée conservée<span>Voir page suivante — à remplir et archiver avec ce document</span></td></tr>
+    <tr><td class="chk-num">6</td><td><span class="chk-box-print"></span></td><td class="chk-action">DPA signé avec l'outil IA principal (si données clients traitées)<span>Claude for Work → Settings → Legal & Compliance · Mistral → legal.mistral.ai</span></td></tr>
+  </table>
+</div>
+
+
+<!-- ATTESTATION -->
+<div class="attestation">
+  <h2>Attestation de formation — AI Literacy · Article 4 AI Act</h2>
+
+  <div class="att-ligne">
+    <span class="att-label">Entreprise :</span>
+    <span class="att-blank"></span>
+  </div>
+  <div class="att-ligne">
+    <span class="att-label">SIREN :</span>
+    <span class="att-blank"></span>
+  </div>
+  <div class="att-ligne">
+    <span class="att-label">Date de la session :</span>
+    <span class="att-blank"></span>
+  </div>
+  <div class="att-ligne">
+    <span class="att-label">Durée :</span>
+    <span class="att-blank"></span>
+  </div>
+  <div class="att-ligne">
+    <span class="att-label">Animatrice :</span>
+    <span class="att-blank"></span>
+  </div>
+  <div class="att-ligne">
+    <span class="att-label">Support utilisé :</span>
+    <span class="att-blank"></span>
+  </div>
+
+  <h3 style="margin-top: 18px; margin-bottom: 10px;">Participants</h3>
+  <table class="session-table" style="font-size: 12px;">
+    <tr>
+      <th style="width: 35%;">Nom et prénom</th>
+      <th style="width: 30%;">Poste</th>
+      <th>Signature</th>
+    </tr>
+    <tr><td style="height: 28px;"></td><td></td><td></td></tr>
+    <tr><td style="height: 28px;"></td><td></td><td></td></tr>
+    <tr><td style="height: 28px;"></td><td></td><td></td></tr>
+    <tr><td style="height: 28px;"></td><td></td><td></td></tr>
+    <tr><td style="height: 28px;"></td><td></td><td></td></tr>
+    <tr><td style="height: 28px;"></td><td></td><td></td></tr>
+    <tr><td style="height: 28px;"></td><td></td><td></td></tr>
+    <tr><td style="height: 28px;"></td><td></td><td></td></tr>
+  </table>
+
+  <div class="att-sign">
+    <div class="att-sign-col">
+      <strong>Signature de la dirigeante / responsable :</strong>
+      <div class="sign-zone">Nom, date, cachet</div>
+    </div>
+    <div class="att-sign-col">
+      <strong>Cette attestation constitue votre preuve de conformité Article 4 AI Act. Conservez-la avec votre registre RGPD.</strong>
+      <div class="sign-zone" style="font-style:normal; color: var(--gris); font-size: 10px;">Base légale : Règlement UE 2024/1689, Article 4 — Formation des équipes à l'usage de l'IA</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="doc-footer">
+  <p>CS Consulting Stratégique · Catherine Selosse · <a href="https://csbusiness.fr" style="color: #D17C61;">csbusiness.fr</a></p>
+  <p>Formation FCE Académie · Guide AI Literacy · Juin 2026</p>
+</div>
+
+</body>
+</html>

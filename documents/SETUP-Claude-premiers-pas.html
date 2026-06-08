@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configurer Claude — Premiers pas · CS Consulting Stratégique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --lin:#F3EADA; --blanc:#FAFAFA; --terre:#433F3C; --terra:#D17C61; --beige:#C19E8A; --gris:#5F5E5A; --border:#C19E8A; }
+body { background: var(--blanc); font-family: 'DM Sans', sans-serif; color: var(--terre); }
+a { color: var(--terra); text-decoration: none; }
+h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; }
+.top-bar { background: var(--terra); padding: 10px 24px; text-align: center; }
+.top-bar a { color: #fff; font-size: 12px; font-weight: 600; }
+
+.hero { background: var(--terre); padding: 48px 32px 40px; }
+.hero-inner { max-width: 820px; margin: 0 auto; }
+.hero-tag { display: inline-block; background: var(--terra); color: #fff; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; }
+.hero h1 { font-size: 32px; font-weight: 600; color: var(--lin); line-height: 1.25; margin-bottom: 12px; }
+.hero .sub { font-size: 14px; color: var(--beige); line-height: 1.75; max-width: 620px; }
+
+.container { max-width: 820px; margin: 0 auto; padding: 36px 24px 60px; }
+.section-label { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); margin: 32px 0 12px; }
+.card { background: #fff; border-radius: 14px; border: 1px solid var(--border); padding: 22px 26px; margin-bottom: 14px; }
+.card h3 { font-size: 15px; font-weight: 600; color: var(--terre); margin-bottom: 10px; }
+p { font-size: 13px; line-height: 1.75; color: var(--gris); margin-bottom: 8px; }
+p:last-child { margin-bottom: 0; }
+ul, ol { padding-left: 20px; margin-bottom: 10px; }
+li { font-size: 13px; line-height: 1.75; color: var(--gris); margin-bottom: 3px; }
+
+/* ÉTAPE PRINCIPALE */
+.etape-grande { background: #fff; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 20px; overflow: hidden; }
+.etape-grande-h { display: grid; grid-template-columns: 60px 1fr; align-items: center; background: var(--lin); padding: 18px 22px; gap: 16px; border-bottom: 1px solid var(--border); }
+.eg-num { background: var(--terra); color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 600; font-family: 'Playfair Display', serif; flex-shrink: 0; }
+.eg-titre h3 { font-size: 16px; font-weight: 600; color: var(--terre); margin: 0 0 2px; }
+.eg-titre .eg-sub { font-size: 12px; color: var(--gris); }
+.etape-grande-body { padding: 20px 22px; }
+.etape-grande-body p { font-size: 13px; }
+
+/* SOUS-ÉTAPES */
+.sous-etapes { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+.sous-etape { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; }
+.se-n { background: var(--beige); color: var(--terre); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+.se-text { font-size: 13px; color: var(--gris); line-height: 1.65; }
+.se-text strong { color: var(--terre); }
+.se-text code { font-family: 'Courier New', monospace; background: var(--lin); padding: 2px 6px; border-radius: 4px; font-size: 11px; color: var(--terre); border: 1px solid var(--beige); }
+
+/* PROMPT */
+.prompt-wrap { position: relative; background: #1E1C1A; border-radius: 10px; padding: 18px 20px; margin: 12px 0; }
+.prompt-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--terra); margin-bottom: 10px; }
+.prompt-text { font-family: 'Courier New', monospace; font-size: 11.5px; color: var(--lin); line-height: 1.85; white-space: pre-wrap; }
+.pt-h { color: #FAC775; font-weight: 700; }
+.pt-s { color: var(--terra); font-weight: 600; }
+.copy-btn { position: absolute; top: 12px; right: 12px; background: var(--terra); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: 'DM Sans', sans-serif; font-weight: 600; }
+.copy-btn:hover { background: #AE7558; }
+.copy-btn.copied { background: #3B6D11; }
+
+/* COMPARATIF VERSIONS */
+.versions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 12px 0; }
+.version { border-radius: 10px; padding: 14px; }
+.v-free { background: #FAF3ED; border: 1px solid #D9BEA8; }
+.v-free h4 { color: #8B5E3C; font-size: 12px; margin-bottom: 6px; font-family: 'DM Sans', sans-serif; font-weight: 600; }
+.v-free p { color: #6B4A30; font-size: 11px; line-height: 1.55; }
+.v-pro { background: #EAF3DE; border: 2px solid #3B6D11; }
+.v-pro h4 { color: #173404; font-size: 12px; margin-bottom: 6px; font-family: 'DM Sans', sans-serif; font-weight: 600; }
+.v-pro p { color: #27500A; font-size: 11px; line-height: 1.55; }
+.v-work { background: #E6F1FB; border: 1px solid #B5D4F4; }
+.v-work h4 { color: #0C447C; font-size: 12px; margin-bottom: 6px; font-family: 'DM Sans', sans-serif; font-weight: 600; }
+.v-work p { color: #185FA5; font-size: 11px; line-height: 1.55; }
+.recommended-tag { display: inline-block; background: #3B6D11; color: #fff; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 6px; margin-left: 6px; text-transform: uppercase; letter-spacing: 1px; vertical-align: middle; }
+
+/* ALERTE */
+.alerte { border-radius: 0 10px 10px 0; padding: 13px 16px; margin: 12px 0; border-left: 4px solid; }
+.alerte strong { display: block; font-size: 13px; margin-bottom: 4px; }
+.alerte p { margin: 0; font-size: 12px; }
+.al-verte { background: #EAF3DE; border-color: #3B6D11; }
+.al-verte strong { color: #173404; }
+.al-verte p { color: #27500A; }
+.al-orange { background: #FAEEDA; border-color: #CC5500; }
+.al-orange strong { color: #633806; }
+.al-orange p { color: #854F0B; }
+
+/* CHECKLIST FINALE */
+.checklist-finale { background: #fff; border-radius: 14px; border: 2px solid var(--terra); padding: 22px 26px; margin-top: 20px; }
+.checklist-finale h3 { font-size: 15px; color: var(--terre); margin-bottom: 14px; }
+.check-item { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #F0EAE0; }
+.check-item:last-child { border-bottom: none; }
+.check-box { width: 20px; height: 20px; border: 2px solid var(--terra); border-radius: 4px; flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: background 0.1s; }
+.check-box.done { background: var(--terra); }
+.check-text { font-size: 13px; color: var(--gris); line-height: 1.6; }
+.check-text strong { color: var(--terre); }
+
+footer { background: var(--terre); padding: 28px; text-align: center; }
+footer p { font-size: 12px; color: #888780; line-height: 1.8; }
+footer a { color: var(--terra); }
+@media (max-width: 600px) { .versions { grid-template-columns: 1fr; } .etape-grande-h { grid-template-columns: 44px 1fr; } }
+@media print { .top-bar { display: none; } }
+</style>
+</head>
+<body>
+<div class="top-bar"><a href="../index.html">← Toutes les ressources</a></div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">Configuration · Premiers pas</span>
+    <h1>Configurer Claude pour votre entreprise</h1>
+    <p class="sub">Pas de compte, pas de configuration — et vous travaillez dans le flou. En 30 minutes, vous installez Claude de façon sécurisée, efficace, et adaptée à votre façon de travailler.</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ÉTAPE 1 : CHOISIR SA VERSION -->
+  <div class="section-label">Étape 1 — Choisir la bonne version</div>
+  <div class="etape-grande">
+    <div class="etape-grande-h">
+      <div class="eg-num">1</div>
+      <div class="eg-titre"><h3>Quelle version choisir ?</h3><div class="eg-sub">La version détermine ce que vous pouvez envoyer à Claude</div></div>
+    </div>
+    <div class="etape-grande-body">
+      <div class="versions">
+        <div class="version v-free">
+          <h4>Claude gratuit</h4>
+          <p>Données publiques uniquement. Pas de DPA. Ne jamais envoyer de données clients, RH ou financières.</p>
+        </div>
+        <div class="version v-pro">
+          <h4>Claude Pro <span class="recommended-tag">Pour vous</span></h4>
+          <p>Priorité réseau, projets, mémoire. Avec le DPA signé → données clients autorisées sous conditions.</p>
+        </div>
+        <div class="version v-work">
+          <h4>Claude for Work (Teams)</h4>
+          <p>Usage équipe, DPA inclus, hébergement EU. Pour les structures avec plusieurs utilisateurs.</p>
+        </div>
+      </div>
+      <div class="alerte al-verte">
+        <strong>Action immédiate si vous êtes sur Claude Pro</strong>
+        <p>Allez dans Settings → Legal & Compliance → signez le Data Processing Agreement. 5 minutes. Sans cette étape, vous n'avez pas de base légale pour les données clients même avec Claude Pro.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 2 : INSTRUCTIONS PERSONNALISÉES -->
+  <div class="section-label">Étape 2 — Vos instructions personnalisées (racine)</div>
+  <div class="etape-grande">
+    <div class="etape-grande-h">
+      <div class="eg-num">2</div>
+      <div class="eg-titre"><h3>Configurer votre contexte une fois pour toutes</h3><div class="eg-sub">Ces instructions s'appliquent à toutes vos conversations</div></div>
+    </div>
+    <div class="etape-grande-body">
+      <p>Les instructions personnalisées sont votre "carte de visite" que Claude lit avant chaque conversation. Vous n'avez plus à vous présenter à chaque session.</p>
+      <div class="sous-etapes">
+        <div class="sous-etape"><div class="se-n">1</div><div class="se-text">Claude.ai → cliquez sur votre <strong>avatar en bas à gauche</strong> → <code>Paramètres</code></div></div>
+        <div class="sous-etape"><div class="se-n">2</div><div class="se-text">Onglet <strong>Profil</strong> → section "Instructions personnalisées"</div></div>
+        <div class="sous-etape"><div class="se-n">3</div><div class="se-text">Collez le template ci-dessous, complétez les zones entre [ ]</div></div>
+      </div>
+
+      <div class="prompt-wrap" id="blk-contexte">
+        <div class="prompt-label">Template — instructions personnalisées racine</div>
+        <button class="copy-btn" onclick="copyPrompt('blk-contexte', this)">Copier</button>
+        <div class="prompt-text" id="txt-contexte"><span class="pt-h">Contexte de mon entreprise</span>
+Je suis [votre prénom], dirigeante de [nom de l'entreprise].
+Secteur : [votre secteur d'activité].
+Taille : [nombre de collaborateurs].
+Ma région : [ville ou région].
+
+<span class="pt-h">Comment je travaille</span>
+Je préfère des réponses : [courtes et directes / détaillées / avec exemples].
+Mes principaux usages de Claude : [ex : rédaction emails, analyse documents, préparation RDV].
+Outils que j'utilise au quotidien : [ex : Google Workspace, Notion, etc.].
+
+<span class="pt-h">Mes règles de sécurité (toujours actives)</span>
+Si je t'envoie un document et que tu détectes des données sensibles (noms de clients, IBAN, données RH, données de santé), signale-le avant d'aller plus loin.
+Ne traite jamais de données confidentielles que je t'aurais envoyées par erreur sans m'en avertir.
+
+<span class="pt-s">Quand je tape /secure-guard suivi d'un contenu :</span>
+Analyse si ce contenu contient des données sensibles RGPD.
+Verdict : 🟢 Sûr / 🟡 À anonymiser (liste quoi) / 🔴 Ne pas envoyer (explique pourquoi).
+Si 🟡 : propose une version avec les données remplacées par [PRÉNOM], [MONTANT], etc.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 : CRÉER LE PROJET GOUVERNANCE IA -->
+  <div class="section-label">Étape 3 — Créer votre Projet Gouvernance IA</div>
+  <div class="etape-grande">
+    <div class="etape-grande-h">
+      <div class="eg-num">3</div>
+      <div class="eg-titre"><h3>Votre projet dédié — mémoire et skills</h3><div class="eg-sub">Claude se souvient de tout ce qui est dans ce projet</div></div>
+    </div>
+    <div class="etape-grande-body">
+      <p>Un Projet Claude, c'est un espace où vos conversations s'accumulent et où vous pouvez définir des comportements spécifiques (vos skills). Claude voit tout l'historique du projet à chaque nouvelle conversation.</p>
+      <div class="sous-etapes">
+        <div class="sous-etape"><div class="se-n">1</div><div class="se-text">Claude.ai → barre latérale gauche → <strong>Nouveau projet</strong> → nommez-le <code>Gouvernance IA [votre entreprise]</code></div></div>
+        <div class="sous-etape"><div class="se-n">2</div><div class="se-text">Ouvrez le projet → <strong>Instructions du projet</strong> → collez vos skills (amélioration continue, veille)</div></div>
+        <div class="sous-etape"><div class="se-n">3</div><div class="se-text">Désormais, travaillez dans ce projet pour tout ce qui concerne votre gouvernance IA — Claude accumule le contexte</div></div>
+      </div>
+
+      <div class="alerte al-orange">
+        <strong>Créez un second projet "Veille IA" séparé</strong>
+        <p>Gardez la veille dans un projet dédié. Comme ça, dans 6 mois Claude peut comparer : "En janvier vous surveilliez X, maintenant voici ce qui a changé."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 4 : PREMIER TEST -->
+  <div class="section-label">Étape 4 — Votre premier test</div>
+  <div class="etape-grande">
+    <div class="etape-grande-h">
+      <div class="eg-num">4</div>
+      <div class="eg-titre"><h3>Tester que tout fonctionne</h3><div class="eg-sub">3 tests à faire maintenant, avant de fermer cette page</div></div>
+    </div>
+    <div class="etape-grande-body">
+      <div class="sous-etapes">
+        <div class="sous-etape">
+          <div class="se-n">A</div>
+          <div class="se-text"><strong>Test Secure Guard</strong> — dans n'importe quelle conversation Claude, tapez :<br>
+          <code>/secure-guard Bonjour, voici la facture de M. Dupont, IBAN FR76 1234 5678 9012, montant 1 450 €.</code><br>
+          Claude doit répondre 🟡 et proposer une version anonymisée.</div>
+        </div>
+        <div class="sous-etape">
+          <div class="se-n">B</div>
+          <div class="se-text"><strong>Test contexte</strong> — démarrez une nouvelle conversation et demandez :<br>
+          <code>Qui suis-je et dans quel secteur je travaille ?</code><br>
+          Claude doit répondre avec vos informations sans que vous les ayez redonné.</div>
+        </div>
+        <div class="sous-etape">
+          <div class="se-n">C</div>
+          <div class="se-text"><strong>Test projet</strong> — depuis votre projet Gouvernance IA, tapez :<br>
+          <code>/amélioration-continue</code><br>
+          Si le skill est bien installé, Claude lance l'analyse. S'il répond "je ne comprends pas cette commande", revérifiez que le skill est bien dans les instructions du projet.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 5 : PROMPT DE DÉMARRAGE UNIVERSEL -->
+  <div class="section-label">Étape 5 — Votre prompt de démarrage universel</div>
+  <div class="card">
+    <h3>Quand vous ne savez pas quoi demander</h3>
+    <p>Ce prompt s'utilise en début de session pour demander à Claude de vous proposer comment il peut vous aider — en partant de votre contexte.</p>
+  </div>
+  <div class="prompt-wrap" id="blk-demarrage">
+    <div class="prompt-label">Prompt universel de démarrage — à utiliser quand vous ouvrez Claude</div>
+    <button class="copy-btn" onclick="copyPrompt('blk-demarrage', this)">Copier</button>
+    <div class="prompt-text" id="txt-demarrage"><span class="pt-h">Sur la base de ce que tu sais de mon profil et de mon activité :</span>
+
+1. Qu'est-ce que tu pourrais faire pour moi aujourd'hui qui m'économiserait du temps ?
+
+2. Y a-t-il quelque chose que tu remarques dans ma façon de travailler avec toi que je pourrais améliorer ?
+
+3. Propose-moi une tâche concrète à te déléguer maintenant, que je n'aurais probablement pas pensé à te confier.
+
+Sois direct. Propose des choses faisables en moins de 20 minutes.</div>
+  </div>
+
+  <!-- CHECKLIST FINALE -->
+  <div class="checklist-finale">
+    <h3>Checklist de configuration — cochez au fur et à mesure</h3>
+    <div class="check-item"><div class="check-box" onclick="this.classList.toggle('done')"></div><div class="check-text"><strong>Version choisie</strong> — Claude gratuit, Pro ou Work selon vos usages</div></div>
+    <div class="check-item"><div class="check-box" onclick="this.classList.toggle('done')"></div><div class="check-text"><strong>DPA signé</strong> — Settings → Legal & Compliance (si Claude Pro ou Work)</div></div>
+    <div class="check-item"><div class="check-box" onclick="this.classList.toggle('done')"></div><div class="check-text"><strong>Instructions personnalisées</strong> — profil + contexte + skill /secure-guard installés à la racine</div></div>
+    <div class="check-item"><div class="check-box" onclick="this.classList.toggle('done')"></div><div class="check-text"><strong>Projet "Gouvernance IA" créé</strong> — avec skill /amélioration-continue dans les instructions</div></div>
+    <div class="check-item"><div class="check-box" onclick="this.classList.toggle('done')"></div><div class="check-text"><strong>Projet "Veille IA" créé</strong> — avec skill /veille hebdo et /veille mensuel</div></div>
+    <div class="check-item"><div class="check-box" onclick="this.classList.toggle('done')"></div><div class="check-text"><strong>3 tests effectués</strong> — Secure Guard, contexte, amélioration continue</div></div>
+    <div class="check-item"><div class="check-box" onclick="this.classList.toggle('done')"></div><div class="check-text"><strong>Réflexe DDO enseigné à l'équipe</strong> — Département → Donnée → Outil avant chaque usage IA</div></div>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>CS Consulting Stratégique</strong> · Catherine Selosse · <a href="https://csbusiness.fr">csbusiness.fr</a></p>
+  <p>Formation FCE Académie · Configuration Claude · Juin 2026</p>
+</footer>
+
+<script>
+function copyPrompt(blockId, btn) {
+  var text = document.getElementById(blockId).querySelector('[id^="txt-"]').innerText;
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '✓ Copié !';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+</script>
+</body>
+</html>

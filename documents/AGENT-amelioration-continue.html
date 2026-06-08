@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Créez vos skills IA — Gouvernance & amélioration continue · CS Consulting Stratégique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --lin:#F3EADA; --blanc:#FAFAFA; --terre:#433F3C; --terra:#D17C61; --beige:#C19E8A; --gris:#5F5E5A; --border:#C19E8A; }
+body { background: var(--blanc); font-family: 'DM Sans', sans-serif; color: var(--terre); }
+a { color: var(--terra); text-decoration: none; }
+h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; }
+.top-bar { background: var(--terra); padding: 10px 24px; text-align: center; }
+.top-bar a { color: #fff; font-size: 12px; font-weight: 600; }
+.hero { background: var(--terre); padding: 48px 32px 40px; }
+.hero-inner { max-width: 820px; margin: 0 auto; }
+.hero-tag { display: inline-block; background: var(--terra); color: #fff; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; }
+.hero h1 { font-size: 32px; font-weight: 600; color: var(--lin); line-height: 1.25; margin-bottom: 12px; }
+.hero .sub { font-size: 14px; color: var(--beige); line-height: 1.75; max-width: 620px; }
+.container { max-width: 820px; margin: 0 auto; padding: 36px 24px 60px; }
+.section-label { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--terra); margin: 32px 0 12px; }
+.card { background: #fff; border-radius: 14px; border: 1px solid var(--border); padding: 22px 26px; margin-bottom: 14px; }
+.card h3 { font-size: 15px; font-weight: 600; color: var(--terre); margin-bottom: 10px; }
+p { font-size: 13px; line-height: 1.75; color: var(--gris); margin-bottom: 8px; }
+p:last-child { margin-bottom: 0; }
+ul { padding-left: 18px; margin-bottom: 8px; }
+li { font-size: 13px; line-height: 1.7; color: var(--gris); margin-bottom: 3px; }
+
+/* NIVEAUX RACINE / PROJET */
+.niveau-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+.niv-box { border-radius: 12px; padding: 20px; }
+.niv-racine { background: #1E1C1A; border: 2px solid #FAC775; }
+.niv-racine h4 { color: #FAC775; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 600; margin-bottom: 8px; }
+.niv-racine p, .niv-racine li { color: #C8B89A; font-size: 12px; }
+.niv-racine ul { padding-left: 16px; }
+.niv-projet { background: #EEEDFE; border: 2px solid #534AB7; }
+.niv-projet h4 { color: #3C3489; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 600; margin-bottom: 8px; }
+.niv-projet p, .niv-projet li { color: #534AB7; font-size: 12px; }
+.niv-projet ul { padding-left: 16px; }
+
+/* ÉTAPES */
+.etapes { display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
+.etape { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.etape-n { background: var(--terra); color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; font-family: 'Playfair Display', serif; flex-shrink: 0; }
+.etape h4 { font-size: 13px; font-weight: 600; color: var(--terre); margin-bottom: 4px; font-family: 'DM Sans', sans-serif; }
+.etape p { font-size: 12px; color: var(--gris); margin: 0; }
+.etape code { font-family: 'Courier New', monospace; background: var(--lin); padding: 2px 6px; border-radius: 4px; font-size: 11px; color: var(--terre); border: 1px solid var(--beige); }
+
+/* PROMPT */
+.prompt-wrap { position: relative; background: #1E1C1A; border-radius: 10px; padding: 20px 22px; margin: 14px 0; }
+.prompt-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--terra); margin-bottom: 12px; }
+.prompt-text { font-family: 'Courier New', monospace; font-size: 11.5px; color: var(--lin); line-height: 1.85; white-space: pre-wrap; }
+.pt-h { color: #FAC775; font-weight: 700; }
+.pt-s { color: var(--terra); font-weight: 600; }
+.pt-ex { color: #9FE1CB; }
+.copy-btn { position: absolute; top: 12px; right: 12px; background: var(--terra); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: 'DM Sans', sans-serif; font-weight: 600; }
+.copy-btn:hover { background: #AE7558; }
+.copy-btn.copied { background: #3B6D11; }
+
+/* SKILL CARD */
+.skill-card { border-radius: 14px; border: 2px solid; margin-bottom: 20px; overflow: hidden; }
+.skill-card-h { display: flex; align-items: center; justify-content: space-between; padding: 16px 22px; gap: 12px; }
+.skill-card h3 { font-size: 16px; font-weight: 600; font-family: 'Playfair Display', serif; }
+.skill-tag { font-family: 'Courier New', monospace; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
+.skill-card-meta { padding: 0 22px 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.skill-card-body { padding: 0 22px 20px; }
+.skill-card-body > p { font-size: 13px; line-height: 1.65; margin-bottom: 12px; }
+
+.sk-amelio { border-color: #534AB7; }
+.sk-amelio .skill-card-h { background: #EEEDFE; }
+.sk-amelio h3 { color: #3C3489; }
+.sk-amelio .skill-tag { background: #3C3489; color: #fff; }
+.sk-amelio .skill-card-meta { color: #534AB7; }
+
+.sk-secure { border-color: #FAC775; }
+.sk-secure .skill-card-h { background: #1E1C1A; }
+.sk-secure h3 { color: #FAC775; }
+.sk-secure .skill-tag { background: #FAC775; color: #1E1C1A; }
+.sk-secure .skill-card-meta { color: #8B5E3C; }
+
+.sk-veille { border-color: var(--terra); }
+.sk-veille .skill-card-h { background: var(--lin); }
+.sk-veille h3 { color: var(--terre); }
+.sk-veille .skill-tag { background: var(--terra); color: #fff; }
+.sk-veille .skill-card-meta { color: var(--terra); }
+
+/* BADGE PLACEMENT */
+.badge-placement { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.bp-racine { background: #1E1C1A; color: #FAC775; }
+.bp-projet { background: #EEEDFE; color: #3C3489; }
+
+/* ROUTINE */
+.routine-schema { display: flex; align-items: center; gap: 8px; background: var(--lin); border-radius: 12px; padding: 18px 20px; margin: 14px 0; flex-wrap: wrap; }
+.rs-box { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; text-align: center; min-width: 100px; flex: 1; }
+.rs-icon { font-size: 20px; margin-bottom: 4px; }
+.rs-label { font-size: 11px; font-weight: 600; color: var(--terre); }
+.rs-sub { font-size: 10px; color: var(--gris); margin-top: 2px; }
+.rs-arrow { font-size: 18px; color: var(--terra); font-weight: 600; flex-shrink: 0; }
+
+/* CTA */
+.cta-audit { background: var(--terre); border-radius: 16px; padding: 36px 32px; margin-top: 40px; text-align: center; }
+.cta-audit h2 { font-size: 22px; color: var(--lin); margin-bottom: 12px; }
+.cta-audit p { color: var(--beige); font-size: 14px; line-height: 1.7; max-width: 520px; margin: 0 auto 24px; }
+.cta-btn { display: inline-block; background: var(--terra); color: #fff; padding: 14px 32px; border-radius: 10px; font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; }
+.cta-btn:hover { background: #AE7558; color: #fff; }
+.cta-sub { font-size: 12px; color: #888780; margin-top: 12px; }
+
+footer { background: var(--terre); padding: 28px; text-align: center; }
+footer p { font-size: 12px; color: #888780; line-height: 1.8; }
+footer a { color: var(--terra); }
+@media (max-width: 600px) { .niveau-grid { grid-template-columns: 1fr; } .routine-schema { flex-direction: column; } .skill-card-h { flex-direction: column; align-items: flex-start; } }
+</style>
+</head>
+<body>
+<div class="top-bar"><a href="../index.html">← Ressources formation</a></div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">⚙️ Niveau avancé</span>
+    <h1>Créez vos propres skills IA</h1>
+    <p class="sub">Claude sait déjà faire énormément de choses. Avant de créer quoi que ce soit, commencez par lui demander ce qu'il peut faire pour vous — puis personnalisez ce dont vous avez vraiment besoin.</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SKILL CREATOR -->
+  <div class="section-label">Comment créer un skill — le Skill Creator de Claude.ai</div>
+  <div class="card">
+    <h3>Claude.ai a un créateur de skills intégré</h3>
+    <p>Depuis octobre 2025, Claude.ai dispose d'un <strong>Skill Creator natif</strong>. Vous lui décrivez ce que vous voulez, il génère et installe le skill directement dans votre compte — disponible dans toutes vos conversations.</p>
+    <p>Accès : <strong>Claude.ai → Settings → Features → Create a skill</strong> · Plan Pro ou supérieur requis.</p>
+  </div>
+
+  <div class="etapes">
+    <div class="etape">
+      <div class="etape-n">1</div>
+      <div><h4>Ouvrez le Skill Creator</h4>
+      <p>Claude.ai → votre avatar en bas à gauche → <strong>Settings</strong> → onglet <strong>Features</strong> → <strong>Create a skill</strong></p></div>
+    </div>
+    <div class="etape">
+      <div class="etape-n">2</div>
+      <div><h4>Collez le prompt de création ci-dessous</h4>
+      <p>Chaque skill a son propre prompt à donner au Skill Creator. Claude génère la configuration complète et l'installe pour vous.</p></div>
+    </div>
+    <div class="etape">
+      <div class="etape-n">3</div>
+      <div><h4>Le skill est actif immédiatement</h4>
+      <p>Une fois créé, il s'active automatiquement selon le contexte de votre conversation — sans que vous ayez à le rappeler.</p></div>
+    </div>
+  </div>
+
+  <!-- SKILL 1 : SECURE GUARD -->
+  <div class="section-label">Skill 1 — Secure Guard</div>
+  <div class="skill-card sk-secure">
+    <div class="skill-card-h">
+      <h3>Secure Guard — pare-feu IA</h3>
+      <span class="skill-tag">sécurité RGPD</span>
+    </div>
+    <div class="skill-card-meta">📍 Actif dans toutes vos conversations — détecte les données sensibles avant envoi</div>
+    <div class="skill-card-body">
+      <p>Ce skill surveille silencieusement ce que vous envoyez à Claude. Si vous partagez un document contenant des données sensibles (noms de clients, IBAN, données RH…), il vous alerte avant d'aller plus loin et propose une version anonymisée.</p>
+
+      <div class="prompt-wrap" id="blk-sg">
+        <div class="prompt-label">Prompt à coller dans le Skill Creator — Settings → Features → Create a skill</div>
+        <button class="copy-btn" onclick="copyPrompt('blk-sg', this)">Copier</button>
+        <div class="prompt-text" id="txt-sg"><span class="pt-h">Crée un skill de sécurité RGPD pour une dirigeante de TPE française.</span>
+
+Ce skill s'appelle "Secure Guard". Il surveille silencieusement tout contenu que je partage dans Claude.
+
+<span class="pt-s">Comportement automatique dès qu'un document, texte ou email est partagé :</span>
+Scanne le contenu et identifie les données sensibles RGPD :
+- Noms et coordonnées de personnes identifiables
+- Données financières (IBAN, montants, contrats)
+- Données RH (salaires, évaluations, numéros de sécurité sociale)
+- Informations stratégiques (brevets, devis en cours, prix fournisseurs)
+- Données de santé
+
+Si aucune donnée sensible : traite normalement, sans interruption.
+
+Si données sensibles détectées, affiche avant tout traitement :
+🟡 SECURE GUARD — Données sensibles détectées
+Liste exactement ce qui est sensible et pourquoi.
+Propose une version avec les données remplacées : [PRÉNOM], [MONTANT], [NOM-ENTREPRISE]…
+Demande confirmation avant de continuer.
+
+Si le contenu est clairement dangereux (données de santé, IBAN avec contexte financier) :
+🔴 SECURE GUARD — Ne pas traiter
+Explique pourquoi et propose une alternative sécurisée.
+
+Ne jamais demander de cliquer sur un lien pour vérifier.
+Mode silencieux par défaut — n'intervient que si risque détecté.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILL 2 : AMÉLIORATION CONTINUE -->
+  <div class="section-label">Skill 2 — Amélioration continue</div>
+  <div class="skill-card sk-amelio">
+    <div class="skill-card-h">
+      <h3>Amélioration continue</h3>
+      <span class="skill-tag">bilan hebdo / mensuel</span>
+    </div>
+    <div class="skill-card-meta">📁 À lancer en fin de semaine — analyse votre façon de travailler avec l'IA</div>
+    <div class="skill-card-body">
+      <p>Ce skill analyse vos conversations récentes et vous dit concrètement comment vous progressez dans votre usage de l'IA — ce qui fonctionne, ce qui freine, ce que vous pourriez automatiser. Deux rythmes : hebdomadaire (5 min) et mensuel (20 min).</p>
+
+      <div class="prompt-wrap" id="blk-ac">
+        <div class="prompt-label">Prompt à coller dans le Skill Creator — Settings → Features → Create a skill</div>
+        <button class="copy-btn" onclick="copyPrompt('blk-ac', this)">Copier</button>
+        <div class="prompt-text" id="txt-ac"><span class="pt-h">Crée un skill d'amélioration continue IA pour une dirigeante de TPE française.</span>
+
+Ce skill s'appelle "Amélioration continue". Il analyse mes conversations récentes et m'aide à progresser dans mon usage de l'IA.
+
+<span class="pt-s">Quand je demande mon bilan hebdomadaire :</span>
+Analyse mes conversations de la semaine.
+Identifie comment j'utilise l'IA : tâches déléguées, façon de formuler mes demandes, résultats obtenus.
+
+Réponds en 3 points — 200 mots max :
+✅ CE QUI FONCTIONNE BIEN
+2 usages concrets où j'exploite bien l'IA. Cite un exemple réel de nos échanges.
+
+🔧 CE QUI POURRAIT ÊTRE AMÉLIORÉ
+2 points précis : prompts trop vagues, tâches manuelles que l'IA pourrait faire, occasions manquées.
+
+🎯 MON ACTION DE LA SEMAINE
+Une seule chose à changer dès maintenant. Formulée en action, pas en conseil.
+
+Termine par : "Tu veux qu'on approfondisse l'un de ces points ?"
+
+<span class="pt-s">Quand je demande mon bilan mensuel :</span>
+Bilan de fond en 4 points :
+1. Mes outils IA sont-ils toujours conformes RGPD + AI Act ?
+2. L'équipe applique-t-elle le réflexe DDO (Département → Donnée → Outil) ?
+3. Y a-t-il une échéance légale dans les 30 jours ?
+4. Mes 3 actions prioritaires pour le mois prochain.
+
+Produis un compte-rendu daté que je peux conserver.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILL 3 : VEILLE -->
+  <div class="section-label">Skill 3 — Veille réglementaire (optionnel)</div>
+  <div class="skill-card sk-veille">
+    <div class="skill-card-h">
+      <h3>Veille IA — hebdo & mensuelle</h3>
+      <span class="skill-tag">AI Act · RGPD · outils</span>
+    </div>
+    <div class="skill-card-meta">📰 Reste informée des évolutions IA sans y passer du temps</div>
+    <div class="skill-card-body">
+      <p>Ce skill vous donne en 200 mots l'essentiel de l'actualité IA qui impacte votre entreprise — ce qui a changé, ce à quoi il faut faire attention, une action concrète. Hebdo ou mensuel selon votre rythme.</p>
+
+      <div class="prompt-wrap" id="blk-v">
+        <div class="prompt-label">Prompt à coller dans le Skill Creator — Settings → Features → Create a skill</div>
+        <button class="copy-btn" onclick="copyPrompt('blk-v', this)">Copier</button>
+        <div class="prompt-text" id="txt-v"><span class="pt-h">Crée un skill de veille IA pour une dirigeante de TPE française.</span>
+
+Ce skill s'appelle "Veille IA". Il me tient informée des actualités IA et réglementaires qui impactent mon entreprise.
+
+<span class="pt-s">Quand je demande ma veille hebdomadaire — 200 mots max :</span>
+
+📰 L'ACTU DE LA SEMAINE
+Une info IA ou réglementaire qui impacte les TPE françaises cette semaine.
+Si rien de notable : confirme en une phrase.
+
+⚠️ SIGNAL À SURVEILLER
+Un nouvel outil, une faille de sécurité, ou un changement réglementaire à garder à l'œil.
+
+✅ MON ACTION DE LA SEMAINE
+Une seule chose concrète à faire dans ma gouvernance IA cette semaine.
+
+<span class="pt-s">Quand je demande ma veille mensuelle :</span>
+
+🔍 Mes outils IA sont-ils toujours conformes RGPD + AI Act ?
+📅 Y a-t-il une échéance légale dans les 30 jours ?
+👥 Ma politique IA est-elle à jour ?
+🎯 3 actions pour le mois prochain, par ordre de priorité.
+
+Produis un compte-rendu daté que je peux conserver.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRÉEZ VOS PROPRES SKILLS -->
+  <div class="section-label">Créez vos propres skills — le prompt qui propose</div>
+  <div class="card">
+    <h3>Laissez Claude concevoir vos skills sur mesure</h3>
+    <p>Ouvrez le Skill Creator, collez ce prompt. Claude vous pose 5 questions, analyse votre façon de travailler, et génère les skills adaptés à votre profil — prêts à installer.</p>
+  </div>
+
+  <div class="prompt-wrap" id="blk-designer">
+    <div class="prompt-label">Prompt à coller dans le Skill Creator — pour créer vos skills personnalisés</div>
+    <button class="copy-btn" onclick="copyPrompt('blk-designer', this)">Copier</button>
+    <div class="prompt-text" id="txt-designer"><span class="pt-h">Je suis dirigeante d'une TPE française. Je veux créer des skills IA personnalisés adaptés à mon travail.</span>
+
+Commence par me poser 5 questions courtes pour comprendre :
+- Mon secteur et la taille de mon équipe
+- Comment j'utilise Claude au quotidien (fréquence, types de tâches)
+- Quelles tâches répétitives je fais souvent et que je pourrais déléguer
+- Ce qui me frustre dans mes interactions actuelles avec l'IA
+- Les résultats que j'aimerais obtenir automatiquement sans y penser
+
+Ensuite, propose-moi 3 skills personnalisés. Pour chacun :
+1. Un nom clair et ce qu'il fait concrètement
+2. Le comportement exact que tu vas lui donner
+3. Génère-le directement — ne demande pas de validation
+
+Commence par les questions. Sois direct.</div>
+  </div>
+
+  <!-- ROUTINE AUTOMATIQUE -->
+  <div class="section-label">Automatisez — la routine qui s'envoie par mail</div>
+  <div class="routine-schema">
+    <div class="rs-box"><div class="rs-icon">⏰</div><div class="rs-label">Déclencheur</div><div class="rs-sub">Lundi 8h</div></div>
+    <div class="rs-arrow">→</div>
+    <div class="rs-box"><div class="rs-icon">🤖</div><div class="rs-label">Claude</div><div class="rs-sub">Exécute /veille</div></div>
+    <div class="rs-arrow">→</div>
+    <div class="rs-box"><div class="rs-icon">📄</div><div class="rs-label">Résultat</div><div class="rs-sub">Bilan généré</div></div>
+    <div class="rs-arrow">→</div>
+    <div class="rs-box"><div class="rs-icon">📧</div><div class="rs-label">Email</div><div class="rs-sub">Dans votre boîte</div></div>
+  </div>
+
+  <div class="etapes">
+    <div class="etape">
+      <div class="etape-n" style="background: #E6F1FB; color: #0C447C;">1</div>
+      <div><h4>Option simple — rappel calendrier (gratuit)</h4>
+      <p>Événement récurrent chaque lundi dans Google Agenda. Description : <code>Taper /veille dans Claude Veille IA</code>. 2 minutes à mettre en place, zéro technique.</p></div>
+    </div>
+    <div class="etape">
+      <div class="etape-n" style="background: #FAEEDA; color: #633806;">2</div>
+      <div><h4>Option intermédiaire — Zapier ou Make (~20 €/mois)</h4>
+      <p>Déclencheur lundi → envoie le prompt à Claude via l'API → résultat par email. Aucun code, configuration en 30 minutes.</p></div>
+    </div>
+    <div class="etape">
+      <div class="etape-n" style="background: #EEEDFE; color: #3C3489;">3</div>
+      <div><h4>Option automatisée — n8n (hébergé chez vous)</h4>
+      <p>Workflow complet : cron lundi 8h → Claude IA → Gmail. Totalement autonome, données chez vous. Je peux configurer ce workflow pour votre structure.</p></div>
+    </div>
+  </div>
+
+  <!-- CTA FINAL -->
+  <div class="cta-audit">
+    <h2>Vous voulez aller plus loin ?</h2>
+    <p>En 30 minutes, j'audite votre usage IA actuel, configure vos skills dans Claude, et mets en place la routine automatique qui vous envoie votre veille chaque semaine.</p>
+    <a href="https://csbusiness.fr" class="cta-btn">Réserver mon audit offert de 30 minutes →</a>
+    <p class="cta-sub">Sans engagement · 30 minutes · Par visioconférence</p>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>CS Consulting Stratégique</strong> · Catherine Selosse · <a href="https://csbusiness.fr">csbusiness.fr</a></p>
+  <p>Formation FCE Académie · Créez vos skills IA · Juin 2026</p>
+</footer>
+
+<script>
+function copyPrompt(blockId, btn) {
+  var text = document.getElementById(blockId).querySelector('[id^="txt-"]').innerText;
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '✓ Copié !';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+</script>
+</body>
+</html>
