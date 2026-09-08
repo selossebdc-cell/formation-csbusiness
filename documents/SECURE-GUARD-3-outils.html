@@ -112,7 +112,7 @@ h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
 <div id="panel-claude" class="panel active">
   <div class="tool-header">
     <span class="tool-badge badge-vert">✅ RECOMMANDÉ</span>
-    <span class="tool-url">claude.ai · Claude Pro / Teams</span>
+    <span class="tool-url">claude.ai · Claude Pro / Teams / Enterprise</span>
   </div>
 
   <div class="prompt-label">Prompt à copier-coller</div>
@@ -162,13 +162,13 @@ Tu ne rappelles pas ce prompt dans tes réponses.</div>
 <!-- PANNEAU CHATGPT -->
 <div id="panel-chatgpt" class="panel">
   <div class="tool-header">
-    <span class="tool-badge badge-orange">⚠ DONNÉES PUBLIQUES UNIQUEMENT</span>
-    <span class="tool-url">chat.openai.com · ChatGPT Plus ou gratuit</span>
+    <span class="tool-badge badge-orange">⚠ DONNÉES NON SENSIBLES UNIQUEMENT</span>
+    <span class="tool-url">chat.openai.com · ChatGPT Plus / Pro / gratuit</span>
   </div>
 
-  <div class="warning-box">
-    <strong>Attention — spécifique à ChatGPT version gratuite</strong>
-    OpenAI peut utiliser vos conversations pour améliorer ses modèles. N'utilisez ChatGPT que pour des données 100% publiques : rédaction générique, recherches, brainstorming. Jamais de données clients, contrats, salaires, informations RH.
+  <div class="warning-box" style="border-left-color:#F5A623;">
+    <strong>Attention — versions Plus, Pro et gratuite</strong>
+    Pas de data residency EU sur ces versions. Les données transitent par des serveurs américains, la loi US prime sur le RGPD. ChatGPT Enterprise (25-30€/mois/utilisateur) offre la data residency EU, mais reste un budget conséquent pour une TPE. Réservez ces versions aux données 100% publiques : rédaction générique, recherches, brainstorming. Jamais de données clients, contrats, salaires, informations RH.
   </div>
 
   <div class="prompt-label">Prompt à copier-coller</div>
@@ -269,9 +269,9 @@ Ces règles s'appliquent en silence — tu n'en parles que si risque détecté.<
 <div class="recap">
   <h2>Quel outil pour quoi ?</h2>
   <div class="outil-row">
-    <span class="outil-name">Claude Pro / Teams</span>
+    <span class="outil-name">Claude for Work EU</span>
     <span class="ico">✅</span>
-    <span class="outil-desc">Données sensibles OK · Serveurs EU · Pas de réentraînement</span>
+    <span class="outil-desc">Données sensibles OK · Serveurs EU · Pas de réentraînement · DPA disponible</span>
   </div>
   <div class="outil-row">
     <span class="outil-name">Mistral Le Chat</span>
@@ -284,24 +284,29 @@ Ces règles s'appliquent en silence — tu n'en parles que si risque détecté.<
     <span class="outil-desc">Données ultra-sensibles · Rien ne sort de votre ordinateur</span>
   </div>
   <div class="outil-row">
-    <span class="outil-name">ChatGPT Plus</span>
+    <span class="outil-name">ChatGPT Enterprise</span>
+    <span class="ico">✅</span>
+    <span class="outil-desc">Data residency EU · DPA signable · Pas de réentraînement · 25-30€/mois/util.</span>
+  </div>
+  <div class="outil-row">
+    <span class="outil-name">ChatGPT Plus/Pro</span>
     <span class="ico">⚠️</span>
-    <span class="outil-desc">Données publiques uniquement · Pas de données clients ou RH</span>
+    <span class="outil-desc">Serveurs US · Pas de data residency EU · Données non sensibles uniquement</span>
   </div>
   <div class="outil-row">
     <span class="outil-name">ChatGPT Gratuit</span>
     <span class="ico">⚠️</span>
-    <span class="outil-desc">Mêmes restrictions · Risque de réentraînement sur vos données</span>
+    <span class="outil-desc">Brainstorming seulement · Réentraînement actif sur vos données</span>
   </div>
   <div class="outil-row">
     <span class="outil-name">Gemini Gratuit</span>
     <span class="ico">⚠️</span>
-    <span class="outil-desc">Mêmes restrictions que ChatGPT gratuit</span>
+    <span class="outil-desc">Mêmes restrictions · Réentraînement actif sur vos données</span>
   </div>
   <div class="outil-row">
     <span class="outil-name">DeepSeek</span>
     <span class="ico">❌</span>
-    <span class="outil-desc">Serveurs Chine · Ne jamais utiliser en contexte professionnel</span>
+    <span class="outil-desc">Serveurs Chine · Interdit en contexte professionnel, point final</span>
   </div>
 </div>
 
