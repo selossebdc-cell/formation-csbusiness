@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM Council — Conseil de décision IA · CS Consulting Stratégique</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #F3EADA; font-family: 'DM Sans', sans-serif; color: #433F3C; padding: 32px 24px; max-width: 860px; margin: 0 auto; }
+h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 26px; font-weight: 600; margin-bottom: 4px; color: #433F3C; }
+.sub { font-family: 'Playfair Display', Georgia, serif; font-size: 13px; color: #AE7558; font-style: italic; margin-bottom: 8px; }
+.intro { font-size: 14px; color: #5F5E5A; margin-bottom: 32px; line-height: 1.7; }
+.intro strong { color: #D17C61; }
+
+/* CARTES */
+.card { background: #fff; border-radius: 16px; border: 1px solid #C19E8A; padding: 28px; margin-bottom: 24px; }
+.card h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 600; color: #433F3C; margin-bottom: 16px; border-left: 4px solid #D17C61; padding-left: 12px; }
+.card h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 15px; font-weight: 600; color: #433F3C; margin-bottom: 8px; }
+
+/* CONSEILLERS */
+.conseillers { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.conseiller { background: #F3EADA; border-radius: 10px; padding: 18px 20px; border-left: 4px solid #D17C61; }
+.conseiller:nth-child(1) { border-color: #A32D2D; }
+.conseiller:nth-child(2) { border-color: #185FA5; }
+.conseiller:nth-child(3) { border-color: #534AB7; }
+.conseiller:nth-child(4) { border-color: #BA7517; }
+.conseiller:nth-child(5) { border-color: #3B6D11; }
+.conseiller .nom { font-family: 'Playfair Display', Georgia, serif; font-size: 15px; font-weight: 600; color: #433F3C; margin-bottom: 4px; }
+.conseiller .role { font-size: 12px; color: #AE7558; font-style: italic; margin-bottom: 6px; }
+.conseiller .desc { font-size: 13px; color: #5F5E5A; line-height: 1.6; }
+
+.tensions { font-size: 13px; color: #5F5E5A; margin-top: 16px; padding: 12px 16px; background: #F3EADA; border-radius: 10px; line-height: 1.7; }
+
+/* ÉTAPES */
+.etapes { counter-reset: step; }
+.etape { position: relative; padding-left: 48px; margin-bottom: 24px; }
+.etape::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%; background: #D17C61; color: #fff; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+.etape h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 16px; font-weight: 600; color: #433F3C; margin-bottom: 8px; }
+.etape p { font-size: 13px; color: #5F5E5A; line-height: 1.7; }
+
+/* BLOC CODE */
+.code-block { background: #2C2C2A; border-radius: 10px; padding: 20px; margin: 12px 0 16px; font-family: 'Courier New', monospace; font-size: 12px; color: #F3EADA; line-height: 1.7; white-space: pre-wrap; word-break: break-word; }
+
+/* STRUCTURE VERDICT */
+.verdict-structure { font-family: 'Courier New', monospace; font-size: 11px; background: #F3EADA; padding: 16px 20px; border-radius: 10px; color: #433F3C; line-height: 1.8; }
+
+/* RÈGLES */
+.regles { display: flex; flex-direction: column; gap: 10px; }
+.regle { font-size: 13px; color: #5F5E5A; line-height: 1.6; padding: 10px 14px; background: #F3EADA; border-radius: 8px; }
+.regle strong { color: #D17C61; }
+
+/* LIENS */
+.lien { display: inline-block; margin-top: 16px; font-size: 12px; color: #AE7558; text-decoration: none; border-bottom: 1px solid #C19E8A; padding-bottom: 2px; }
+.lien:hover { color: #D17C61; }
+
+.footer { text-align: center; font-size: 11px; color: #888780; margin-top: 32px; padding-top: 16px; border-top: 1px solid #C19E8A; }
+
+@media (min-width: 700px) { .conseillers { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>LLM Council</h1>
+<div class="sub">Conseil de décision IA — 5 conseillers, 1 verdict tranché</div>
+<p class="intro">Adapté du <a href="https://github.com/karpathy/llm-council" style="color:#AE7558;">LLM Council d'Andrej Karpathy</a>. À réserver aux décisions où <strong>se tromper coûte cher</strong> : positionnement, pricing, pivot, offre, embauche, investissement. Si la question a une seule bonne réponse ou aucun enjeu, <strong>n'utilisez pas ce conseil</strong> — répondez directement.</p>
+
+<!-- LES 5 CONSEILLERS -->
+<div class="card">
+  <h2>Les 5 conseillers</h2>
+  <p style="font-size:13px; color:#5F5E5A; margin-bottom:16px; line-height:1.7;">Des <strong>styles de pensée</strong> qui créent des tensions naturelles entre eux, pas des personas.</p>
+  <div class="conseillers">
+    <div class="conseiller">
+      <div class="nom">1. L'Avocat du diable</div>
+      <div class="role">Cherche la faille fatale</div>
+      <div class="desc">Ce qui manque, ce qui va échouer. Part du principe que l'idée a un défaut caché et le traque. Si tout semble solide, creuse plus loin. Pose les questions que personne n'ose poser.</div>
+    </div>
+    <div class="conseiller">
+      <div class="nom">2. Le Penseur premiers principes</div>
+      <div class="role">Reconstruit depuis zéro</div>
+      <div class="desc">Ignore la question de surface et demande « quel problème essaie-t-on vraiment de résoudre ? ». Décape les suppositions. Sa meilleure contribution est parfois « vous posez la mauvaise question ».</div>
+    </div>
+    <div class="conseiller">
+      <div class="nom">3. L'Expansionniste</div>
+      <div class="role">Cherche le potentiel caché</div>
+      <div class="desc">Et si ça marchait mieux que prévu ? Quelle opportunité adjacente se cache là ? Le risque ne le concerne pas — c'est le travail de l'Avocat du diable.</div>
+    </div>
+    <div class="conseiller">
+      <div class="nom">4. L'Outsider</div>
+      <div class="role">Regard neuf, zéro contexte</div>
+      <div class="desc">Zéro contexte sur votre secteur ou votre historique. Réagit uniquement à ce qui est devant lui. Détecte le jargon, la malédiction du savoir, les évidences qui n'en sont pas.</div>
+    </div>
+    <div class="conseiller">
+      <div class="nom">5. L'Exécuteur</div>
+      <div class="role">Une obsession : le premier pas</div>
+      <div class="desc">Est-ce faisable, et quel est le chemin le plus court ? « OK, mais vous faites quoi lundi matin ? » Une idée brillante sans premier pas concret, il le dit.</div>
+    </div>
+  </div>
+  <div class="tensions"><strong>Tensions voulues :</strong> Avocat du diable vs Expansionniste (risque vs potentiel), Premiers principes vs Exécuteur (tout repenser vs foncer), l'Outsider au milieu qui garde tout le monde honnête.</div>
+</div>
+
+<!-- DÉROULÉ -->
+<div class="card">
+  <h2>Déroulé d'une session</h2>
+  <p style="font-size:13px; color:#5F5E5A; margin-bottom:20px;">Une session complète mobilise <strong>11 sous-agents</strong>. Voici les 6 étapes :</p>
+
+  <div class="etapes">
+    <div class="etape">
+      <h3>Cadrer la question</h3>
+      <p><strong>A. Enrichir le contexte</strong> : intégrer les éléments clés — secteur, chiffres, contraintes, historique de la décision.<br>
+      <strong>B. Reformuler</strong> en prompt neutre : la décision, le contexte, l'enjeu. Sans opinion, sans orientation. Si la question est trop vague, poser une seule question de clarification.</p>
+    </div>
+    <div class="etape">
+      <h3>Avis indépendants (5 sous-agents en parallèle)</h3>
+      <p>Lancer les 5 conseillers <strong>simultanément</strong>, jamais en séquence.</p>
+      <div class="code-block">Tu es [Nom du conseiller] au sein d'un LLM Council.
+Ton style de pensée : [description]
+
+La question soumise au conseil :
+---
+[question cadrée]
+---
+
+Réponds depuis ton angle, en français. Sois direct et spécifique.
+Ne nuance pas, n'essaie pas d'être équilibré : les autres conseillers
+couvrent les angles que tu ne couvres pas. Entre 150 et 300 mots.
+Pas de préambule.</div>
+    </div>
+    <div class="etape">
+      <h3>Peer review anonymisée (5 sous-agents en parallèle)</h3>
+      <p>Anonymiser les 5 réponses en <strong>Réponse A à E</strong> (mapping aléatoire). Lancer 5 relecteurs.</p>
+      <div class="code-block">Cinq conseillers ont répondu indépendamment à cette question :
+---
+[question cadrée]
+---
+
+Réponses anonymisées : [Réponse A ... Réponse E]
+
+Réponds en français, en citant les réponses par lettre, moins de 200 mots :
+1. Quelle réponse est la plus forte ? Pourquoi ?
+2. Quelle réponse a le plus gros angle mort ? Lequel ?
+3. Qu'est-ce que les CINQ réponses ont raté ?</div>
+    </div>
+    <div class="etape">
+      <h3>Synthèse du Chairman</h3>
+      <p>Un dernier agent reçoit tout : question cadrée, 5 avis désanonymisés, 5 reviews. Il produit le verdict avec cette structure :</p>
+      <div class="verdict-structure">## Où le conseil converge
+[Points sur lesquels plusieurs conseillers arrivent indépendamment]
+
+## Où le conseil se déchire
+[Les vrais désaccords, sans les lisser. Les deux camps]
+
+## Les angles morts attrapés
+[Ce qui n'a émergé que par la peer review]
+
+## La recommandation
+[Tranchée, argumentée. Jamais « ça dépend »]
+
+## La première chose à faire
+[Une seule action concrète. Pas une liste]</div>
+    </div>
+    <div class="etape">
+      <h3>Verdict</h3>
+      <p>Présenter le verdict complet en markdown directement dans la conversation. Le Chairman <strong>peut suivre le dissident</strong> : si 4 conseillers disent « fonce » mais que le raisonnement du 5e est le plus solide, il tranche avec le dissident et l'explique.</p>
+    </div>
+    <div class="etape">
+      <h3>Archivage (optionnel)</h3>
+      <p>Sur demande : sauvegarder le transcript complet (question cadrée, 5 avis, 5 reviews avec mapping révélé, verdict) pour référence future.</p>
+    </div>
+  </div>
+</div>
+
+<!-- RÈGLES -->
+<div class="card">
+  <h2>Règles</h2>
+  <div class="regles">
+    <div class="regle"><strong>Toujours en parallèle</strong> (étapes 2 et 3) : le séquentiel fait fuiter les avis entre eux.</div>
+    <div class="regle"><strong>Toujours anonymiser</strong> la peer review : sinon les relecteurs favorisent certains styles.</div>
+    <div class="regle"><strong>Verdict tranché</strong> : le conseil existe pour donner une clarté qu'une seule perspective ne donne pas.</div>
+    <div class="regle"><strong>Tout en français</strong>, accents compris, jamais de tiret long.</div>
+    <div class="regle"><strong>Ne pas counciler le trivial</strong> : une question simple mérite une réponse simple.</div>
+  </div>
+</div>
+
+<!-- MODE DÉGRADÉ -->
+<div class="card">
+  <h2>Mode dégradé</h2>
+  <p style="font-size:13px; color:#5F5E5A; line-height:1.7;">Si votre environnement ne permet pas les sous-agents parallèles : générer les 5 avis <strong>séquentiellement</strong> en incarnant strictement un seul rôle à la fois, puis la review et la synthèse. L'étanchéité entre conseillers est alors moindre.</p>
+</div>
+
+<a href="https://github.com/karpathy/llm-council" class="lien">→ Voir le LLM Council original de Karpathy sur GitHub</a>
+
+<div class="footer">
+  CS CONSULTING STRATÉGIQUE &nbsp;·&nbsp; Catherine Selosse &nbsp;·&nbsp; Formation FCE Académie 2026<br>
+  Document partageable — à utiliser avec Claude, ChatGPT ou tout LLM supportant les sous-agents
+</div>
+
+</body>
+</html>
